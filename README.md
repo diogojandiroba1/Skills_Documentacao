@@ -252,13 +252,8 @@ Se desejar gerar um PDF exclusivo contendo apenas um dos capítulos (por exemplo
 
 ## 👤 Autoria
 
-- **Autor:** Diogo Santos Pires Jandiroba  
-- **Titulação / Atuação:** *Lead Software Engineer & Solutions Architect*  
-- **Instituição:** Universidade Federal de Sergipe (UFS) -- Departamento de Computação (DCOMP)  
+- **Autor:** Diogo Santos Pires Jandiroba   
 - **Ano:** 2026
 
 ---
 
-## 📜 Licença
-
-Distribuído sob a licença MIT. Consulte o arquivo `LICENSE` para mais informações.
