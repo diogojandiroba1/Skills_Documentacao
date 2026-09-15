@@ -15,27 +15,34 @@ O **PostoSmart** foi elaborado como um exemplo canônico de especificação téc
 
 ---
 
-## 📊 Catálogo de Diagramas (15 Diagramas Nativos em TikZ Vetorial)
+## 📊 Catálogo de Diagramas e Modelagem no StarUML v7.0
 
-Todos os diagramas foram codificados diretamente em código vetorial LaTeX nativo (`tikz`), dispensando arquivos externos de imagem e garantindo qualidade gráfica perfeita em qualquer escala ou zoom:
+Em conformidade com a nova diretriz oficial de engenharia de software do projeto, **não utilizamos diagramas como código (TikZ/PlantUML/Mermaid)**. Toda a modelagem visual do PostoSmart é formalmente elaborada na ferramenta **StarUML v7.0** (UML 2.5.1 / ERD) e integrada ao documento LaTeX via comandos `\incluirdiagrama`.
 
-| # | Capítulo | Tipo de Diagrama | Norma / Metodologia | Elementos Modelados |
+> 💡 **Instalação do StarUML v7.0 Pro:**  
+> Siga o tutorial oficial de instalação e ativação: [Get-full-version-of-StarUML-7.0.0-Pro-Remove-Watermark](https://github.com/rodyuzuriaga/Get-full-version-of-StarUML-7.0.0-Pro-Remove-Watermark).
+
+### 📁 Mapeamento de Arquivos e Placeholders no StarUML v7.0
+
+Todos os capítulos possuem caixas de placeholder com instruções para modelagem no StarUML v7.0. Uma vez desenhados e exportados (`File -> Export Diagram as -> PNG...` a 300 DPI ou PDF vetorial) para o diretório `Imagens/`, basta descomentar o comando `\incluirdiagrama` correspondente:
+
+| # | Capítulo | Tipo no StarUML v7.0 | Arquivo de Destino | Elementos Modelados |
 |:---:|:---|:---|:---|:---|
-| **01** | Cap. 1 -- Plano de Projeto | **Matriz de Mendelow** | Gestão de Stakeholders | Poder $\times$ Interesse (Proprietário, SEFAZ, Frentistas, Fornecedores) |
-| **02** | Cap. 1 -- Plano de Projeto | **WBS / EAP em Árvore** | PMBOK / IEEE Std 1058 | Decomposição hierárquica das entregas do PostoSmart |
-| **03** | Cap. 1 -- Plano de Projeto | **Linha do Tempo / Gantt** | Gestão de Cronograma | Marcos e entregas quinzenais dos 4 sprints de desenvolvimento |
-| **04** | Cap. 3 -- Casos de Uso | **Diagrama de Casos de Uso** | OMG UML 2.5.1 | Atores (*Frentista*, *Caixa*, *Gerente*) e Casos de Uso com `<<include>>` |
-| **05** | Cap. 3 -- Casos de Uso | **Modelo Conceitual de Domínio** | Classes de Análise / DDD | *Tanque*, *Bomba*, *Bico*, *Combustível*, *Abastecimento*, *Venda* |
-| **06** | Cap. 4 -- Arquitetura | **Visão Lógica de Componentes** | Kruchten 4+1 / ISO 42010 | Camada Edge Local (Driver, Regras, PDV) e Nuvem (Sync, SEFAZ, DB) |
-| **07** | Cap. 4 -- Arquitetura | **Visão de Processos** | Kruchten 4+1 / ISO 42010 | Threads concorrentes, Ring Buffer Lockless e despacho WebSocket |
-| **08** | Cap. 4 -- Arquitetura | **Visão Física / Implantação** | Kruchten 4+1 / ISO 42010 | Ilhas de pista, Barramento RS-485, Concentrador, Edge Server, Nuvem |
-| **09** | Cap. 5 -- Design Detalhado | **Diagrama de Classes de Projeto** | UML Design Level (SDD) | Atributos com visibilidade `+`/`-`, métodos tipados e contratos |
-| **10** | Cap. 5 -- Design Detalhado | **Diagrama de Sequência** | OMG UML 2.5.1 | Ciclo completo: Desengate $\rightarrow$ Autorização $\rightarrow$ Abastecimento $\rightarrow$ Encerramento |
-| **11** | Cap. 5 -- Design Detalhado | **Diagrama de Máquina de Estados** | UML State Machine | Ciclo de vida do bico (*Repouso*, *Aguardando*, *Abastecendo*, *Pendente*, *Bloqueado*) |
-| **12** | Cap. 5 -- Design Detalhado | **Diagrama de Atividades** | UML Activity Diagram | Fluxo de caixa, bifurcação de contingência fiscal e impressão DANFE |
-| **13** | Cap. 5 -- Design Detalhado | **Diagrama ER Relacional** | Mapeamento ORM / DDL | Tabelas físicas (`tb_tanque`, `tb_bico`, `tb_abastecimento`, `tb_venda`) com PK/FK |
-| **14** | Cap. 6 -- Plano de Testes | **Pirâmide de Testes de Software** | ISO/IEC/IEEE 29119 | Distribuição de esforço: Unitários (60\%), Integração (30\%) e E2E (10\%) |
-| **15** | Cap. 7 -- DevOps & Runbook | **Pipeline de CI/CD** | Entrega Contínua / DORA | Git Push $\rightarrow$ Lint/SAST $\rightarrow$ Testes $\rightarrow$ Docker Build $\rightarrow$ Scan $\rightarrow$ Deploy |
+| **01** | Cap. 1 -- Plano de Projeto | Class / Custom Diagram | `Imagens/matriz_mendelow.png` | Matriz de Poder $\times$ Interesse dos Stakeholders |
+| **02** | Cap. 1 -- Plano de Projeto | Class / Package Diagram | `Imagens/wbs_projeto.png` | Decomposição hierárquica das entregas (WBS / EAP) |
+| **03** | Cap. 1 -- Plano de Projeto | Deployment / Timing Diagram | `Imagens/gantt_marcos.png` | Linha do tempo de marcos e sprints de entrega |
+| **04** | Cap. 3 -- Casos de Uso | **Use Case Diagram** | `Imagens/uc_visao_geral.png` | Atores (*Frentista*, *Caixa*, *Gerente*) e Casos de Uso |
+| **05** | Cap. 3 -- Casos de Uso | **Class Diagram (Conceitual)** | `Imagens/cls_modelo_conceitual.png` | Entidades de domínio e regras de negócio |
+| **06** | Cap. 4 -- Arquitetura | **Component Diagram (Lógica)** | `Imagens/arc_visao_logica.png` | Camadas Edge Local (Driver, Regras, PDV) e Nuvem |
+| **07** | Cap. 4 -- Arquitetura | **Activity / Timing (Processos)** | `Imagens/arc_visao_processos.png` | Threads concorrentes, Ring Buffer e WebSocket |
+| **08** | Cap. 4 -- Arquitetura | **Deployment Diagram (Física)** | `Imagens/arc_visao_implantacao.png` | Ilhas de pista, RS-485, Concentrador, Edge Server, Nuvem |
+| **09** | Cap. 5 -- Design Detalhado | **Class Diagram (Projeto)** | `Imagens/cls_projeto_postosmart.png` | Classes de implementação, visibilidade e tipagem |
+| **10** | Cap. 5 -- Design Detalhado | **Sequence Diagram** | `Imagens/seq_abastecimento.png` | Mensageria temporal: Desengate $\rightarrow$ Autorização $\rightarrow$ Fim |
+| **11** | Cap. 5 -- Design Detalhado | **Statechart Diagram** | `Imagens/dsm_bico_combustivel.png` | Máquina de estados do bico (*Repouso*, *Autorizado*, etc.) |
+| **12** | Cap. 5 -- Design Detalhado | **Activity Diagram** | `Imagens/act_fechamento_venda.png` | Fluxo de caixa e contingência offline NFC-e |
+| **13** | Cap. 5 -- Design Detalhado | **Class Diagram / ERD** | `Imagens/cls_er_relacional.png` | Esquema relacional de banco (`tb_tanque`, `tb_bico`, etc.) |
+| **14** | Cap. 6 -- Plano de Testes | **Component Diagram** | `Imagens/test_piramide_posto.png` | Pirâmide de testes (Unitários 60\%, Integração 30\%, E2E 10\%) |
+| **15** | Cap. 7 -- DevOps & Runbook | **Activity Diagram** | `Imagens/devops_pipeline_posto.png` | Esteira CI/CD automatizada (Git Push $\rightarrow$ Deploy Edge) |
 
 ---
 

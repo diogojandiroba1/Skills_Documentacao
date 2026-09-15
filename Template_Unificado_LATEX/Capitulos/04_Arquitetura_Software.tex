@@ -55,19 +55,114 @@ C4 & Resiliência e Recuperação & Mecanismos de backup automatizado diário e 
 Cenários críticos que exercitam as propriedades não-funcionais do sistema (ex.: alta concorrência e operações financeiras).
 
 \subsection{Visão Lógica}
-A Visão Lógica descreve a organização em componentes e subsistemas independentes. A divisão adotada segue princípios de Contextos Delimitados (Bounded Contexts) para garantir coesão interna e baixo acoplamento.
+A Visão Lógica descreve a organização em componentes e subsistemas independentes. A divisão adotada segue princípios de Contextos Delimitados (Bounded Contexts) para garantir coesão interna e baixo acoplamento. A \autoref{fig:arch_visao_logica} apresenta o Diagrama de Componentes modelado no StarUML v7.0.
+
+% PLACEHOLDER STARUML v7.0: Visão Lógica
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Component Diagram
+% Arquivo: Imagens/arch_visao_logica.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/arch_visao_logica.png}{Visão Lógica da Arquitetura (Diagrama de Componentes)}{fig:arch_visao_logica}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Visão Lógica -- Diagrama de Componentes -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/arch\_visao\_logica.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/arch\_visao\_logica.png\}\{Visão Lógica (Componentes)\}\{fig:arch\_visao\_logica\}}%
+    \vspace{1cm}}}
+    \caption{Visão Lógica da Arquitetura (Placeholder StarUML v7.0)}
+    \label{fig:arch_visao_logica}
+\end{figure}
 
 \subsection{Visão de Processos}
-Modela o fluxo de execução, transações assíncronas, controle de concorrência e comunicações entre serviços.
+Modela o fluxo de execução, transações assíncronas, controle de concorrência e comunicações entre serviços. A \autoref{fig:arch_visao_processos} ilustra a dinâmica temporal e mensageria entre os processos.
+
+% PLACEHOLDER STARUML v7.0: Visão de Processos
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Sequence Diagram ou Activity Diagram
+% Arquivo: Imagens/arch_visao_processos.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/arch_visao_processos.png}{Visão de Processos e Concorrência}{fig:arch_visao_processos}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Visão de Processos e Concorrência -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/arch\_visao\_processos.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/arch\_visao\_processos.png\}\{Visão de Processos\}\{fig:arch\_visao\_processos\}}%
+    \vspace{1cm}}}
+    \caption{Visão de Processos da Arquitetura (Placeholder StarUML v7.0)}
+    \label{fig:arch_visao_processos}
+\end{figure}
 
 \subsection{Visão de Desenvolvimento}
-Estruturação do código-fonte em camadas limpas (ex.: Camada de Apresentação, Aplicação/Casos de Uso, Domínio e Infraestrutura/Persistência).
+Estruturação do código-fonte em camadas limpas (ex.: Camada de Apresentação, Aplicação/Casos de Uso, Domínio e Infraestrutura/Persistência). A \autoref{fig:arch_visao_desenvolvimento} apresenta a divisão estrutural de pacotes.
+
+% PLACEHOLDER STARUML v7.0: Visão de Desenvolvimento
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Package Diagram
+% Arquivo: Imagens/arch_visao_desenvolvimento.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/arch_visao_desenvolvimento.png}{Visão de Desenvolvimento (Diagrama de Pacotes)}{fig:arch_visao_desenvolvimento}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Visão de Desenvolvimento -- Diagrama de Pacotes -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/arch\_visao\_desenvolvimento.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/arch\_visao\_desenvolvimento.png\}\{Visão de Desenvolvimento\}\{fig:arch\_visao\_desenvolvimento\}}%
+    \vspace{1cm}}}
+    \caption{Visão de Desenvolvimento da Arquitetura (Placeholder StarUML v7.0)}
+    \label{fig:arch_visao_desenvolvimento}
+\end{figure}
 
 \subsection{Visão Física / de Implantação}
-Mapeamento dos nós computacionais, balanceadores de carga, servidores de aplicação em contêineres e instâncias gerenciadas de banco de dados.
+Mapeamento dos nós computacionais, balanceadores de carga, servidores de aplicação em contêineres e instâncias gerenciadas de banco de dados. A \autoref{fig:arch_visao_implantacao} demonstra a topologia de nós físicos e de execução.
+
+% PLACEHOLDER STARUML v7.0: Visão Física / Implantação
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Deployment Diagram
+% Arquivo: Imagens/arch_visao_implantacao.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/arch_visao_implantacao.png}{Visão Física e de Implantação (Deployment Diagram)}{fig:arch_visao_implantacao}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Visão Física e de Implantação -- Deployment Diagram -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/arch\_visao\_implantacao.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/arch\_visao\_implantacao.png\}\{Visão de Implantação\}\{fig:arch\_visao\_implantacao\}}%
+    \vspace{1cm}}}
+    \caption{Visão Física e de Implantação da Arquitetura (Placeholder StarUML v7.0)}
+    \label{fig:arch_visao_implantacao}
+\end{figure}
 
 \subsection{Visão de Segurança e Conformidade (LGPD)}
-Todos os dados pessoais sensíveis (prontuários, diagnósticos e documentos) são criptografados em repouso (AES-256) e em trânsito (TLS 1.3). Cada leitura ou modificação gera log imutável de auditoria com identificação do operador, data/hora e IP.
+Todos os dados pessoais sensíveis (prontuários, diagnósticos e documentos) são criptografados em repouso (AES-256) e em trânsito (TLS 1.3). Cada leitura ou modificação gera log imutável de auditoria com identificação do operador, data/hora e IP. A \autoref{fig:arch_visao_seguranca} detalha o isolamento perimetral e as barreiras de segurança.
+
+% PLACEHOLDER STARUML v7.0: Visão de Segurança e Conformidade
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Component Diagram (com zonas de segurança)
+% Arquivo: Imagens/arch_visao_seguranca.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/arch_visao_seguranca.png}{Visão de Segurança e Conformidade LGPD}{fig:arch_visao_seguranca}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Visão de Segurança e Conformidade LGPD -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/arch\_visao\_seguranca.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/arch\_visao\_seguranca.png\}\{Visão de Segurança\}\{fig:arch\_visao\_seguranca\}}%
+    \vspace{1cm}}}
+    \caption{Visão de Segurança e Conformidade LGPD (Placeholder StarUML v7.0)}
+    \label{fig:arch_visao_seguranca}
+\end{figure}
 
 \section{Decisões Arquiteturais e Rationale (ADRs)}
 As decisões arquiteturais fundamentais do sistema são formalizadas a seguir:

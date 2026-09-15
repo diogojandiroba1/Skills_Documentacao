@@ -24,9 +24,46 @@ Gateway de Pagamento & Sistema Externo & Processa cobranças, emite confirmaçõ
 \section{Diagrama Geral de Casos de Uso}
 A visão geral de casos de uso delimita as funcionalidades disponibilizadas aos diferentes atores. A modelagem detalhada é particionada por módulos funcionais para evitar diagramas monolíticos com cruzamento excessivo de linhas.
 
-\begin{center}
-    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}\small\textbf{[Diagrama Geral de Casos de Uso]}\\\textit{Insira o arquivo em Imagens/ e utilize o comando \texttt{\textbackslash incluirdiagrama\{Imagens/nome\_arquivo\}\{Legenda\}\{label\}}}\vspace{1cm}}}
-\end{center}
+% PLACEHOLDER STARUML v7.0: Diagrama Geral de Casos de Uso
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Use Case Diagram
+% Arquivo: Imagens/uc_geral.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/uc_geral.png}{Diagrama Geral de Casos de Uso do Sistema}{fig:uc_geral}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Diagrama Geral de Casos de Uso -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/uc\_geral.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/uc\_geral.png\}\{Diagrama Geral de Casos de Uso\}\{fig:uc\_geral\}}%
+    \vspace{1cm}}}
+    \caption{Diagrama Geral de Casos de Uso (Placeholder StarUML v7.0)}
+    \label{fig:uc_geral}
+\end{figure}
+
+\subsection{Diagrama de Casos de Uso Particionado -- Módulo de Agendamento}
+A \autoref{fig:uc_agendamento} ilustra a modelagem detalhada e modular do pacote funcional de agendamentos.
+
+% PLACEHOLDER STARUML v7.0: Diagrama de Casos de Uso por Pacote
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Use Case Diagram
+% Arquivo: Imagens/uc_agendamento.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/uc_agendamento.png}{Diagrama de Casos de Uso -- Módulo Agendamento}{fig:uc_agendamento}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Diagrama de Casos de Uso -- Módulo Agendamento -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/uc\_agendamento.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/uc\_agendamento.png\}\{Diagrama de Casos de Uso -- Módulo Agendamento\}\{fig:uc\_agendamento\}}%
+    \vspace{1cm}}}
+    \caption{Diagrama de Casos de Uso do Módulo de Agendamento (Placeholder StarUML v7.0)}
+    \label{fig:uc_agendamento}
+\end{figure}
 
 \section{Especificação Textual dos Casos de Uso}
 
@@ -90,4 +127,23 @@ RF04 & Controle de Estoque & UC04 (Dispensar Insumos), UC05 (Repor Estoque) \\
 \end{table}
 
 \section{Diagrama de Classes de Análise / Conceitual de Domínio}
-O modelo de domínio descreve os conceitos e entidades fundamentais de negócio sem detalhes técnicos de implementação (banco de dados, linguagens de programação ou frameworks).
+O modelo de domínio descreve os conceitos e entidades fundamentais de negócio sem detalhes técnicos de implementação (banco de dados, linguagens de programação ou frameworks). A \autoref{fig:cls_conceitual} apresenta as entidades puras de negócio, seus atributos e suas associações semânticas.
+
+% PLACEHOLDER STARUML v7.0: Diagrama de Classes de Análise / Conceitual de Domínio
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Class Diagram
+% Arquivo: Imagens/cls_conceitual_dominio.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/cls_conceitual_dominio.png}{Diagrama Conceitual de Classes de Domínio}{fig:cls_conceitual}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Modelo Conceitual de Classes de Domínio -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/cls\_conceitual\_dominio.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/cls\_conceitual\_dominio.png\}\{Diagrama Conceitual de Classes de Domínio\}\{fig:cls\_conceitual\}}%
+    \vspace{1cm}}}
+    \caption{Modelo Conceitual de Classes de Domínio (Placeholder StarUML v7.0)}
+    \label{fig:cls_conceitual}
+\end{figure}

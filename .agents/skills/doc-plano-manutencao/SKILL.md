@@ -1,11 +1,15 @@
 ---
 name: doc-plano-manutencao
-description: Guia o agente na elaboração do Plano de Manutenção e Suporte de Software conforme a área de conhecimento de Manutenção do SWEBOK, cobrindo tipologia de manutenção, SLAs, suporte N1/N2/N3, triagem de defeitos, ciclo de hotfixes e política de descontinuação (EOL).
+description: Guia o agente na elaboração do Plano de Manutenção e Suporte de Software conforme o SWEBOK, cobrindo tipologia de manutenção, SLAs, suporte N1/N2/N3, triagem de defeitos, hotfixes e modelagem no StarUML v7.0.
 ---
 
 # Skill: Plano de Manutenção e Suporte de Software
 
 Esta skill orienta o agente na formulação do **Plano de Manutenção e Suporte de Software (Software Maintenance & Support Plan)**, fundamentado na Área de Conhecimento de Manutenção de Software do **SWEBOK v4** e nas melhores práticas de Service Level Management (ITIL/SRE). O documento estabelece as regras e processos para manter o software operando com estabilidade e evoluindo após sua entrega inicial.
+
+O agente atua simultaneamente como **gerente de sustentação operacional** e **copiloto de modelagem no StarUML v7.0**, instruindo a criação visual dos fluxos de suporte N1/N2/N3 e rito de hotfix emergencial.
+
+---
 
 ## 1. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
 
@@ -80,8 +84,6 @@ Baixa (P4) & Dúvidas operacionais de uso ou sugestão de melhoria estética. & 
 ```
 
 ### Rito de Hotfix Emergencial
-> **Diretriz:** NÃO utilize caixas gráficas de destaque (`destaque`, `tcolorbox`). Apresente o procedimento como subseção com lista formal:
-
 ```latex
 \subsection{Procedimento Padronizado para Hotfix em Produção}
 Para qualquer incidente classificado como Severidade Crítica (P1):
@@ -96,9 +98,23 @@ Para qualquer incidente classificado como Severidade Crítica (P1):
 
 ---
 
-## 4. Checklist de Qualidade do Agente
+## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
-- [ ] A classificação de incidentes (P1 a P4) possui critérios objetivos e prazos contratuais de SLA?
-- [ ] O papel e as responsabilidades dos níveis de suporte N1, N2 e N3 estão claramente delimitados?
-- [ ] O fluxo de hotfix emergencial prevê testes de regressão obrigatórios antes da publicação?
-- [ ] O plano aborda os quatro tipos de manutenção do SWEBOK (corretiva, adaptativa, perfectiva e preventiva)?
+### 4.1. Fluxo de Triagem e Escalonamento N1/N2/N3 (Activity Diagram)
+1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Activity Diagram` e nomeie como `manut_ciclo_incidente`;
+2. **Raias de Suporte (Swimlanes):** Crie raias horizontais para: `Usuário / Operador`, `N1 - Helpdesk`, `N2 - Sustentação`, `N3 - Engenharia`;
+3. **Ações:** Modele o fluxo desde `Abertura do Chamado`, `Triagem Inicial`, `Resolução Operacional N1`, `Diagnóstico de Banco N2`, `Refatoração de Bug N3` até `Fechamento e Homologação`.
+
+### 4.2. Fluxo de Hotfix Emergencial (Activity Diagram)
+1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Activity Diagram` e nomeie como `manut_fluxo_hotfix`;
+2. **Ações:** Modele a criação da branch de hotfix, testes automatizados imediatos, aprovação emergencial de 2 seniors e deploy contínuo em produção;
+3. **Exportação:** Exporte via **`File` -> `Export Diagram as` -> `PNG...`** (300 DPI, fundo branco) para `Template_Unificado_LATEX/Imagens/manut_ciclo_incidente.png` e `Imagens/manut_fluxo_hotfix.png`.
+
+---
+
+## 5. Checklist de Qualidade do Agente
+
+- [ ] A matriz de SLA especifica tempos máximos contratuais de resposta e resolução definitiva?
+- [ ] Os fluxos de triagem e rito de hotfix foram prescritos para modelagem visual no StarUML v7.0?
+- [ ] Há clara distinção entre as 4 categorias canônicas de manutenção do SWEBOK?
+- [ ] A política de fim de vida (EOL) estipula prazos prévios para desativação de versões de API?

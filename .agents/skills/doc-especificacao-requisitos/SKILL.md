@@ -136,6 +136,7 @@ RN02 & Bloqueio por Tentativas & Bloquear a conta por 15 minutos após 5 tentati
 
 - **Evite Termos Vagos:** Nunca use expressões como *"rápido"*, *"amigável"*, *"seguro"* ou *"otimizado"*. Substitua sempre por métricas numéricas verificáveis (ex.: em vez de *"sistema rápido"*, use *"tempo de resposta $\le 1{,}5$ segundos sob carga de 50 usuários simultâneos"*).
 - **Consistência de Vocabulário:** Mantenha os mesmos nomes de entidades ao longo de todo o documento (se usou "Paciente", nunca alterne para "Cliente" ou "Usuário" sem distinguir os papéis).
+- **Transição para Modelagem Visual (StarUML v7.0):** Os requisitos funcionais catalogados servirão como insumo primário para a modelagem visual dos Casos de Uso e Modelo Conceitual no StarUML v7.0 (executada através da skill `doc-casos-de-uso`). Não utilize diagramas-como-código nesta fase.
 
 ---
 

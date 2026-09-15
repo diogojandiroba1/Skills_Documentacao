@@ -1,11 +1,15 @@
 ---
 name: doc-integrador-final
-description: Orienta o agente na consolidação, harmonização editorial e compilação do Documento Técnico Completo do Ciclo de Vida de Software, garantindo consistência terminológica, integridade de referências cruzadas e compilação perfeita no template LaTeX unificado.
+description: Orienta o agente na consolidação, harmonização editorial e compilação do Documento Técnico Completo do Ciclo de Vida de Software, garantindo consistência terminológica, auditoria de diagramas exportados pelo StarUML v7.0 e compilação perfeita no template LaTeX unificado.
 ---
 
 # Skill: Orquestração e Integração do Documento Técnico Consolidado
 
-Esta skill guia o agente no papel de **Editor Técnico Chefe e Integrador**, responsável por revisar, harmonizar e unificar os 7 documentos especializados do ciclo de vida de software em uma única **Especificação Técnica Consolidada**, garantindo que não existam inconsistências conceituais, terminológicas ou falhas de compilação no template LaTeX unificado.
+Esta skill guia o agente no papel de **Editor Técnico Chefe e Integrador**, responsável por revisar, harmonizar e unificar os 7 documentos especializados do ciclo de vida de software em uma única **Especificação Técnica Consolidada**, garantindo que não existam inconsistências conceituais, terminológicas, referências quebradas ou falhas de compilação no template LaTeX unificado.
+
+O integrador atua também como **Auditor de Qualidade Visual dos Diagramas**, assegurando que todos os modelos tenham sido construídos no **StarUML v7.0** e devidamente exportados para a pasta `Imagens/`.
+
+---
 
 ## 1. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
 
@@ -36,9 +40,16 @@ Esta skill sintetiza e orquestra o ciclo de vida completo de engenharia de softw
    - Garantir que cada elemento seja explicitamente citado no texto antes ou logo após sua apresentação através de `\autoref{...}` ou `\ref{...}`;
    - Conferir se todas as citações `\cite{...}` possuem entradas correspondentes em `Bibliografia.bib`.
 
-4. **Gerenciamento de Figuras e Diagramas**
-   - Assegurar que todas as imagens referenciadas existam na pasta `Imagens/`;
-   - Garantir que não existam diagramas monolíticos ilegíveis ou com sobreposição de texto, cobrando das skills anteriores o devido particionamento modular.
+4. **Auditoria de Modelagem e Diagramas no StarUML v7.0**
+   - **Proibição de Diagramas-como-Código:** Confirmar que nenhum diagrama PlantUML ou Mermaid permaneça no texto final;
+   - **Conformidade StarUML v7.0:** Assegurar que todos os diagramas foram modelados visualmente no StarUML v7.0 e exportados para `Template_Unificado_LATEX/Imagens/` com fundo branco e resolução mínima de 300 DPI (escala 2x ou 3x);
+   - **Substituição dos Placeholders:** Auditar se todos os blocos de placeholders dos capítulos foram substituídos pelos comandos reais `\incluirdiagrama{Imagens/<arquivo>.png}{...}{fig:...}`;
+   - **Catálogo de Imagens:** Conferir a presença dos arquivos padronizados:
+     - `uc_geral.png`, `uc_<modulo>.png`
+     - `cls_conceitual_dominio.png`, `cls_projeto_<modulo>.png`
+     - `seq_<caso_uso>.png`, `dsm_<entidade>.png`, `act_<processo>.png`
+     - `arch_visao_logica.png`, `arch_visao_desenvolvimento.png`, `arch_visao_processos.png`, `arch_visao_implantacao.png`, `arch_visao_seguranca.png`
+     - `test_piramide_estrategia.png`, `devops_pipeline_cicd.png`, `devops_topologia_infra.png`.
 
 ---
 
@@ -86,7 +97,7 @@ pdflatex -interaction=nonstopmode main.tex
 
 ## 4. Matriz Global de Rastreabilidade do Projeto
 
-O integrador deve gerar e manter no documento consolidado a matriz global resumida:
+O integrador deve manter no documento consolidado a matriz global resumida:
 
 ```latex
 \begin{table}[htbp]
@@ -112,7 +123,8 @@ RF04 & UC05 (Estoque) & ADR-02 (Estoque) & \texttt{tb\_insumo} & CT-EST-01 & \ba
 ## 5. Checklist Final de Entrega do Agente Integrador
 
 - [ ] A compilação LaTeX executa com zero erros fatais?
+- [ ] Todos os diagramas foram gerados pelo StarUML v7.0 e exportados com resolução adequada em `Imagens/`?
+- [ ] Os placeholders temporários foram ativados com os diagramas reais exportados?
 - [ ] O sumário, lista de figuras e lista de tabelas estão perfeitamente populados?
 - [ ] Não há nenhum aviso de referência quebrada (`Reference undefined` ou `Citation undefined`) no log de compilação?
 - [ ] O documento atende integralmente ao modelo de completude ArchCaMo e às boas práticas do SWEBOK v4?
-- [ ] A capa e cabeçalhos refletem com exatidão a identidade do projeto e da instituição?

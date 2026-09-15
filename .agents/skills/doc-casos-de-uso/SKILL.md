@@ -1,11 +1,13 @@
 ---
 name: doc-casos-de-uso
-description: Guia o agente na modelagem de casos de uso (UML Use Case) e análise conceitual de domínio, incluindo especificação textual detalhada, diagramas por pacotes funcionais, matriz de rastreabilidade (RF x UC) e modelo conceitual de classes.
+description: Guia o agente na modelagem de casos de uso (UML Use Case) e análise conceitual de domínio, incluindo especificação textual detalhada, matriz de rastreabilidade (RF x UC), modelo conceitual de classes e instrução formal passo a passo para modelagem no StarUML v7.0.
 ---
 
 # Skill: Modelagem de Casos de Uso e Análise Conceitual
 
-Esta skill orienta o agente na especificação e modelagem detalhada dos **Casos de Uso (UML Use Cases)** e na construção do **Modelo Conceitual de Domínio (Classes de Análise)**, fundamentada na Área de Conhecimento de Requisitos e Design do **SWEBOK v4** e no padrão formal **OMG Unified Modeling Language (UML 2.5.1)**.
+Esta skill orienta o agente na especificação, detalhamento e auxílio à modelagem dos **Casos de Uso (UML Use Cases)** e do **Modelo Conceitual de Domínio (Classes de Análise)**, fundamentada na Área de Conhecimento de Requisitos e Design do **SWEBOK v4** e no padrão formal **OMG Unified Modeling Language (UML 2.5.1)**.
+
+O agente atua simultaneamente como **especificador formal da documentação técnica** e **copiloto de modelagem visual no StarUML v7.0**, fornecendo descrições prescritivas para que o usuário construa os diagramas visualmente na ferramenta com rigor profissional.
 
 ---
 
@@ -15,7 +17,7 @@ Esta skill orienta o agente na especificação e modelagem detalhada dos **Casos
   * **Chapter 1 -- Software Requirements (Subárea 2.3: Conceptual Modeling):** O modelo conceitual traduz os requisitos textuais em representações comportamentais rigorosas de fluxos de tarefas orientadas a objetivos de negócio (*Goal-Oriented Requirements*).
   * **Chapter 3 -- Software Design (Subárea 2.2: Object-Oriented Analysis):** Identificação de entidades de domínio do mundo real, atributos fundamentais e relacionamentos semânticos (associação, agregação, composição e multiplicidade), mantendo independência de implementações técnicas.
 * **Normas e Metodologias:**
-  * **OMG Unified Modeling Language (UML) Specification v2.5.1:** Semântica formal para Use Cases, Atores, Fronteiras do Sistema (*System Boundary*), estereótipos de relacionamento (`<<include>>`, `<<extend>>`) e generalização de atores;
+  * **OMG Unified Modeling Language (UML) Specification v2.5.1:** Semântica formal para Use Cases, Atores, Fronteiras do Sistema (*System Boundary* / *Subject*), estereótipos de relacionamento (`<<include>>`, `<<extend>>`) e generalização de atores;
   * **Metodologia de Casos de Uso de Alistair Cockburn:** Estruturação orientada a objetivos (Garantias Mínimas, Garantias de Sucesso, Triggers, Fluxo Básico e Extensões de Exceção);
   * **ISO/IEC/IEEE 29148:2018:** Rastreabilidade formal bidirecional Requisitos Funcionais $\leftrightarrow$ Casos de Uso ($RF \leftrightarrow UC$).
 
@@ -24,33 +26,33 @@ Esta skill orienta o agente na especificação e modelagem detalhada dos **Casos
 ## 2. Estrutura Obrigatória do Documento
 
 1. **Atores do Sistema**
-   - Identificação de todos os atores humanos (papéis) e sistemas externos;
-   - Descrição das responsabilidades de cada ator e relações de generalização/herança de papéis (ex.: `Médico` herda permissões de `Profissional de Saúde`).
+   - Identificação de todos os atores humanos (papéis operacionais) e sistemas externos;
+   - Descrição detalhada das responsabilidades de cada ator e relações de generalização/herança de papéis (ex.: `Médico` especializa `Profissional de Saúde`).
 
-2. **Diagrama Geral e Particionamento por Pacotes**
-   - **Diagrama Geral de Casos de Uso:** Visão das fronteiras do sistema delimitando os grandes módulos funcionais;
-   - **Diagramas de Casos de Uso por Pacote Funcional:** Cada pacote (ex.: Agenda, Prontuário, Farmácia) deve possuir seu próprio diagrama isolado.
+2. **Diagrama Geral e Particionamento por Pacotes Funcionais**
+   - **Diagrama Geral de Casos de Uso:** Visão macro delimitando as fronteiras do sistema e seus grandes módulos;
+   - **Diagramas de Casos de Uso por Módulo Funcional:** Cada pacote (ex.: Agenda, Prontuário, Farmácia, Faturamento) deve possuir seu próprio diagrama isolado, contendo entre **4 e 6 casos de uso** para garantir legibilidade.
 
 3. **Especificação Textual Detalhada dos Casos de Uso**
-   - Todo caso de uso prioritário deve ser detalhado segundo o template rigoroso:
+   - Todo caso de uso prioritário deve ser detalhado segundo o template formal:
      - **ID e Nome:** `UCxx -- Nome no Infinitivo` (ex.: `UC01 -- Realizar Agendamento`);
      - **Atores:** Indicando quem inicia a interação (ator primário) e quem é notificado (ator secundário);
      - **Objetivo / Breve Descrição:** Resumo do valor entregue ao ator;
      - **Pré-condições:** Condições de estado necessárias antes do início do fluxo;
      - **Pós-condições:** Estado garantido do sistema após o sucesso da operação;
-     - **Fluxo Principal:** Sequência numerada passo-a-passo (interação Ator $\rightarrow$ Sistema $\rightarrow$ Ator);
-     - **Fluxos Alternativos (FA):** Caminhos secundários de sucesso (ex.: cliente não cadastrado sendo cadastrado durante o fluxo);
+     - **Fluxo Principal dos Eventos:** Sequência numerada passo a passo (interação Ator $\rightarrow$ Sistema $\rightarrow$ Ator);
+     - **Fluxos Alternativos (FA):** Caminhos secundários de sucesso;
      - **Fluxos de Exceção (FE):** Tratamento de falhas, erros de validação e cancelamentos;
      - **Regras de Negócio e Requisitos Vinculados:** Rastreabilidade direta para as RNs e RFs.
 
 4. **Matrizes de Rastreabilidade**
-   - Matriz Requisitos Funcionais $\times$ Casos de Uso;
-   - Matriz Casos de Uso $\times$ Classes de Análise.
+   - Matriz Requisitos Funcionais $\times$ Casos de Uso ($RF \leftrightarrow UC$);
+   - Matriz Casos de Uso $\times$ Classes de Análise ($UC \leftrightarrow Entidades$).
 
 5. **Modelo Conceitual de Domínio (Diagrama de Classes de Análise)**
    - Representação puramente orientada ao problema (entidades de negócio e conceitos do mundo real);
-   - Sem tipos técnicos de bancos de dados, chaves primárias artificiais (IDs) ou métodos de controle;
-   - Relações conceituais: Associações com multiplicidade nas extremidades (`1..1`, `1..*`, `0..*`), Agregações e Composições.
+   - Sem tipos de banco de dados (ex.: VARCHAR, INT), chaves primárias artificiais ou métodos técnicos;
+   - Relações conceituais com multiplicidades explícitas em ambas as pontas (`1..1`, `1..*`, `0..*`), além de Agregações e Composições.
 
 ---
 
@@ -102,43 +104,84 @@ Esta skill orienta o agente na especificação e modelagem detalhada dos **Casos
 
 ---
 
-## 4. Diretrizes de Diagramação (Evitando Diagramas Poluídos)
+## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
-### Por que diagramas quebram?
-Em ferramentas automáticas ou scripts como PlantUML mal configurados, diagramas com muitos casos de uso sofrem com:
-- Linhas que cruzam sobre os elipses dos casos de uso;
-- Atores com linhas diagonais longas que atravessam todo o diagrama;
-- Rótulos `<<include>>` e `<<extend>>` sobrepostos a outras conexões.
+O agente deve fornecer ao usuário instruções formais e determinísticas para construir os diagramas no **StarUML v7.0**, seguindo rigorosamente os passos abaixo:
 
-### Regras de Boa Prática para o Agente:
-1. **Regra de Granularidade por Módulo:**
-   - **NUNCA** coloque todos os casos de uso de um sistema grande em uma única imagem.
-   - Divida sempre por pacotes funcionais com no máximo **4 a 6 casos de uso por diagrama**.
-2. **Código Mermaid Limpo para Pré-visualização:**
-   Utilize alinhamento da esquerda para a direita (`direction LR`) e fronteiras de subsistema explícitas:
-   ```mermaid
-   flowchart LR
-       subgraph Sistema [Módulo de Agendamento]
-           UC1((UC01: Realizar Agendamento))
-           UC2((UC02: Confirmar Presença))
-           UC3((UC03: Cancelar Agendamento))
-           UC4((UC04: Notificar Paciente))
-       end
-       Recepcionista --> UC1
-       Recepcionista --> UC2
-       Recepcionista --> UC3
-       UC1 -.->|<<include>>| UC4
+### 4.1. Modelagem de Casos de Uso (Geral e Modular)
+
+1. **Estruturação no Model Explorer:**
+   - No painel lateral direito (*Model Explorer*), clique com o botão direito no modelo raiz (`Model`) e selecione **`Add` -> `Package`**;
+   - Nomeie o pacote como `Modelagem_Casos_Uso` e crie subpacotes para cada módulo (ex.: `Modulo_Agendamento`, `Modulo_Atendimento`);
+   - Clique com o botão direito no pacote e selecione **`Add Diagram` -> `Use Case Diagram`**.
+
+2. **Criação e Posicionamento dos Elementos:**
+   - **Fronteira do Sistema (Subject):** Na Toolbox à esquerda (*Use Case*), clique em **`System Boundary`** (ou `Subject`), arraste um retângulo amplo para o centro do canvas e nomeie com o título do subsistema (ex.: `Sistema VitaCare -- Módulo Agendamento`);
+   - **Atores:** Na Toolbox, selecione **`Actor`**. Posicione atores primários (iniciadores) à esquerda da fronteira e atores secundários (sistemas externos ou destinatários de alertas) à direita;
+   - **Casos de Uso:** Na Toolbox, selecione **`UseCase`** e insira as elipses dentro da fronteira do sistema. Nomeie sempre com verbo no infinitivo seguido do objeto (ex.: `Realizar Agendamento`, `Confirmar Presença`).
+
+3. **Estabelecimento de Relacionamentos Semânticos:**
+   - **Associação Ator-UC:** Utilize a ferramenta **`Association`** ligando o ator ao caso de uso que ele aciona;
+   - **Inclusão (`<<include>>`):** Selecione a ferramenta **`Include`**, clique no caso de uso base e arraste até o caso de uso incluído (ex.: de `Realizar Agendamento` para `Validar Conflito de Horário`). O StarUML v7.0 renderizará automaticamente a linha tracejada com ponta aberta e o estereótipo `<<include>>`;
+   - **Extensão (`<<extend>>`):** Selecione a ferramenta **`Extend`**, clique no caso de uso extensor/opcional e arraste até o caso de uso base. Configure pontos de extensão (*Extension Points*) no painel de propriedades (*Editors / Properties*);
+   - **Generalização de Atores:** Utilize **`Generalization`** ligando o ator especialista ao ator genérico (ex.: `Médico` $\rightarrow$ `Profissional de Saúde`).
+
+4. **Diretrizes de Layout e Alinhamento no Canvas:**
+   - Mantenha alinhamento estrito em grade (*Format -> Layout -> Align Left / Distribute Vertically*);
+   - Evite absolutamente linhas diagonais longas que atravessem a fronteira do sistema;
+   - Mantenha no máximo **4 a 6 Use Cases** por diagrama modular;
+   - Conectores devem ser mantidos no estilo **Rectilinear** ou **Oblique limpo** (*Format -> Line Style -> Rectilinear*).
+
+---
+
+### 4.2. Modelagem do Diagrama Conceitual de Classes (Domínio)
+
+1. **Adição do Diagrama:**
+   - No *Model Explorer*, clique no pacote de domínio e selecione **`Add Diagram` -> `Class Diagram`**;
+   - Nomeie o diagrama como `Diagrama_Conceitual_Dominio`.
+
+2. **Criação de Entidades de Domínio:**
+   - Na Toolbox (*Class*), selecione **`Class`** e clique no canvas;
+   - Nomeie cada entidade no singular com inicial maiúscula (ex.: `Paciente`, `Agendamento`, `Consulta`, `Profissional`);
+   - Clique com o botão direito na classe e escolha **`Add` -> `Attribute`** para inserir os atributos essenciais de negócio com tipos primitivos conceituais (ex.: `nome: String`, `dataNascimento: Date`, `telefone: String`). Não insira detalhes técnicos de banco de dados (ex.: INT UNSIGNED, VARCHAR, sequences).
+
+3. **Definição de Relacionamentos e Multiplicidades:**
+   - Utilize **`Association`** entre classes que possuem vínculo semântico;
+   - No painel de propriedades de cada extremidade (*End1* e *End2*), preencha:
+     - `Multiplicity`: `1`, `0..1`, `1..*`, `*` ou `0..*`;
+     - `Aggregation`: configure `shared` para Agregações ou `composite` para Composições (ex.: `Prontuario` composto por `ItemEvolucao`);
+     - `Role Name`: rótulo semântico do papel (ex.: `+paciente`, `+horarioReservado`).
+
+---
+
+### 4.3. Exportação e Inclusão no Template LaTeX
+
+1. **Procedimento de Exportação no StarUML v7.0:**
+   - Abra o diagrama finalizado no canvas;
+   - Acesse o menu: **`File` -> `Export Diagram as` -> `PNG...`** (ou `PDF...`);
+   - No diálogo de exportação:
+     - Selecione resolução de **2x** ou **3x (300 DPI)** para máxima qualidade;
+     - Assegure que o fundo esteja definido como **branco** (não transparente);
+   - Salve os arquivos com a nomenclatura padronizada na pasta `Template_Unificado_LATEX/Imagens/`:
+     - Diagrama Geral de Casos de Uso: `Imagens/uc_geral.png`
+     - Diagrama Modular de Casos de Uso: `Imagens/uc_<modulo>.png` (ex.: `Imagens/uc_agendamento.png`)
+     - Diagrama Conceitual de Classes: `Imagens/cls_conceitual_dominio.png`
+
+2. **Ativação no LaTeX (`Capitulos/03_Modelagem_Casos_Uso.tex`):**
+   ```latex
+   \incluirdiagrama{Imagens/uc_geral.png}{Diagrama Geral de Casos de Uso do Sistema}{fig:uc_geral}
+   \incluirdiagrama{Imagens/uc_agendamento.png}{Diagrama de Casos de Uso -- Módulo Agendamento}{fig:uc_agendamento}
+   \incluirdiagrama{Imagens/cls_conceitual_dominio.png}{Modelo Conceitual de Classes de Domínio}{fig:cls_conceitual}
    ```
-3. **Inclusão no LaTeX:**
-   Gere ou exporte os diagramas vetoriais (PDF/SVG) na pasta `Imagens/` e use:
-   `\incluirdiagrama{Imagens/uc_agendamento.pdf}{Diagrama de Casos de Uso -- Módulo Agendamento}{fig:uc_agenda}`
 
 ---
 
 ## 5. Checklist de Qualidade do Agente
 
 - [ ] Todos os casos de uso possuem nome no infinitivo descrevendo o objetivo do ator?
-- [ ] Todo caso de uso possui pré-condições, pós-condições e ao menos um fluxo alternativo ou de exceção?
+- [ ] Todo caso de uso prioritário possui pré-condições, pós-condições e fluxos de exceção?
 - [ ] A numeração dos passos do fluxo principal é consistente e lógica?
-- [ ] Os diagramas foram divididos por módulo para garantir clareza visual absoluta?
+- [ ] O guia de modelagem no StarUML v7.0 prescreve elementos, relacionamentos e nomes exatos de arquivos?
+- [ ] Os diagramas de casos de uso foram particionados por módulo (máximo de 4 a 6 UCs por diagrama)?
+- [ ] As classes conceituais possuem atributos sem tipos de implementação e com multiplicidades explícitas em todas as extremidades?
 - [ ] A matriz de rastreabilidade cobre 100% dos requisitos funcionais mapeados?

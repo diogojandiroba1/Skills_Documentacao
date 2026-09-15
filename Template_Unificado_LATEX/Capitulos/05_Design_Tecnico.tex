@@ -27,22 +27,75 @@ CREATE TABLE tb_agendamento (
 \end{lstlisting}
 
 \section{Diagrama de Classes em Nível de Projeto}
-Diferente do diagrama de análise, o diagrama de projeto especifica as classes de implementação: controladores, casos de uso, repositórios, entidades e DTOs, incluindo visibilidade (\texttt{+}, \texttt{-}, \texttt{\#}), tipos de retorno e parâmetros de métodos.
+Diferente do diagrama de análise, o diagrama de projeto especifica as classes de implementação: controladores, casos de uso, repositórios, entidades e DTOs, incluindo visibilidade (\texttt{+}, \texttt{-}, \texttt{\#}), tipos de retorno e parâmetros de métodos. A \autoref{fig:cls_projeto_agendamento} ilustra o diagrama de classes detalhado do módulo de agendamento.
 
 \paragraph{Diretriz de Decomposição de Diagramas:}
 Para evitar poluição visual e cruzamento desordenado de linhas, o diagrama de classes em nível de projeto deve ser apresentado dividido por módulos funcionais (subpacotes), acompanhado de tabela sintética de métodos e atributos.
 
+% PLACEHOLDER STARUML v7.0: Diagrama de Classes de Projeto
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Class Diagram
+% Arquivo: Imagens/cls_projeto_agendamento.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/cls_projeto_agendamento.png}{Diagrama de Classes de Projeto -- Módulo Agendamento}{fig:cls_projeto_agendamento}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Diagrama de Classes de Projeto -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/cls\_projeto\_agendamento.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/cls\_projeto\_agendamento.png\}\{Classes de Projeto -- Agendamento\}\{fig:cls\_projeto\_agendamento\}}%
+    \vspace{1cm}}}
+    \caption{Diagrama de Classes de Projeto do Módulo Agendamento (Placeholder StarUML v7.0)}
+    \label{fig:cls_projeto_agendamento}
+\end{figure}
+
 \section{Diagramas Dinâmicos}
 
 \subsection{Diagramas de Sequência}
-Representam a ordem temporal das trocas de mensagens entre objetos e serviços durante a execução de um caso de uso crítico.
+Representam a ordem temporal das trocas de mensagens entre objetos e serviços durante a execução de um caso de uso crítico. A \autoref{fig:seq_agendamento} detalha a interação para o caso de uso UC01.
 
-\begin{center}
-    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}\small\textbf{[Diagrama de Sequência -- UC01 Agendamento]}\\\textit{Insira o diagrama correspondente exportado em Imagens/}\vspace{1cm}}}
-\end{center}
+% PLACEHOLDER STARUML v7.0: Diagrama de Sequência
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Sequence Diagram
+% Arquivo: Imagens/seq_agendamento.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/seq_agendamento.png}{Diagrama de Sequência -- UC01 Realizar Agendamento}{fig:seq_agendamento}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Diagrama de Sequência -- UC01 Agendamento -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/seq\_agendamento.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/seq\_agendamento.png\}\{Diagrama de Sequência -- UC01\}\{fig:seq\_agendamento\}}%
+    \vspace{1cm}}}
+    \caption{Diagrama de Sequência do UC01 -- Agendamento (Placeholder StarUML v7.0)}
+    \label{fig:seq_agendamento}
+\end{figure}
 
 \subsection{Diagramas de Máquinas de Estados}
-Modelam o ciclo de vida e as transições de estado permitidas para entidades centrais da regra de negócio (ex.: Consulta, Pedido, Prescrição).
+Modelam o ciclo de vida e as transições de estado permitidas para entidades centrais da regra de negócio (ex.: Consulta, Pedido, Prescrição). A \autoref{fig:dsm_agendamento} demonstra os estados possíveis da entidade Agendamento.
+
+% PLACEHOLDER STARUML v7.0: Diagrama de Máquinas de Estados
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Statechart Diagram
+% Arquivo: Imagens/dsm_agendamento.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/dsm_agendamento.png}{Máquina de Estados da Entidade Agendamento}{fig:dsm_agendamento}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Diagrama de Máquina de Estados -- Entidade Agendamento -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/dsm\_agendamento.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/dsm\_agendamento.png\}\{Máquina de Estados -- Agendamento\}\{fig:dsm\_agendamento\}}%
+    \vspace{1cm}}}
+    \caption{Diagrama de Máquina de Estados da Entidade Agendamento (Placeholder StarUML v7.0)}
+    \label{fig:dsm_agendamento}
+\end{figure}
 
 \begin{table}[htbp]
 \caption{Matriz de Transição de Estados da Entidade Agendamento}
@@ -62,7 +115,26 @@ Em Atendimento & Finalizar Consulta & Prontuário preenchido e assinado & Conclu
 \end{table}
 
 \subsection{Diagramas de Atividades}
-Ilustram fluxos operacionais completos com bifurcações condicionais, paralelismo (fork/join) e raias de responsabilidade (swimlanes) entre diferentes setores ou sistemas.
+Ilustram fluxos operacionais completos com bifurcações condicionais, paralelismo (fork/join) e raias de responsabilidade (swimlanes) entre diferentes setores ou sistemas. A \autoref{fig:act_agendamento} mapeia as raias e decisões do processo de agendamento.
+
+% PLACEHOLDER STARUML v7.0: Diagrama de Atividades
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Activity Diagram
+% Arquivo: Imagens/act_fluxo_agendamento.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/act_fluxo_agendamento.png}{Fluxo Operacional de Atividades do Agendamento}{fig:act_agendamento}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Diagrama de Atividades com Raias -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/act\_fluxo\_agendamento.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/act\_fluxo\_agendamento.png\}\{Diagrama de Atividades\}\{fig:act\_agendamento\}}%
+    \vspace{1cm}}}
+    \caption{Diagrama de Atividades do Fluxo de Agendamento (Placeholder StarUML v7.0)}
+    \label{fig:act_agendamento}
+\end{figure}
 
 \section{Status dos Casos de Uso Implementáveis}
 \begin{table}[htbp]

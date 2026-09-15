@@ -13,6 +13,51 @@ O repositório **Skills_Documentacao** foi concebido para resolver de forma defi
 2. **Fundamentação Teórica Rigorosa**: Cada documento e skill está mapeado diretamente a um capítulo do **SWEBOK v4 (Software Engineering Body of Knowledge)** e às normas formais correspondentes da **IEEE** e **ISO/IEC**.
 3. **Template LaTeX Unificado (`modern-engsoft.cls`)**: Classe tipográfica moderna com fontes profissionais (*Inter* e *JetBrains Mono*), microtipografia avançada, tabelas no padrão internacional `booktabs`, badges semânticos de rastreabilidade e compilação modular (documento integrado completo ou capítulos individuais isolados com capa própria).
 4. **Diretriz Editorial Limpa**: Eliminação total de caixas gráficas genéricas (*tcolorbox* e fundos coloridos) em prol de diagramação editorial sofisticada, legível e pronta para publicação de nível sênior.
+5. **Padronização Oficial de Modelagem no StarUML v7.0**: Descontinuação definitiva de diagramas-como-código (PlantUML, Mermaid) em favor da modelagem visual rigorosa no StarUML v7.0, eliminando linhas tortas, textos truncados e sobreposições desordenadas.
+
+---
+
+## 🎨 Padronização de Modelagem Visual: StarUML v7.0
+
+A partir desta versão, **não utilizamos mais diagramas como código (PlantUML, Mermaid, etc.)**. Todas as representações gráficas de engenharia de software devem ser modeladas visualmente na ferramenta profissional **StarUML v7.0** e exportadas em alta resolução (PNG com fundo branco a 300 DPI ou PDF vetorial) para o diretório `Template_Unificado_LATEX/Imagens/`.
+
+### 📥 Instalação do StarUML v7.0
+Para instalar a versão completa do StarUML v7.0 (sem marca d'água na exportação), acesse o tutorial oficial da comunidade:  
+👉 **[Tutorial de Instalação do StarUML v7.0 Pro (Remover Marca d'Água)](https://github.com/rodyuzuriaga/Get-full-version-of-StarUML-7.0.0-Pro-Remove-Watermark)**
+
+### 🤖 Novo Papel dos Agentes de IA
+Os agentes atuam em conjunto com o usuário através de um duplo papel:
+1. **Gerador da Documentação Formal:** Redige o conteúdo técnico rigoroso, tabelas `booktabs`, especificações textuais de Casos de Uso, catálogo de ADRs e matrizes de rastreabilidade em LaTeX.
+2. **Copiloto / Assistente de Modelagem no StarUML v7.0:** Fornece um roteiro textual passo a passo, detalhando exatamente como o usuário deve construir visualmente cada diagrama no StarUML (árvore do *Model Explorer*, tipo de diagrama, elementos da Toolbox, estereótipos, visibilidades `+`, `-`, `#`, métodos, tipos de retorno, multiplicidades, conexões e alinhamento).
+
+### 📋 Catálogo Oficial de Diagramas e Nomenclatura
+
+| # | Capítulo / Skill | Tipo no StarUML v7.0 | Nome do Arquivo Salvo | Formato |
+|:---:|:---|:---|:---|:---:|
+| 01 | `doc-plano-projeto` | **Class / Tree Diagram** | `Imagens/proj_wbs_escopo.png` | `.png` (300 DPI) / `.pdf` |
+| 03 | `doc-casos-de-uso` | **Use Case Diagram** | `Imagens/uc_geral.png` | `.png` (300 DPI) / `.pdf` |
+| 03 | `doc-casos-de-uso` | **Use Case Diagram** | `Imagens/uc_<modulo>.png` | `.png` (300 DPI) / `.pdf` |
+| 03 | `doc-casos-de-uso` | **Class Diagram** (Análise) | `Imagens/cls_conceitual_dominio.png` | `.png` (300 DPI) / `.pdf` |
+| 04 | `doc-arquitetura-software` | **Component Diagram** | `Imagens/arch_visao_logica.png` | `.png` (300 DPI) / `.pdf` |
+| 04 | `doc-arquitetura-software` | **Sequence / Activity Diagram** | `Imagens/arch_visao_processos.png` | `.png` (300 DPI) / `.pdf` |
+| 04 | `doc-arquitetura-software` | **Package Diagram** | `Imagens/arch_visao_desenvolvimento.png` | `.png` (300 DPI) / `.pdf` |
+| 04 | `doc-arquitetura-software` | **Deployment Diagram** | `Imagens/arch_visao_implantacao.png` | `.png` (300 DPI) / `.pdf` |
+| 04 | `doc-arquitetura-software` | **Component Diagram** (Segurança) | `Imagens/arch_visao_seguranca.png` | `.png` (300 DPI) / `.pdf` |
+| 05 | `doc-design-detalhado` | **Class Diagram** (Projeto) | `Imagens/cls_projeto_<modulo>.png` | `.png` (300 DPI) / `.pdf` |
+| 05 | `doc-design-detalhado` | **Sequence Diagram** | `Imagens/seq_<caso_uso>.png` | `.png` (300 DPI) / `.pdf` |
+| 05 | `doc-design-detalhado` | **Statechart Diagram** | `Imagens/dsm_<entidade>.png` | `.png` (300 DPI) / `.pdf` |
+| 05 | `doc-design-detalhado` | **Activity Diagram** | `Imagens/act_<processo>.png` | `.png` (300 DPI) / `.pdf` |
+| 06 | `doc-plano-testes` | **Component / Package Diagram** | `Imagens/test_piramide_estrategia.png` | `.png` (300 DPI) / `.pdf` |
+| 06 | `doc-plano-testes` | **Statechart Diagram** | `Imagens/test_ciclo_defeito.png` | `.png` (300 DPI) / `.pdf` |
+| 07 | `doc-implantacao-devops` | **Activity Diagram** (Swimlanes) | `Imagens/devops_pipeline_cicd.png` | `.png` (300 DPI) / `.pdf` |
+| 07 | `doc-implantacao-devops` | **Deployment Diagram** | `Imagens/devops_topologia_infra.png` | `.png` (300 DPI) / `.pdf` |
+| 08 | `doc-manual-usuario` | **Screenshots / Telas Reais** | `Imagens/ui_<funcionalidade>.png` | `.png` |
+| 09 | `doc-gerencia-configuracao` | **Activity Diagram** (Branches) | `Imagens/scm_branching_model.png` | `.png` (300 DPI) / `.pdf` |
+| 10 | `doc-garantia-qualidade` | **Activity Diagram** (Code Review) | `Imagens/sqa_processo_revisao.png` | `.png` (300 DPI) / `.pdf` |
+| 11 | `doc-plano-manutencao` | **Activity Diagram** (Incidentes) | `Imagens/manut_ciclo_incidente.png` | `.png` (300 DPI) / `.pdf` |
+
+### 🖼️ Placeholders nos Templates LaTeX
+Os capítulos LaTeX em `Template_Unificado_LATEX/Capitulos/` contêm placeholders visuais elegantes informando o nome exato do arquivo, o menu do StarUML v7.0 e a linha comentada `\incluirdiagrama{Imagens/<arquivo>.png}{...}{fig:...}`. Uma vez exportada a imagem do StarUML para `Imagens/`, basta descomentar a linha no `.tex` para ativar a figura na publicação.
 
 ---
 

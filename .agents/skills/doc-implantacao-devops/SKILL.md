@@ -1,11 +1,13 @@
 ---
 name: doc-implantacao-devops
-description: Orienta o agente na elaboração do Guia de Implantação, DevOps e Runbook Operacional, cobrindo esteiras de CI/CD, contêineres Docker, migrações de banco, monitoramento, rollback e contingência.
+description: Orienta o agente na elaboração do Guia de Implantação, DevOps e Runbook Operacional, cobrindo esteiras de CI/CD, contêineres Docker, migrações de banco, monitoramento, rollback e modelagem formal no StarUML v7.0.
 ---
 
 # Skill: Guia de Implantação, DevOps e Runbook Operacional
 
 Esta skill orienta o agente na redação do **Guia de Implantação, DevOps e Runbook Operacional de Software**, em conformidade com os processos de transição e operação da **ISO/IEC/IEEE 12207:2017**, fundamentada na Área de Conhecimento de Operações de Engenharia de Software do **SWEBOK v4** (Capítulo 10) e nas métricas de confiabilidade DORA / SRE.
+
+O agente atua simultaneamente como **especificador de processos operacionais e infraestrutura** e **copiloto de modelagem visual no StarUML v7.0**, ensinando a desenhar a esteira de CI/CD como Diagrama de Atividades com Raias e a topologia de infraestrutura como Diagrama de Implantação.
 
 ---
 
@@ -120,25 +122,60 @@ Queda da fibra local & Indisponibilidade de acesso na clínica. & Roteador comut
 
 ---
 
-## 4. Diretrizes de Diagramação (Topologia de Deploy e Pipeline)
+## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
-1. **Pipeline de CI/CD em Mermaid:**
-   ```mermaid
-   flowchart LR
-       Push[Push no GitHub] --> Lint[Linting & Static Analysis]
-       Lint --> Test[Testes Unitários & API]
-       Test --> Build[Build Imagem Docker]
-       Build --> Staging[Deploy Homologação]
-       Staging --> Prod[Aprovação & Deploy Produção]
+### 4.1. Modelagem da Esteira de CI/CD (Activity Diagram)
+1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Activity Diagram` e nomeie como `devops_pipeline_cicd`;
+2. **Raias de Execução (Swimlanes):** Na Toolbox (*Activity*), selecione **`Swimlane (Horizontal)`** e crie raias para:
+   - `Desenvolvedor / Git Client` (Branch e Push);
+   - `GitHub Actions Runner` (Automação de CI);
+   - `Ambiente de Homologação / Staging` (Deploy automatizado);
+   - `Comitê Técnico / QA` (Aprovação manual para Produção);
+   - `Cluster de Produção / Live` (Deploy produtivo).
+3. **Ações da Esteira:** Arraste **`Action`** para os estágios:
+   - `Git Push / Pull Request`;
+   - `Executar Linter e Análise Estática`;
+   - `Executar Testes Unitários e Integração`;
+   - `Build Imagem Docker Multi-Stage`;
+   - `Publicar Imagem no Container Registry`;
+   - `Deploy Automático em Staging`;
+   - `Gate de Aprovação Manual`;
+   - `Deploy com Zero-Downtime em Produção`.
+4. **Nós de Controle:** Utilize **`Initial Node`**, **`Decision Node`** (verificando sucesso dos testes) e **`Activity Final Node`**.
+
+### 4.2. Topologia de Infraestrutura e Ambientes (Deployment Diagram)
+1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Deployment Diagram` e nomeie como `devops_topologia_infra`;
+2. **Nós Computacionais e Contêineres:** Arraste **`Node`** e **`ExecutionEnvironment`** para:
+   - `Nuvem Pública (AWS / GCP / VPS)`;
+   - `Borda / Reverse Proxy (Nginx com SSL)`;
+   - `Contêiner da Aplicação FastAPI (Docker Engine)`;
+   - `Banco de Dados Gerenciado (PostgreSQL 16)`;
+   - `Serviço de Armazenamento de Objetos (S3 / Supabase Storage)`.
+3. **Caminhos de Rede:** Conecte os nós via **`CommunicationPath`** especificando as portas e protocolos (`<<HTTPS :443>>`, `<<TCP :5432>>`).
+
+---
+
+### 4.3. Exportação e Inclusão no Template LaTeX
+
+1. **Procedimento de Exportação:**
+   - Acesse **`File` -> `Export Diagram as` -> `PNG...`** (ou `PDF...`);
+   - Resolução **2x ou 3x (300 DPI)** com **fundo branco**;
+   - Salvar em `Template_Unificado_LATEX/Imagens/`:
+     - `Imagens/devops_pipeline_cicd.png`
+     - `Imagens/devops_topologia_infra.png`
+
+2. **Ativação no LaTeX (`Capitulos/07_Implantacao_DevOps.tex`):**
+   ```latex
+   \incluirdiagrama{Imagens/devops_pipeline_cicd.png}{Fluxo Automatizado da Esteira CI/CD}{fig:devops_pipeline}
+   \incluirdiagrama{Imagens/devops_topologia_infra.png}{Topologia de Infraestrutura e Ambientes}{fig:devops_topologia}
    ```
-2. **Topologia de Implantação:**
-   Evite fios cruzados. Mantenha a separação limpa entre Borda (Reverse Proxy), Serviços de Aplicação e Camada Gerenciada de Dados.
 
 ---
 
 ## 5. Checklist de Qualidade do Agente
 
-- [ ] A esteira de CI/CD possui barreiras de qualidade bloqueantes (falha em teste impede deploy)?
-- [ ] Os procedimentos de rollback cobrem tanto o código da aplicação quanto as migrações do banco de dados?
-- [ ] O runbook contém ações claras e acionáveis para falhas comuns de infraestrutura?
-- [ ] As variáveis de ambiente críticas não estão expostas em texto puro no repositório?
+- [ ] A esteira de CI/CD possui barreiras de qualidade bloqueantes (falha em testes impede avanço)?
+- [ ] A pipeline e a topologia de infraestrutura foram prescritas para modelagem no StarUML v7.0?
+- [ ] Os procedimentos de rollback cobrem tanto a aplicação quanto as migrações de banco?
+- [ ] O runbook contém ações claras e determinísticas para incidentes comuns?
+- [ ] As variáveis de ambiente críticas não estão expostas em texto puro?

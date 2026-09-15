@@ -1,11 +1,13 @@
 ---
 name: doc-manual-usuario
-description: Guia o agente na elaboração do Manual do Usuário Final e Guia Operacional do Sistema, com linguagem clara, fluxos passo a passo com telas, FAQ e guia de suporte, sem jargões técnicos de programação.
+description: Guia o agente na elaboração do Manual do Usuário Final e Guia Operacional do Sistema, com linguagem clara, fluxos passo a passo com telas, FAQ, guia de suporte e diagramas de processos operacionais no StarUML v7.0.
 ---
 
 # Skill: Elaboração de Manual do Usuário Final e Guia Operacional
 
 Esta skill orienta o agente na construção do **Manual do Usuário Final e Guia Operacional (End-User Manual & Operations Guide)**, em estrita conformidade com as normas internacionais **ISO/IEC/IEEE 26514:2022** e **IEEE Std 1063-2001**, fundamentada nas disciplinas de Comunicação Técnica e Operações do **SWEBOK v4**.
+
+O agente atua simultaneamente como **comunicador técnico e redator de manuais** e **copiloto de modelagem visual**, instruindo a captura correta de telas e a elaboração de fluxogramas de navegação do usuário no **StarUML v7.0**.
 
 ---
 
@@ -29,7 +31,7 @@ A documentação voltada ao usuário final é um artefato crítico para usabilid
 - **Linguagem Orientada a Tarefas:** Concentre-se no que o usuário deseja alcançar (ex.: *"Como agendar uma nova consulta"* em vez de *"Endpoint POST de inserção na tabela tb_consulta"*);
 - **Zero Jargões Técnicos:** **Proibido** citar termos de desenvolvedor como endpoints, JSON, SQL, Docker, DTOs, classes ou bancos de dados;
 - **Instruções Acionáveis e Numeradas:** Cada ação deve ser descrita em passos cronológicos com verbos no imperativo (*"1. Clique em...", "2. Digite...", "3. Selecione..."*);
-- **Riqueza de Capturas de Tela:** Todo procedimento principal deve indicar a imagem da interface correspondente na pasta `Imagens/`.
+- **Padronização de Imagens e Telas:** Todas as telas reais do sistema e fluxos de navegação devem residir na pasta `Template_Unificado_LATEX/Imagens/`.
 
 ---
 
@@ -62,11 +64,9 @@ A documentação voltada ao usuário final é um artefato crítico para usabilid
 
 ---
 
-## 3. Modelos de Tabelas e Seções em LaTeX
+## 4. Modelos de Tabelas e Seções em LaTeX
 
 ### Template do Roteiro Passo a Passo
-> **Diretriz:** NÃO utilize caixas gráficas de destaque (`destaque`, `tcolorbox`). Use texto fluido com parágrafos nomeados:
-
 ```latex
 \section{Como Realizar um Novo Agendamento}
 
@@ -99,9 +99,9 @@ O sistema exibirá a notificação verde \textbf{``Agendamento realizado com suc
 \toprule
 \textbf{Mensagem / Sintoma na Tela} & \textbf{Causa Provável} & \textbf{O que Fazer} \\
 \midrule
-``Horário Indisponível'' & Outro atendente reservou o horário segundos antes. & Atualize a tela clicando em \textbf{Recarregar} e selecione o próximo horário livre. \\
-``CPF já cadastrado no sistema'' & O cliente já possui cadastro anterior na clínica. & Use a barra de busca pelo nome ou localize o cadastro existente para atualizar os dados. \\
-``Sessão Expirada por Inatividade'' & O sistema ficou aberto por mais de 30 minutos sem uso. & Digite novamente seu e-mail e senha na tela de login. Nenhuma informação salva será perdida. \\
+``Horário Indisponível'' & Outro operador reservou o horário simultaneamente. & Clique em Atualizar Agenda e escolha o próximo horário livre disponível. \\
+``Sessão Expirada'' & O sistema ficou inativo por mais de 30 minutos por segurança. & Clique em OK, digite novamente seu e-mail e senha na tela de login. \\
+``CPF Não Localizado'' & O cliente ainda não possui cadastro na clínica. & Clique no botão ``+ Novo Cliente'' e preencha os dados básicos antes de agendar. \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -109,10 +109,22 @@ O sistema exibirá a notificação verde \textbf{``Agendamento realizado com suc
 
 ---
 
-## 4. Checklist de Qualidade do Agente
+## 5. Diretrizes para Telas e Fluxos Operacionais no StarUML v7.0
 
-- [ ] A linguagem está 100% livre de jargões técnicos de software e banco de dados?
-- [ ] Todas as instruções seguem numeração cronológica acionável?
-- [ ] As telas e botões citados correspondem exatamente aos nomes visíveis na interface?
-- [ ] O FAQ e a tabela de troubleshooting fornecem respostas diretas para os operadores?
-- [ ] Há orientações claras sobre como solicitar suporte técnico quando um problema persistir?
+1. **Capturas de Tela da Interface Real:**
+   - Salve as capturas limpas de tela no formato `.png` diretamente em `Template_Unificado_LATEX/Imagens/`;
+   - Padrão de nomenclatura: `ui_<funcionalidade>.png` (ex.: `ui_login.png`, `ui_agenda_grade.png`, `ui_prontuario.png`).
+2. **Diagramas de Fluxo de Navegação do Usuário (StarUML v7.0):**
+   - Quando for necessário ilustrar a jornada do usuário entre telas:
+     - No StarUML v7.0, crie um **`Activity Diagram`** nomeado `act_jornada_<perfil>`;
+     - Use linguagem puramente do usuário (ex.: `Acessar Tela de Login` $\rightarrow$ `Digitar Credenciais` $\rightarrow$ `Visualizar Dashboard Inicial`);
+     - Exporte em PNG (300 DPI, fundo branco) para `Imagens/act_jornada_<perfil>.png`.
+
+---
+
+## 6. Checklist de Qualidade do Agente
+
+- [ ] A linguagem está 100% livre de jargões técnicos de programação (sem SQL, JSON, Docker, etc.)?
+- [ ] Todos os procedimentos possuem instruções numeradas, tela associada e mensagem de validação?
+- [ ] O guia de resolução de problemas (troubleshooting) fornece ações concretas para o operador resolver sozinho?
+- [ ] As capturas de tela e eventuais fluxos no StarUML v7.0 estão com nomes padronizados em `Imagens/`?

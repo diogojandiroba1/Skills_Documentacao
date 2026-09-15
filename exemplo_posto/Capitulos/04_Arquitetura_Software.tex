@@ -15,92 +15,69 @@ A arquitetura do \textbf{PostoSmart} adota o padrão \textit{Edge-First Event-Dr
 
 A \autoref{fig:visao_logica_posto} ilustra a decomposição em subsistemas modulares com alta coesão e baixo acoplamento.
 
+% PLACEHOLDER STARUML v7.0: Visão Lógica (Componentes)
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Component Diagram
+% Arquivo: Imagens/arch_visao_logica.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/arch_visao_logica.png}{Visão Lógica da Arquitetura Edge-First do PostoSmart}{fig:visao_logica_posto}
 \begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[scale=0.88, every node/.style={font=\small\sffamily}]
-    % Camada Edge Local
-    \draw[thick, primary, dashed, rounded corners=6pt] (-5.5,-3.5) rectangle (1.5,3.2);
-    \node[anchor=north west, font=\bfseries\color{primary}] at (-5.3,3.0) {Servidor Edge Local (Posto)};
-    
-    \node[component] (driver) at (-2.0, 1.8) {\textbf{Driver de Pista}\\\scriptsize Protocolo Concentrador};
-    \node[component] (regras) at (-2.0, 0.0) {\textbf{Motor de Regras}\\\scriptsize Trava de Bico (RN01)};
-    \node[component] (pdv) at (-2.0, -1.8) {\textbf{Serviço PDV}\\\scriptsize Faturamento Local};
-    
-    \node[database_node] (sqlite) at (-4.5, -0.9) {\textbf{SQLite}\\\scriptsize Local};
-    
-    % Camada Cloud
-    \draw[thick, secondary, dashed, rounded corners=6pt] (3.0,-3.5) rectangle (7.5,3.2);
-    \node[anchor=north west, font=\bfseries\color{secondary}] at (3.2,3.0) {Retaguarda Cloud};
-    
-    \node[component] (sync) at (5.2, 0.0) {\textbf{Sync Agent}\\\scriptsize Ingestão Assíncrona};
-    \node[database_node] (postgres) at (5.2, -2.0) {\textbf{PostgreSQL}\\\scriptsize Cloud};
-    \node[component] (sefaz) at (5.2, 1.8) {\textbf{Gateway SEFAZ}\\\scriptsize Transmissão NFC-e};
-    
-    % Conexões
-    \draw[line] (driver) -- node[right, font=\scriptsize] {telemetria} (regras);
-    \draw[line] (regras) -- node[right, font=\scriptsize] {liberação} (pdv);
-    \draw[line] (pdv) -- (sqlite);
-    \draw[line] (regras) -- (sqlite);
-    \draw[line_dashed] (sqlite) to[bend right=20] node[below, font=\scriptsize] {sync HTTPS} (sync);
-    \draw[line] (sync) -- (postgres);
-    \draw[line] (pdv) to[bend left=25] node[above, font=\scriptsize] {emissão fiscal} (sefaz);
-\end{tikzpicture}
-\caption{Visão Lógica da Arquitetura Edge-First do PostoSmart}\label{fig:visao_logica_posto}
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Visão Lógica -- Diagrama de Componentes -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/arch\_visao\_logica.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/arch\_visao\_logica.png\}\{Visão Lógica\}\{fig:visao_logica_posto\}}%
+    \vspace{1cm}}}
+    \caption{Visão Lógica da Arquitetura Edge-First do PostoSmart (Placeholder StarUML v7.0)}
+    \label{fig:visao_logica_posto}
 \end{figure}
 
 \section{Visão de Processos e Concorrência}
 
 A \autoref{fig:visao_processos_posto} detalha o processamento concorrente em tempo real dos pulsos emitidos pelas bombas de combustível.
 
+% PLACEHOLDER STARUML v7.0: Visão de Processos e Concorrência
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Sequence Diagram ou Activity Diagram
+% Arquivo: Imagens/arch_visao_processos.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/arch_visao_processos.png}{Visão de Processos do Pipeline de Telemetria de Pista}{fig:visao_processos_posto}
 \begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[every node/.style={font=\small\sffamily}]
-    \node[block] (thread_serial) at (0, 2) {\textbf{Thread Serial/TCP}\\\scriptsize Polling contínuo a cada $50\,\text{ms}$};
-    \node[block_gray] (ring_buffer) at (4.5, 2) {\textbf{Ring Buffer Lockless}\\\scriptsize Fila de Eventos de Bico};
-    \node[block] (event_worker) at (9.0, 2) {\textbf{Worker de Despacho}\\\scriptsize Processa status e litragem};
-    
-    \node[block] (websocket) at (9.0, -0.5) {\textbf{Servidor WebSocket}\\\scriptsize Notificação aos PDVs em tempo real};
-    \node[block] (db_worker) at (4.5, -0.5) {\textbf{Persistência Local}\\\scriptsize Commit ACID no SQLite};
-    
-    \draw[line] (thread_serial) -- (ring_buffer);
-    \draw[line] (ring_buffer) -- (event_worker);
-    \draw[line] (event_worker) -- (websocket);
-    \draw[line] (event_worker) -- (db_worker);
-\end{tikzpicture}
-\caption{Visão de Processos do Pipeline de Telemetria de Pista}\label{fig:visao_processos_posto}
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Visão de Processos e Concorrência -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/arch\_visao\_processos.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/arch\_visao\_processos.png\}\{Visão de Processos\}\{fig:visao_processos_posto\}}%
+    \vspace{1cm}}}
+    \caption{Visão de Processos do Pipeline de Telemetria de Pista (Placeholder StarUML v7.0)}
+    \label{fig:visao_processos_posto}
 \end{figure}
 
 \section{Visão Física e de Implantação}
 
 A \autoref{fig:visao_implantacao_posto} descreve a infraestrutura física de pista, cabeamento industrial e ambiente corporativo em nuvem.
 
+% PLACEHOLDER STARUML v7.0: Visão Física e de Implantação
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Deployment Diagram
+% Arquivo: Imagens/arch_visao_implantacao.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/arch_visao_implantacao.png}{Visão Física de Implantação e Conectividade Industrial}{fig:visao_implantacao_posto}
 \begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[scale=0.88, every node/.style={font=\small\sffamily}]
-    % Ilha de Combustível
-    \node[block, minimum height=1.2cm] (bomba1) at (-5.2, 1.8) {\textbf{Bomba 01}\\\scriptsize Dispensador 4 Bicos};
-    \node[block, minimum height=1.2cm] (bomba2) at (-5.2, -0.4) {\textbf{Bomba 02}\\\scriptsize Dispensador 4 Bicos};
-    
-    % Concentrador de Pista
-    \node[block_accent, minimum width=2.6cm, minimum height=1.5cm] (conc) at (-1.0, 0.7) {\textbf{Concentrador de Pista}\\\scriptsize (Horustec / Companytec)\\\scriptsize Loop RS-485};
-    
-    % Servidor Edge Local
-    \node[block, minimum width=2.8cm, minimum height=1.5cm] (edge) at (3.8, 0.7) {\textbf{Edge Server Local}\\\scriptsize Linux Ubuntu / Docker\\\scriptsize IP: 192.168.1.10};
-    
-    % PDV Caixa
-    \node[block] (pdv_box) at (3.8, -1.8) {\textbf{Terminal PDV}\\\scriptsize Touchscreen / Impressora};
-    
-    % Nuvem
-    \node[block_gray, minimum width=2.5cm] (cloud) at (8.4, 0.7) {\textbf{AWS / Cloud}\\\scriptsize API Gateway + PostgreSQL};
-    
-    % Barramentos
-    \draw[line_plain, thick] (bomba1) -- node[above, font=\scriptsize] {RS-485} (conc);
-    \draw[line_plain, thick] (bomba2) -- node[below, font=\scriptsize] {RS-485} (conc);
-    \draw[line, thick] (conc) -- node[above, font=\scriptsize] {Ethernet TCP} (edge);
-    \draw[line, thick] (edge) -- node[right, font=\scriptsize] {WebSocket / HTTP} (pdv_box);
-    \draw[line_dashed, thick] (edge) -- node[above, font=\scriptsize] {TLS / HTTPS} (cloud);
-\end{tikzpicture}
-\caption{Visão Física de Implantação e Conectividade Industrial}\label{fig:visao_implantacao_posto}
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Visão Física e de Implantação -- Deployment Diagram -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/arch\_visao\_implantacao.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/arch\_visao\_implantacao.png\}\{Visão Física\}\{fig:visao_implantacao_posto\}}%
+    \vspace{1cm}}}
+    \caption{Visão Física de Implantação e Conectividade Industrial (Placeholder StarUML v7.0)}
+    \label{fig:visao_implantacao_posto}
 \end{figure}
 
 \section{Catálogo de Registros de Decisão Arquitetural (ADR)}

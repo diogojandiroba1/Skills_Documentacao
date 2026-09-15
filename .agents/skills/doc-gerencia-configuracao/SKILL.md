@@ -1,11 +1,15 @@
 ---
 name: doc-gerencia-configuracao
-description: Guia o agente na elaboração do Plano de Gerência de Configuração de Software (SCM Plan) em conformidade com a norma IEEE Std 828, abordando estratégia de branching, baselines, versionamento semântico, controle de mudanças (CCB) e auditoria de itens de configuração.
+description: Guia o agente na elaboração do Plano de Gerência de Configuração de Software (SCM Plan) em conformidade com a norma IEEE Std 828, abordando estratégia de branching, baselines, SemVer, controle de mudanças (CCB) e modelagem no StarUML v7.0.
 ---
 
 # Skill: Plano de Gerência de Configuração de Software (SCM Plan)
 
 Esta skill orienta o agente na formulação do **Plano de Gerência de Configuração de Software (SCM Plan - Software Configuration Management Plan)**, estruturado com base na norma internacional **IEEE Std 828** e nas melhores práticas de engenharia de software e DevOps de mercado.
+
+O agente atua simultaneamente como **gerente de configuração de software** e **copiloto de modelagem visual no StarUML v7.0**, prescrevendo como modelar o fluxo de branches e o ciclo de vida de solicitações de mudança (RFC/CCB).
+
+---
 
 ## 1. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
 
@@ -83,8 +87,6 @@ CI-INFRA-IAC & Configuração Docker & \texttt{git:deploy/docker-compose.yml} & 
 ```
 
 ### Regras de Proteção de Branches
-> **Diretriz:** NÃO utilize caixas gráficas de destaque (`destaque`, `tcolorbox`). Apresente as políticas como subseções limpas:
-
 ```latex
 \subsection{Política de Branches Protegidas no Repositório}
 A branch principal (\texttt{main}) é estritamente protegida contra \textit{direct push} e \textit{force push}. Toda alteração exige:
@@ -98,9 +100,23 @@ A branch principal (\texttt{main}) é estritamente protegida contra \textit{dire
 
 ---
 
-## 4. Checklist de Qualidade do Agente
+## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
-- [ ] A estratégia de branches (GitFlow / Trunk-based) está explicitada com regras de proteção?
-- [ ] A política de versionamento semântico (SemVer) define com precisão os critérios para incremento de versão?
-- [ ] O fluxo do Change Control Board (CCB) prevê análise de impacto prévia para solicitações de mudança?
-- [ ] Os itens de configuração cobrem tanto o código-fonte quanto esquemas de banco, Docker e documentação?
+### 4.1. Estratégia de Branching no Git (Activity Diagram)
+1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Activity Diagram` e nomeie como `scm_branching_model`;
+2. **Raias de Branches (Swimlanes):** Crie raias horizontais para: `main (Produção)`, `staging (Homologação)`, `feature/*` e `hotfix/*`;
+3. **Ações:** Modele o fluxo desde `Criar Branch a partir de main/staging`, `Commits locais`, `Pull Request`, `Execução de CI`, `Code Review (2 aprovações)` até `Merge Squash` e `Tag SemVer`.
+
+### 4.2. Ciclo de Mudança e Aprovação CCB (Statechart Diagram)
+1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Statechart Diagram` e nomeie como `scm_fluxo_ccb`;
+2. **Estados da Mudança:** `Proposta` $\rightarrow$ `Em Avaliação de Impacto` $\rightarrow$ `Aprovada pelo CCB` (ou `Rejeitada`) $\rightarrow$ `Em Implementação` $\rightarrow$ `Homologada` $\rightarrow$ `Implantada em Baseline`;
+3. **Exportação:** Exporte via **`File` -> `Export Diagram as` -> `PNG...`** (300 DPI, fundo branco) para `Template_Unificado_LATEX/Imagens/scm_branching_model.png` e `Imagens/scm_fluxo_ccb.png`.
+
+---
+
+## 5. Checklist de Qualidade do Agente
+
+- [ ] A estratégia de branches está explicitada com regras formais de proteção?
+- [ ] A política de SemVer 2.0.0 define os critérios objetivos para MAJOR, MINOR e PATCH?
+- [ ] O fluxo do CCB e o modelo de branches foram orientados para modelagem no StarUML v7.0?
+- [ ] Os itens de configuração cobrem código, esquemas de banco, Docker e documentação?

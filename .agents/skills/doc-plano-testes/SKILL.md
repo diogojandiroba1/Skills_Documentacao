@@ -1,11 +1,13 @@
 ---
 name: doc-plano-testes
-description: Guia o agente na elaboração do Plano e Especificação de Testes de Software (STP / STD) conforme a norma ISO/IEC/IEEE 29119, cobrindo pirâmide de testes, casos de teste tabulados, matriz de rastreabilidade e critérios de aceite.
+description: Guia o agente na elaboração do Plano e Especificação de Testes de Software (STP / STD) conforme a norma ISO/IEC/IEEE 29119, cobrindo pirâmide de testes, casos de teste tabulados, matriz de rastreabilidade, critérios de aceite e modelagem no StarUML v7.0.
 ---
 
 # Skill: Elaboração de Plano e Especificação de Testes de Software (STP / STD)
 
 Esta skill orienta o agente na construção do **Plano e Especificação de Testes de Software (STP - Software Test Plan / STD - Software Test Description)** em estrita conformidade com a norma internacional **ISO/IEC/IEEE 29119 (Partes 1 a 4)** e a norma **IEEE Std 829-2008**, fundamentada na Área de Conhecimento de Testes de Software do **SWEBOK v4** (Capítulo 4).
+
+O agente atua simultaneamente como **engenheiro de qualidade e testes** e **copiloto de modelagem visual no StarUML v7.0**, instruindo a estruturação da arquitetura da pirâmide de testes e o ciclo de vida do defeito diretamente na ferramenta de modelagem.
 
 ---
 
@@ -123,24 +125,50 @@ RNF01 & Tempo de resposta $P95 \le 2{,}0$s & CT-PERF-01 (Carga via k6) & \badgec
 
 ---
 
-## 4. Diretrizes de Diagramação (Pirâmide de Testes e Fluxo de Defeitos)
+## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
-1. **Pirâmide de Testes em Mermaid:**
-   ```mermaid
-   flowchart TD
-       E2E[Testes E2E / Interface Web - 10%]
-       INT[Testes de Integração & API - 20%]
-       UNIT[Testes Unitários & Domínio - 70%]
-       E2E --> INT --> UNIT
+### 4.1. Pirâmide e Estratégia de Testes (Component / Package Diagram)
+1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Package Diagram` (ou `Component Diagram`) e nomeie como `test_piramide_estrategia`;
+2. **Camadas da Pirâmide:**
+   - Crie 3 pacotes horizontais empilhados representando os níveis de teste:
+     - Topo (Menor volume, maior custo): `Testes de Sistema / E2E (10%)` (Ferramentas: Playwright / Cypress);
+     - Centro (Médio volume): `Testes de Integração & API (20%)` (Ferramentas: HTTPX / Pytest / Schemathesis);
+     - Base (Maior volume, execução ultrarrápida): `Testes Unitários & Domínio (70%)` (Ferramentas: Pytest / Vitest);
+3. **Conexões de Cobertura:** Conecte os níveis via **`Dependency`** (`<<covers>>`) descendo para as entidades de negócio e casos de uso testados.
+
+### 4.2. Ciclo de Vida do Defeito (Statechart Diagram)
+1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Statechart Diagram` e nomeie como `test_ciclo_defeito`;
+2. **Estados do Defeito:**
+   - `Initial State` $\rightarrow$ `Novo (Submetido pelo QA)`;
+   - `Em Triagem` (Classificação de severidade);
+   - `Em Correção` (Alocado a desenvolvedor);
+   - `Corrigido / Em Reteste` (Deploy em staging para validação);
+   - `Fechado` (Homologado com sucesso) $\rightarrow$ `Final State`;
+   - `Reaberto` (Falha no reteste).
+3. **Transições:** Conecte os estados com **`Transition`** definindo triggers explícitos (ex.: `reprovarReteste()`).
+
+---
+
+### 4.3. Exportação e Inclusão no Template LaTeX
+
+1. **Exportação no StarUML v7.0:**
+   - Acesse **`File` -> `Export Diagram as` -> `PNG...`** (ou `PDF...`);
+   - Resolução **2x ou 3x (300 DPI)** com **fundo branco**;
+   - Salvar em `Template_Unificado_LATEX/Imagens/`:
+     - `Imagens/test_piramide_estrategia.png`
+     - `Imagens/test_ciclo_defeito.png`
+
+2. **Ativação no LaTeX (`Capitulos/06_Plano_Testes.tex`):**
+   ```latex
+   \incluirdiagrama{Imagens/test_piramide_estrategia.png}{Pirâmide e Níveis de Testes Automatizados}{fig:test_piramide}
    ```
-2. **Fluxo de Vida do Defeito:**
-   Modela claramente os estados pelos quais um bug transita até ser homologado pela equipe de qualidade.
 
 ---
 
 ## 5. Checklist de Qualidade do Agente
 
 - [ ] Todos os casos de teste possuem dados de entrada concretos e resultado esperado verificável?
-- [ ] Os critérios de aceite estabelecem porcentagem de cobertura de código objetiva?
+- [ ] A arquitetura da pirâmide e o ciclo de vida do defeito foram prescritos para modelagem no StarUML v7.0?
+- [ ] Os critérios de aceite estabelecem porcentagem de cobertura de código objetiva ($\ge 80\%$)?
 - [ ] A matriz de rastreabilidade cobre requisitos funcionais e requisitos não funcionais?
-- [ ] Os testes de integração cobrem cenários felizes (status 200/201) e cenários de erro (status 400, 401, 404, 409)?
+- [ ] Os testes de integração cobrem cenários felizes e cenários de exceção?

@@ -11,7 +11,47 @@ A esteira de Integração e Entrega Contínua (CI/CD) automatiza o fluxo de vali
     \item \textbf{Estágio de Deploy Automático:} Implantação em ambiente de homologação após aprovação de Pull Request na branch principal.
 \end{enumerate}
 
+% PLACEHOLDER STARUML v7.0: Pipeline de CI/CD
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Activity Diagram
+% Arquivo: Imagens/devops_pipeline_cicd.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/devops_pipeline_cicd.png}{Fluxo Automatizado da Esteira CI/CD}{fig:devops_pipeline}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Pipeline de CI/CD -- Diagrama de Atividades -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/devops\_pipeline\_cicd.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/devops\_pipeline\_cicd.png\}\{Pipeline de CI/CD\}\{fig:devops_pipeline\}}%
+    \vspace{1cm}}}
+    \caption{Fluxo de Estágios da Esteira de CI/CD (Placeholder StarUML v7.0)}
+    \label{fig:devops_pipeline}
+\end{figure}
+
 \section{Matriz de Ambientes e Gerenciamento de Configurações}
+A \autoref{fig:devops_topologia} apresenta a topologia física e de execução distribuída entre os ambientes.
+
+% PLACEHOLDER STARUML v7.0: Topologia de Ambientes e Infraestrutura
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Deployment Diagram
+% Arquivo: Imagens/devops_topologia_infra.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/devops_topologia_infra.png}{Topologia de Infraestrutura e Ambientes}{fig:devops_topologia}
+\begin{figure}[htbp]
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Topologia de Ambientes e Infraestrutura -- Deployment Diagram -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/devops\_topologia\_infra.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/devops\_topologia\_infra.png\}\{Topologia de Infraestrutura\}\{fig:devops_topologia\}}%
+    \vspace{1cm}}}
+    \caption{Topologia de Ambientes e Infraestrutura (Placeholder StarUML v7.0)}
+    \label{fig:devops_topologia}
+\end{figure}
+
 \begin{table}[htbp]
 \caption{Matriz de Ambientes de Execução}
 \label{tab:matriz_ambientes}

@@ -11,23 +11,23 @@
 
 A esteira de automação garante que qualquer alteração seja testada, escaneada quanto a vulnerabilidades e empacotada em contêineres imutáveis antes da promoção para produção (\autoref{fig:pipeline_cicd_posto}).
 
+% PLACEHOLDER STARUML v7.0: Pipeline CI/CD
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Activity Diagram
+% Arquivo: Imagens/devops_pipeline_posto.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/devops_pipeline_posto.png}{Pipeline Automatizada de CI/CD do PostoSmart}{fig:pipeline_cicd_posto}
 \begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[every node/.style={font=\scriptsize\sffamily}]
-    \node[block] (push) at (0, 0) {\textbf{Git Push}\\\scriptsize Commit main};
-    \node[block_gray] (lint) at (2.4, 0) {\textbf{Lint \& SAST}\\\scriptsize Ruff / SonarQube};
-    \node[block_gray] (test) at (4.8, 0) {\textbf{Testes Auto}\\\scriptsize Unit + Mocks};
-    \node[block_gray] (build) at (7.2, 0) {\textbf{Docker Build}\\\scriptsize Multi-stage Image};
-    \node[block_gray] (scan) at (9.6, 0) {\textbf{Trivy Scan}\\\scriptsize Zero CVE Crítico};
-    \node[block_accent] (deploy) at (12.0, 0) {\textbf{Deploy Edge}\\\scriptsize Watchtower OTA};
-    
-    \draw[line] (push) -- (lint);
-    \draw[line] (lint) -- (test);
-    \draw[line] (test) -- (build);
-    \draw[line] (build) -- (scan);
-    \draw[line] (scan) -- (deploy);
-\end{tikzpicture}
-\caption{Pipeline Automatizada de CI/CD do PostoSmart}\label{fig:pipeline_cicd_posto}
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Pipeline de Integração e Entrega Contínua (CI/CD) -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/devops_pipeline_posto.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/devops_pipeline_posto.png\}\{Pipeline Automatizada de CI/CD do PostoSmart\}\{fig:pipeline_cicd_posto\}}%
+    \vspace{1cm}}}
+    \caption{Pipeline Automatizada de CI/CD do PostoSmart (Placeholder StarUML v7.0)}
+    \label{fig:pipeline_cicd_posto}
 \end{figure}
 
 \section{Configuração de Contêineres e Execução Local (Docker Compose)}

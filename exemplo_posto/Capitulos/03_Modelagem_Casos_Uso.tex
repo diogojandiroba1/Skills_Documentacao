@@ -11,41 +11,23 @@
 
 A \autoref{fig:diagrama_casos_uso_posto} apresenta os casos de uso centrais do sistema PostoSmart e as interações com os atores operacionais de pista e retaguarda.
 
+% PLACEHOLDER STARUML v7.0: Diagrama de Casos de Uso do PostoSmart
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Use Case Diagram
+% Arquivo: Imagens/uc_postosmart.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/uc_postosmart.png}{Diagrama de Casos de Uso do PostoSmart}{fig:diagrama_casos_uso_posto}
 \begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[scale=0.88, every node/.style={font=\small\sffamily}]
-    % Limite do Sistema
-    \draw[thick, primary, rounded corners=6pt] (-2.2,-4.2) rectangle (6.2,5.2);
-    \node[anchor=north west, font=\bfseries\color{primary}] at (-2.0,4.9) {Sistema PostoSmart};
-    
-    % Atores
-    \node[actor] (frentista) at (-4.2, 2.2) {};
-    \node[anchor=north, font=\small\bfseries] at (-4.2, 1.6) {Frentista};
-    
-    \node[actor] (caixa) at (-4.2, -0.8) {};
-    \node[anchor=north, font=\small\bfseries, align=center] at (-4.2, -1.4) {Operador\\de Caixa};
-    
-    \node[actor] (gerente) at (8.2, 0.5) {};
-    \node[anchor=north, font=\small\bfseries, align=center] at (8.2, -0.1) {Gerente\\do Posto};
-    
-    % Casos de Uso
-    \node[usecase] (uc04) at (2.0, 4.0) {UC04: Fechar Turno\\e Conciliar Caixa};
-    \node[usecase] (uc01) at (2.0, 2.3) {UC01: Autorizar e Capturar\\Abastecimento};
-    \node[usecase] (uc02) at (2.0, 0.5) {UC02: Registrar Venda\\e Formas de Pagamento};
-    \node[usecase] (uc02_sub) at (2.0, -1.4) {UC02.1: Emitir\\NFC-e / SAT Fiscal};
-    \node[usecase] (uc03) at (2.0, -3.0) {UC03: Monitorar Tanques\\e Nível de Estoque};
-    
-    % Associações de Atores
-    \draw[line_plain] (frentista) -- (uc01);
-    \draw[line_plain] (caixa) -- (uc02);
-    \draw[line_plain] (caixa) -- (uc04);
-    \draw[line_plain] (gerente) -- (uc03);
-    \draw[line_plain] (gerente) -- (uc04);
-    
-    % Relacionamento <<include>>
-    \draw[line_dashed] (uc02) -- node[right, font=\scriptsize\color{secondary}] {$\ll$include$\gg$} (uc02_sub);
-\end{tikzpicture}
-\caption{Diagrama de Casos de Uso do PostoSmart}\label{fig:diagrama_casos_uso_posto}
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Diagrama de Casos de Uso -- PostoSmart -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/uc\_postosmart.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/uc\_postosmart.png\}\{Diagrama de Casos de Uso\}\{fig:diagrama_casos_uso_posto\}}%
+    \vspace{1cm}}}
+    \caption{Diagrama de Casos de Uso do PostoSmart (Placeholder StarUML v7.0)}
+    \label{fig:diagrama_casos_uso_posto}
 \end{figure}
 
 \section{Especificação Textual de Caso de Uso Expandida}
@@ -99,55 +81,21 @@ RF05 -- Fechamento de Turno & UC04 (Fechar Turno e Conciliar Caixa) & Média & \
 
 A \autoref{fig:modelo_conceitual_posto} detalha as entidades essenciais do negócio e suas cardinalidades estruturais.
 
+% PLACEHOLDER STARUML v7.0: Modelo Conceitual de Classes de Domínio
+% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Class Diagram
+% Arquivo: Imagens/cls_conceitual_postosmart.png (Exportar em PNG 300 DPI ou PDF vetorial)
+% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
+% \incluirdiagrama{Imagens/cls_conceitual_postosmart.png}{Modelo Conceitual de Classes de Domínio do PostoSmart}{fig:modelo_conceitual_posto}
 \begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[scale=0.88, every node/.style={font=\small\sffamily}]
-    % Entidades de Domínio
-    \node[block] (tanque) at (-4.5, 2.5) {
-        \textbf{Tanque}\\\hrulefill\\
-        id\_tanque : UUID\\
-        combustivel : String\\
-        capacidade\_litros : Decimal\\
-        volume\_atual : Decimal
-    };
-    
-    \node[block] (bico) at (0, 2.5) {
-        \textbf{Bico}\\\hrulefill\\
-        numero\_bico : Int\\
-        status : StatusBico\\
-        preco\_litro : Decimal
-    };
-    
-    \node[block] (bomba) at (4.5, 2.5) {
-        \textbf{Bomba}\\\hrulefill\\
-        id\_bomba : UUID\\
-        numero\_logico : Int\\
-        fabricante : String
-    };
-    
-    \node[block] (abastecimento) at (0, -2.0) {
-        \textbf{Abastecimento}\\\hrulefill\\
-        id\_abastecimento : UUID\\
-        litros : Decimal\\
-        valor\_total : Decimal\\
-        data\_hora : DateTime\\
-        status : StatusAbastecimento
-    };
-    
-    \node[block] (venda) at (-4.5, -2.0) {
-        \textbf{Venda}\\\hrulefill\\
-        id\_venda : UUID\\
-        numero\_cupom : Int\\
-        chave\_nfce : String\\
-        forma\_pagamento : String\\
-        total\_pago : Decimal
-    };
-    
-    % Conexões com Multiplicidades limpas
-    \draw[line_plain] (tanque) -- node[above, near start, font=\scriptsize] {1} node[below, font=\scriptsize] {fornece} node[above, near end, font=\scriptsize] {1..*} (bico);
-    \draw[line_plain] (bomba) -- node[above, near start, font=\scriptsize] {1} node[below, font=\scriptsize] {contém} node[above, near end, font=\scriptsize] {1..4} (bico);
-    \draw[line_plain] (bico) -- node[left, near start, font=\scriptsize] {1} node[right, font=\scriptsize] {gera} node[left, near end, font=\scriptsize] {0..*} (abastecimento);
-    \draw[line_plain] (abastecimento) -- node[above, near start, font=\scriptsize] {1} node[below, font=\scriptsize] {liquida} node[above, near end, font=\scriptsize] {0..1} (venda);
-\end{tikzpicture}
-\caption{Modelo Conceitual de Classes de Domínio do PostoSmart}\label{fig:modelo_conceitual_posto}
+    \centering
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
+        \textbf{[Modelo Conceitual de Classes de Domínio -- PostoSmart -- StarUML v7.0]}\\%
+        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/cls\_conceitual\_postosmart.png}}\\%
+        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
+        \vspace{0.3cm}%
+        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
+        \texttt{\textbackslash incluirdiagrama\{Imagens/cls\_conceitual\_postosmart.png\}\{Modelo Conceitual de Domínio\}\{fig:modelo_conceitual_posto\}}%
+    \vspace{1cm}}}
+    \caption{Modelo Conceitual de Classes de Domínio do PostoSmart (Placeholder StarUML v7.0)}
+    \label{fig:modelo_conceitual_posto}
 \end{figure}

@@ -1,17 +1,21 @@
 ---
 name: doc-garantia-qualidade
-description: Orienta o agente na elaboração do Plano de Garantia da Qualidade de Software (SQAP) conforme IEEE Std 730, cobrindo auditorias de processo, revisões por pares, análise estática de código, métricas de qualidade e Definition of Done (DoD).
+description: Orienta o agente na elaboração do Plano de Garantia da Qualidade de Software (SQAP) conforme IEEE Std 730, cobrindo auditorias de processo, revisões por pares, análise estática de código, métricas de qualidade, DoD e modelagem no StarUML v7.0.
 ---
 
 # Skill: Plano de Garantia da Qualidade de Software (SQAP)
 
 Esta skill orienta o agente na redação do **Plano de Garantia da Qualidade de Software (SQAP - Software Quality Assurance Plan)**, estruturado com base na norma **IEEE Std 730**. Enquanto o Plano de Testes foca na verificação do *produto*, o SQAP estabelece a governança dos *processos* de engenharia para assegurar que a qualidade seja construída continuamente ao longo de todo o ciclo de vida.
 
+O agente atua como **engenheiro de garantia da qualidade** e **copiloto de modelagem no StarUML v7.0**, instruindo a criação do fluxograma de revisão por pares e auditoria de qualidade.
+
+---
+
 ## 1. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
 
 Esta skill está fundamentada nos preceitos formais da Engenharia de Software:
 - **SWEBOK v4 -- Capítulo 5 (Software Quality KA):**
-  - *1. Software Quality Fundamentals:* Cultura de qualidade, valor e custos da qualidade (custos de prevenção, avaliação, falhas internas e falhas externas), modelos de atributos de qualidade, prevenção de defeitos.
+  - *1. Software Quality Fundamentals:* Cultura de qualidade, valor e custos da qualidade (prevenção, avaliação, falhas internas e externas), modelos de atributos de qualidade, prevenção de defeitos.
   - *2. Software Quality Management Processes:* Garantia da Qualidade de Software (SQA), Verificação e Validação (V&V), Revisões por Pares (*Peer Reviews* e *Walkthroughs*), Auditorias de Processo e Conformidade.
   - *3. Practical Considerations:* Medição e métricas de qualidade de software, classificação e rastreamento de defeitos, identificação de requisitos críticos de confiabilidade.
   - *4. Software Quality Tools:* Ferramentas de análise estática de código (SAST, Linters), analisadores de complexidade ciclomática e rastreamento de cobertura.
@@ -64,8 +68,6 @@ Esta skill está fundamentada nos preceitos formais da Engenharia de Software:
 ## 3. Modelos de Tabelas e Checklists em LaTeX
 
 ### Definition of Done (DoD) Padronizada
-> **Diretriz:** NÃO utilize caixas gráficas de destaque (`destaque`, `tcolorbox`). Apresente a Definition of Done como subseção editorial limpa:
-
 ```latex
 \subsection{Definition of Done (DoD) -- Critérios Obrigatórios}
 Uma história de usuário ou funcionalidade só é promovida para Homologação se satisfizer cumulativamente:
@@ -100,9 +102,30 @@ MTTR (Recuperação) & Alertas do Datadog/Cloud & Média inferior a 30 minutos e
 
 ---
 
-## 4. Checklist de Qualidade do Agente
+## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
-- [ ] O plano estabelece critérios claros de Definition of Done (DoD) mensuráveis?
-- [ ] O processo de Code Review possui checklist estruturado para os revisores?
-- [ ] As ferramentas de análise estática e segurança (SAST) estão integradas à esteira automatizada?
-- [ ] As métricas de qualidade cobrem tanto a qualidade do produto quanto a estabilidade dos processos de entrega?
+### 4.1. Fluxo de Revisão de Código e Verificação de DoD (Activity Diagram)
+1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Activity Diagram` e nomeie como `sqa_processo_revisao`;
+2. **Raias de Responsabilidade (Swimlanes):** Crie raias horizontais para:
+   - `Desenvolvedor Autor`;
+   - `Esteira Automatizada de CI (Linters, Testes e SAST)`;
+   - `Revisores Técnicos Seniores (Code Review)`;
+   - `Tech Lead / Auditor SQA`.
+3. **Ações:** Modele o fluxo determinístico:
+   - `Submeter Pull Request`;
+   - `Executar Análise Estática e Testes`;
+   - `Verificar Cobertura >= 80% e Zero Vulnerabilidades`;
+   - `Inspecionar Legibilidade e Padrões Arquiteturais`;
+   - `Aprovar / Solicitar Ajustes (Decision Node)`;
+   - `Validar Definition of Done (DoD)`;
+   - `Liberar Merge para Main`.
+4. **Exportação:** Exporte via **`File` -> `Export Diagram as` -> `PNG...`** (300 DPI, fundo branco) para `Template_Unificado_LATEX/Imagens/sqa_processo_revisao.png`.
+
+---
+
+## 5. Checklist de Qualidade do Agente
+
+- [ ] Os critérios de Definition of Done (DoD) e Definition of Ready (DoR) são objetivos e verificáveis?
+- [ ] O processo formal de revisão de código e auditoria foi modelado no StarUML v7.0?
+- [ ] As ferramentas de análise estática e linters estão configuradas com limites bloqueantes?
+- [ ] As métricas de processo abrangem tanto métricas DORA quanto métricas clássicas de produto?
