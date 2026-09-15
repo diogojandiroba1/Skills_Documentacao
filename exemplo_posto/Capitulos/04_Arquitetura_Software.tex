@@ -1,0 +1,129 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Capitulo 4: Documento de Arquitetura de Software (SAD)
+%% Sistema: PostoSmart - Automação e Gestão de Postos de Combustíveis
+%% Autor: Diogo Santos Pires Jandiroba
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Documento de Arquitetura de Software (SAD)}
+\label{cap:arquitetura_software}
+
+\section{Visão Geral e Estilo Arquitetural}
+
+A arquitetura do \textbf{PostoSmart} adota o padrão \textit{Edge-First Event-Driven} (borda resiliente orientada a eventos). Como postos de combustíveis operam em condições agressivas com instabilidade de conectividade WAN, toda a lógica de autorização de bombas, controle de pulsos e frente de caixa executa localmente em um appliance local (\textit{Edge Server}), sincronizando assincronamente com o cluster de nuvem.
+
+\section{Visão Lógica (Componentes do Sistema)}
+
+A \autoref{fig:visao_logica_posto} ilustra a decomposição em subsistemas modulares com alta coesão e baixo acoplamento.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.88, every node/.style={font=\small\sffamily}]
+    % Camada Edge Local
+    \draw[thick, primary, dashed, rounded corners=6pt] (-5.5,-3.5) rectangle (1.5,3.2);
+    \node[anchor=north west, font=\bfseries\color{primary}] at (-5.3,3.0) {Servidor Edge Local (Posto)};
+    
+    \node[component] (driver) at (-2.0, 1.8) {\textbf{Driver de Pista}\\\scriptsize Protocolo Concentrador};
+    \node[component] (regras) at (-2.0, 0.0) {\textbf{Motor de Regras}\\\scriptsize Trava de Bico (RN01)};
+    \node[component] (pdv) at (-2.0, -1.8) {\textbf{Serviço PDV}\\\scriptsize Faturamento Local};
+    
+    \node[database_node] (sqlite) at (-4.5, -0.9) {\textbf{SQLite}\\\scriptsize Local};
+    
+    % Camada Cloud
+    \draw[thick, secondary, dashed, rounded corners=6pt] (3.0,-3.5) rectangle (7.5,3.2);
+    \node[anchor=north west, font=\bfseries\color{secondary}] at (3.2,3.0) {Retaguarda Cloud};
+    
+    \node[component] (sync) at (5.2, 0.0) {\textbf{Sync Agent}\\\scriptsize Ingestão Assíncrona};
+    \node[database_node] (postgres) at (5.2, -2.0) {\textbf{PostgreSQL}\\\scriptsize Cloud};
+    \node[component] (sefaz) at (5.2, 1.8) {\textbf{Gateway SEFAZ}\\\scriptsize Transmissão NFC-e};
+    
+    % Conexões
+    \draw[line] (driver) -- node[right, font=\scriptsize] {telemetria} (regras);
+    \draw[line] (regras) -- node[right, font=\scriptsize] {liberação} (pdv);
+    \draw[line] (pdv) -- (sqlite);
+    \draw[line] (regras) -- (sqlite);
+    \draw[line_dashed] (sqlite) to[bend right=20] node[below, font=\scriptsize] {sync HTTPS} (sync);
+    \draw[line] (sync) -- (postgres);
+    \draw[line] (pdv) to[bend left=25] node[above, font=\scriptsize] {emissão fiscal} (sefaz);
+\end{tikzpicture}
+\caption{Visão Lógica da Arquitetura Edge-First do PostoSmart}\label{fig:visao_logica_posto}
+\end{figure}
+
+\section{Visão de Processos e Concorrência}
+
+A \autoref{fig:visao_processos_posto} detalha o processamento concorrente em tempo real dos pulsos emitidos pelas bombas de combustível.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\small\sffamily}]
+    \node[block] (thread_serial) at (0, 2) {\textbf{Thread Serial/TCP}\\\scriptsize Polling contínuo a cada $50\,\text{ms}$};
+    \node[block_gray] (ring_buffer) at (4.5, 2) {\textbf{Ring Buffer Lockless}\\\scriptsize Fila de Eventos de Bico};
+    \node[block] (event_worker) at (9.0, 2) {\textbf{Worker de Despacho}\\\scriptsize Processa status e litragem};
+    
+    \node[block] (websocket) at (9.0, -0.5) {\textbf{Servidor WebSocket}\\\scriptsize Notificação aos PDVs em tempo real};
+    \node[block] (db_worker) at (4.5, -0.5) {\textbf{Persistência Local}\\\scriptsize Commit ACID no SQLite};
+    
+    \draw[line] (thread_serial) -- (ring_buffer);
+    \draw[line] (ring_buffer) -- (event_worker);
+    \draw[line] (event_worker) -- (websocket);
+    \draw[line] (event_worker) -- (db_worker);
+\end{tikzpicture}
+\caption{Visão de Processos do Pipeline de Telemetria de Pista}\label{fig:visao_processos_posto}
+\end{figure}
+
+\section{Visão Física e de Implantação}
+
+A \autoref{fig:visao_implantacao_posto} descreve a infraestrutura física de pista, cabeamento industrial e ambiente corporativo em nuvem.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.88, every node/.style={font=\small\sffamily}]
+    % Ilha de Combustível
+    \node[block, minimum height=1.2cm] (bomba1) at (-5.2, 1.8) {\textbf{Bomba 01}\\\scriptsize Dispensador 4 Bicos};
+    \node[block, minimum height=1.2cm] (bomba2) at (-5.2, -0.4) {\textbf{Bomba 02}\\\scriptsize Dispensador 4 Bicos};
+    
+    % Concentrador de Pista
+    \node[block_accent, minimum width=2.6cm, minimum height=1.5cm] (conc) at (-1.0, 0.7) {\textbf{Concentrador de Pista}\\\scriptsize (Horustec / Companytec)\\\scriptsize Loop RS-485};
+    
+    % Servidor Edge Local
+    \node[block, minimum width=2.8cm, minimum height=1.5cm] (edge) at (3.8, 0.7) {\textbf{Edge Server Local}\\\scriptsize Linux Ubuntu / Docker\\\scriptsize IP: 192.168.1.10};
+    
+    % PDV Caixa
+    \node[block] (pdv_box) at (3.8, -1.8) {\textbf{Terminal PDV}\\\scriptsize Touchscreen / Impressora};
+    
+    % Nuvem
+    \node[block_gray, minimum width=2.5cm] (cloud) at (8.4, 0.7) {\textbf{AWS / Cloud}\\\scriptsize API Gateway + PostgreSQL};
+    
+    % Barramentos
+    \draw[line_plain, thick] (bomba1) -- node[above, font=\scriptsize] {RS-485} (conc);
+    \draw[line_plain, thick] (bomba2) -- node[below, font=\scriptsize] {RS-485} (conc);
+    \draw[line, thick] (conc) -- node[above, font=\scriptsize] {Ethernet TCP} (edge);
+    \draw[line, thick] (edge) -- node[right, font=\scriptsize] {WebSocket / HTTP} (pdv_box);
+    \draw[line_dashed, thick] (edge) -- node[above, font=\scriptsize] {TLS / HTTPS} (cloud);
+\end{tikzpicture}
+\caption{Visão Física de Implantação e Conectividade Industrial}\label{fig:visao_implantacao_posto}
+\end{figure}
+
+\section{Catálogo de Registros de Decisão Arquitetural (ADR)}
+
+\subsection{ADR-01: Adoção de Arquitetura Edge-First com SQLite Local}
+\paragraph{Status:} Aprovado e Homologado.
+\paragraph{Decisores:} Diogo Santos Pires Jandiroba (Lead Architect).
+\paragraph{Contexto:} Os postos de abastecimento não podem interromper suas vendas sob nenhuma hipótese decorrente de quedas de link de internet, atrasos na SEFAZ ou latência da nuvem.
+\paragraph{Decisão:} Implementar arquitetura \textit{Edge-First}, armazenando todo o estado transacional em banco SQLite local configurado em modo WAL (\textit{Write-Ahead Logging}). Os dados são sincronizados de forma eventual e assíncrona com o PostgreSQL na nuvem via mensageria idempotente.
+\paragraph{Consequências Positivas:} Tolerância total a partição de rede; latência sub-milissegundo para autorização de abastecimento na pista.
+\paragraph{Consequências Negativas:} Necessidade de resolução de conflitos de conciliação de cadastros centralizados vindos da nuvem.
+
+\subsection{ADR-02: Comunicação com Concentrador via Sockets TCP/IP com Fallback Serial}
+\paragraph{Status:} Aprovado.
+\paragraph{Contexto:} O ecossistema de postos possui concentradores modernos com placa Ethernet nativa e concentradores legados operando via conversor Serial USB/RS-232.
+\paragraph{Decisão:} Projetar o módulo de telemetria utilizando o padrão de projeto \textit{Adapter}, provendo abstração unificada para conexões Socket TCP assíncronas e suporte secundário a portas seriais nativas.
+\paragraph{Consequências Positivas:} Flexibilidade de instalação em postos modernos e legados sem alteração no núcleo do sistema.
+
+\section{Governança de Dados, Criptografia e LGPD}
+
+Em estrito atendimento à Lei Geral de Proteção de Dados (Lei Federal nº 13.709/2018):
+\begin{itemize}
+    \item Os CPFs informados para inclusão no cupom fiscal são anonimizados nos bancos de auditoria analítica;
+    \item Os logs de transações financeiras e abastecimentos possuem retenção legal obrigatória de 5 anos;
+    \item Toda comunicação entre o Edge Server e a nuvem transita criptografada via protocolo TLS 1.3.
+\end{itemize}

@@ -1,0 +1,95 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Capitulo 2: Especificacao de Requisitos de Software (SRS / ERS)
+%% Sistema: PostoSmart - Automação e Gestão de Postos de Combustíveis
+%% Autor: Diogo Santos Pires Jandiroba
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Especificação de Requisitos de Software (SRS)}
+\label{cap:especificacao_requisitos}
+
+\section{Catálogo de Requisitos Funcionais (RF)}
+
+A \autoref{tab:requisitos_funcionais_posto} elenca as funções essenciais que o sistema PostoSmart desempenha na operação de pista e no ponto de venda.
+
+\begin{table}[htbp]
+\caption{Catálogo de Requisitos Funcionais do Sistema PostoSmart}
+\label{tab:requisitos_funcionais_posto}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l Y c c @{}}
+\toprule
+\textbf{Código} & \textbf{Descrição do Requisito Funcional} & \textbf{Prioridade} & \textbf{Rastreabilidade} \\
+\midrule
+RF01 & Capturar telemetria e pulsos de abastecimento emitidos pelo concentrador (volume, bico, preço unitário e valor total). & \badgealta & RN01, UC01 \\
+RF02 & Registrar venda no PDV a partir de abastecimento capturado, permitindo seleção de múltiplas formas de pagamento. & \badgealta & RN01, UC02 \\
+RF03 & Transmitir documento fiscal (NFC-e / SAT) para a SEFAZ e emitir DANFE para o consumidor final. & \badgealta & RN03, UC02 \\
+RF04 & Monitorar o volume remanescente nos tanques subterrâneos e disparar alertas visuais em caso de nível crítico. & \badgemedia & RN02, UC03 \\
+RF05 & Realizar abertura, sangria e fechamento de turno de operadores de caixa com conciliação física de numerário. & \badgealta & RN04, UC04 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Dicionário de Atributos de Dados}
+
+A \autoref{tab:dicionario_atributos_posto} define o esquema conceitual dos atributos transacionais capturados durante cada operação na pista.
+
+\begin{table}[htbp]
+\caption{Dicionário de Atributos de Dados do Abastecimento}
+\label{tab:dicionario_atributos_posto}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l l l c Y @{}}
+\toprule
+\textbf{Atributo} & \textbf{Tipo de Dado} & \textbf{Tamanho} & \textbf{Obrigatório} & \textbf{Descrição / Domínio} \\
+\midrule
+\texttt{id\_abastecimento} & UUID & 36 carac. & Sim & Identificador unívoco do abastecimento. \\
+\texttt{numero\_bico} & Inteiro & 2 dígitos & Sim & Número físico do bico na pista (ex.: 01 a 16). \\
+\texttt{volume\_litros} & Decimal(10,3) & 10 dígitos & Sim & Volume exato abastecido com 3 casas decimais. \\
+\texttt{preco\_unitario} & Decimal(10,2) & 10 dígitos & Sim & Preço por litro vigente no momento da autorização. \\
+\texttt{valor\_total} & Decimal(10,2) & 10 dígitos & Sim & Valor total monetário calculado pela bomba. \\
+\texttt{data\_hora\_fim} & Timestamp & UTC & Sim & Momento exato em que o bico foi reengatado. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Catálogo de Regras de Negócio (RN)}
+
+As regras de negócio determinam as condições de guarda e restrições mandatórias do domínio de combustíveis (\autoref{tab:regras_negocio_posto}).
+
+\begin{table}[htbp]
+\caption{Catálogo de Regras de Negócio do PostoSmart}
+\label{tab:regras_negocio_posto}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l l Y @{}}
+\toprule
+\textbf{Código} & \textbf{Nome da Regra} & \textbf{Condição Mandatória e Imposição de Guarda} \\
+\midrule
+RN01 & Travamento de Bico por Pendência & Um bico fica bloqueado para novos abastecimentos caso haja mais de 2 abastecimentos concluídos e ainda não faturados no PDV associado. \\
+RN02 & Alerta de Nível Mínimo do Tanque & O sistema deve disparar alarme visual e sonoro quando o volume em tanque atingir menos de 10\% da capacidade total homologada. \\
+RN03 & Contingência Fiscal Imediata & Se a comunicação com a SEFAZ ultrapassar 3 segundos sem resposta, o sistema deve assinar digitalmente e emitir a NFC-e em modo contingência offline. \\
+RN04 & Sangria Obrigatória de Caixa & Ao atingir o limite de R\$ 1.500,00 em cédulas no gaveteiro físico, o PDV bloqueia novas vendas em dinheiro até a emissão de comprovante de sangria. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Catálogo de Requisitos Não Funcionais (RNF)}
+
+A \autoref{tab:requisitos_nao_funcionais_posto} especifica os requisitos de qualidade técnica estruturados conforme a ISO/IEC 25010:2023.
+
+\begin{table}[htbp]
+\caption{Requisitos Não Funcionais Classificados pela ISO/IEC 25010}
+\label{tab:requisitos_nao_funcionais_posto}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l l Y l @{}}
+\toprule
+\textbf{Código} & \textbf{Característica ISO 25010} & \textbf{Especificação Técnica Mensurável} & \textbf{Métrica de Aceite} \\
+\midrule
+RNF01 & Desempenho / Latência & Tempo de captura do evento de bico pelo concentrador até exibição na tela do PDV. & $\le 200\,\text{ms}$ (P99). \\
+RNF02 & Confiabilidade / Disponibilidade & Operação ininterrupta do PDV local mesmo em caso de perda de internet com a nuvem. & Disponibilidade local de 99,99\%. \\
+RNF03 & Segurança / Integridade & Assinatura de payloads de abastecimento com hash SHA-256 para prevenir adulterações. & 100\% dos registros assinados. \\
+RNF04 & Usabilidade & Operador de caixa deve concluir uma venda com pagamento via PIX ou Cartão em até 3 toques. & Média de tempo $\le 15$ segundos. \\
+\bottomrule
+\end{tabularx}
+\end{table}

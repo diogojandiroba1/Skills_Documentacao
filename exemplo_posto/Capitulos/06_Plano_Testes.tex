@@ -1,0 +1,71 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Capitulo 6: Plano e Especificação de Testes (STP / STD)
+%% Sistema: PostoSmart - Automação e Gestão de Postos de Combustíveis
+%% Autor: Diogo Santos Pires Jandiroba
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Plano e Especificação de Testes de Software}
+\label{cap:plano_testes}
+
+\section{Estratégia e Pirâmide de Testes}
+
+A estratégia de garantia de qualidade funcional e de integração do PostoSmart está estruturada na pirâmide de testes da \autoref{fig:piramide_testes_posto}, em estrita conformidade com a norma **ISO/IEC/IEEE 29119:2022**.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\small\sffamily}]
+    % Trapézios da Pirâmide
+    \draw[thick, primary, fill=bgneutral] (-1.5, 3) -- (1.5, 3) -- (2.5, 1.8) -- (-2.5, 1.8) -- cycle;
+    \node[align=center] at (0, 2.4) {\textbf{Testes E2E e UI}\\10\% (Cenários de Caixa e SEFAZ)};
+    
+    \draw[thick, primary, fill=borderline!40] (-2.5, 1.8) -- (2.5, 1.8) -- (3.8, 0.6) -- (-3.8, 0.6) -- cycle;
+    \node[align=center] at (0, 1.2) {\textbf{Testes de Integração}\\30\% (Mock de Concentrador RS-485 / SQLite)};
+    
+    \draw[thick, primary, fill=white] (-3.8, 0.6) -- (3.8, 0.6) -- (5.2, -0.6) -- (-5.2, -0.6) -- cycle;
+    \node[align=center] at (0, 0.0) {\textbf{Testes Unitários Automatizados}\\60\% (Regras de Bloqueio, Cálculos e Parsers)};
+\end{tikzpicture}
+\caption{Pirâmide de Testes de Software do PostoSmart (ISO 29119)}\label{fig:piramide_testes_posto}
+\end{figure}
+
+\section{Casos de Teste Padronizados}
+
+A \autoref{tab:casos_teste_posto} especifica os cenários de verificação com entradas, ações e resultados esperados.
+
+\begin{table}[htbp]
+\caption{Especificação Detalhada de Casos de Teste (ISO/IEC/IEEE 29119)}
+\label{tab:casos_teste_posto}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l l Y Y c @{}}
+\toprule
+\textbf{ID} & \textbf{Requisito} & \textbf{Procedimento de Execução} & \textbf{Resultado Esperado} & \textbf{Resultado} \\
+\midrule
+CT01 & RF01, RN01 & Desengatar bico 01 sem pendências e aguardar pulso. & Concentrador autoriza fluxo; sistema marca bico como \texttt{ABASTECENDO}. & \badgeconcluido \\
+CT02 & RF01, RN01 & Gerar 2 abastecimentos pendentes no bico 02 e tentar novo desengate. & Sistema bloqueia autorização (RN01) e aciona alarme no PDV. & \badgeconcluido \\
+CT03 & RF03, RN03 & Simular queda da SEFAZ com mock de timeout ($> 3\,\text{s}$) no fechamento. & Sistema chaveia para contingência offline e imprime DANFE NFC-e. & \badgeconcluido \\
+CT04 & RNF01 & Disparar telemetria simultânea em 16 bicos em loop a $50\,\text{ms}$. & Latência de atualização da tela do PDV inferior a $200\,\text{ms}$ (P99). & \badgeconcluido \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Matriz de Rastreabilidade (Requisitos \texorpdfstring{$\times$}{x} Testes)}
+
+A \autoref{tab:rastreabilidade_testes_posto} confirma a cobertura total entre requisitos de negócio e baterias de teste.
+
+\begin{table}[htbp]
+\caption{Matriz de Rastreabilidade Requisitos $\times$ Casos de Teste}
+\label{tab:rastreabilidade_testes_posto}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l l l c @{}}
+\toprule
+\textbf{Requisito} & \textbf{Descrição Sintética} & \textbf{Casos de Teste Vinculados} & \textbf{Status} \\
+\midrule
+RF01 & Captura de Telemetria de Bico & CT01, CT02, CT04 & \badgeconcluido \\
+RF02 & Fechamento de Venda no PDV & CT01, CT03 & \badgeconcluido \\
+RF03 & Emissão de Documento Fiscal & CT03 & \badgeconcluido \\
+RN01 & Bloqueio por Dupla Pendência & CT02 & \badgeconcluido \\
+RNF01 & Latência de Telemetria ($\le 200\,\text{ms}$) & CT04 & \badgeconcluido \\
+\bottomrule
+\end{tabularx}
+\end{table}

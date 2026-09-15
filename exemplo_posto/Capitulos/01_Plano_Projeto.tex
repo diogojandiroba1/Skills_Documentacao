@@ -1,0 +1,125 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Capitulo 1: Plano de Projeto e Viabilidade
+%% Sistema: PostoSmart - Automação e Gestão de Postos de Combustíveis
+%% Autor: Diogo Santos Pires Jandiroba
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Plano de Projeto e Análise de Viabilidade}
+\label{cap:plano_projeto}
+
+\section{Identificação do Projeto e Alinhamento Estratégico}
+
+O \textbf{PostoSmart} é uma solução tecnológica integrada para automação de pista, controle de bombas de combustível, gestão volumétrica de tanques e faturamento fiscal instantâneo em postos de abastecimento. O sistema visa mitigar perdas operacionais, fraudes de abastecimento e inconsistências fiscais entre o combustível dispensado e as notas emitidas (NFC-e / SAT).
+
+\paragraph{Elevador Pitch da Solução:}
+Para revendedores e gerentes de postos que enfrentam gargalos no fluxo de caixa e perdas por abastecimentos não registrados, o \textbf{PostoSmart} é uma plataforma de automação e PDV que comunica-se diretamente com os concentradores de bombas em tempo real. Diferente das soluções legadas monolíticas e suscetíveis a falhas de comunicação serial, nosso produto oferece telemetria instantânea, controle de contingência offline e conciliação financeira automatizada em nuvem.
+
+\section{Mapeamento de Stakeholders (Matriz de Mendelow)}
+
+A \autoref{fig:matriz_mendelow} apresenta a classificação dos intervenientes do projeto conforme o modelo Poder $\times$ Interesse.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.92, every node/.style={font=\small\sffamily}]
+    % Grade 2x2 com margem confortável
+    \draw[thick, borderline] (-4.6,-2.8) rectangle (4.6,2.8);
+    \draw[thick, primary] (0,-2.8) -- (0,2.8);
+    \draw[thick, primary] (-4.6,0) -- (4.6,0);
+    
+    % Rótulos dos Eixos
+    \node[anchor=south, font=\bfseries\color{primary}] at (0,2.9) {Poder e Autoridade $\longrightarrow$};
+    \node[anchor=west, font=\bfseries\color{primary}] at (4.7,0) {Interesse};
+    
+    % Quadrantes
+    \node[anchor=north west, font=\tiny\bfseries\color{textmuted}] at (-4.5, 2.7) {MANTER SATISFEITO};
+    \node[anchor=north west, font=\tiny\bfseries\color{textmuted}] at (0.2, 2.7) {GERENCIAR ATIVAMENTE};
+    \node[anchor=north west, font=\tiny\bfseries\color{textmuted}] at (-4.5, -0.1) {MONITORAR};
+    \node[anchor=north west, font=\tiny\bfseries\color{textmuted}] at (0.2, -0.1) {MANTER INFORMADO};
+    
+    % Stakeholders posicionados
+    \node[block, fill=borderline!30] at (2.3, 1.3) {\textbf{Proprietário do Posto}\\\scriptsize Patrocinador / ROI};
+    \node[block, fill=borderline!30] at (-2.3, 1.3) {\textbf{SEFAZ / Fiscalização}\\\scriptsize Conformidade NFC-e};
+    \node[block, fill=borderline!30] at (2.3, -1.5) {\textbf{Frentistas e Caixas}\\\scriptsize Usuários Operacionais};
+    \node[block, fill=borderline!30] at (-2.3, -1.5) {\textbf{Fornecedores de TI}\\\scriptsize Concentrador RS-485};
+\end{tikzpicture}
+\caption{Matriz Poder $\times$ Interesse dos Stakeholders do PostoSmart}\label{fig:matriz_mendelow}
+\end{figure}
+
+\section{Estrutura Analítica do Projeto (WBS / EAP)}
+
+A decomposição hierárquica do trabalho necessário para a entrega do PostoSmart está estruturada na \autoref{fig:wbs_projeto}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    level 1/.style={sibling distance=3.6cm, level distance=1.5cm},
+    level 2/.style={sibling distance=1.8cm, level distance=1.5cm},
+    edge from parent/.style={draw=primary, thick, -{Latex[length=1.5mm]}},
+    every node/.style={font=\scriptsize\sffamily, align=center}
+]
+\node[block, font=\small\bfseries, fill=bgneutral] {PostoSmart 1.0}
+    child { node[block] {\textbf{1. Automação}\\\textbf{de Pista}}
+        child { node[block_gray] {1.1 Driver\\Concentrador} }
+        child { node[block_gray] {1.2 Leitura\\de Bicos} }
+    }
+    child { node[block] {\textbf{2. PDV e}\\\textbf{Faturamento}}
+        child { node[block_gray] {2.1 Emissão\\NFC-e / SAT} }
+        child { node[block_gray] {2.2 Frente\\de Caixa} }
+    }
+    child { node[block] {\textbf{3. Gestão de}\\\textbf{Tanques}}
+        child { node[block_gray] {3.1 Medição\\Volumétrica} }
+        child { node[block_gray] {3.2 Alerta\\Estoque Mín.} }
+    }
+    child { node[block] {\textbf{4. Nuvem e}\\\textbf{Retaguarda}}
+        child { node[block_gray] {4.1 Dashboard\\Gerencial} }
+        child { node[block_gray] {4.2 Relatórios\\de Turno} }
+    };
+\end{tikzpicture}
+\caption{Estrutura Analítica do Projeto (WBS / EAP) do PostoSmart}\label{fig:wbs_projeto}
+\end{figure}
+
+\section{Cronograma e Marcos de Entrega}
+
+O cronograma de desenvolvimento está planejado em 4 sprints quinzenais conforme ilustrado na linha do tempo da \autoref{fig:gantt_marcos}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\small\sffamily}]
+    % Linha Base
+    \draw[very thick, primary, -{Latex[length=3mm]}] (0,0) -- (12.5,0);
+    
+    % Marcos
+    \foreach \x/\dia/\fase in {
+        1.5/M1: Dia 15/Driver Concentrador,
+        4.5/M2: Dia 30/PDV \& Venda Fiscal,
+        7.5/M3: Dia 45/Monitor Tanques,
+        10.5/M4: Dia 60/Deploy \& Homologação
+    } {
+        \draw[thick, primary] (\x, 0.2) -- (\x, -0.2);
+        \node[anchor=south, font=\bfseries\color{primary}] at (\x, 0.3) {\dia};
+        \node[block, anchor=north, fill=bgneutral] at (\x, -0.4) {\fase};
+    }
+\end{tikzpicture}
+\caption{Linha do Tempo de Marcos de Entrega do Projeto}\label{fig:gantt_marcos}
+\end{figure}
+
+\section{Matriz de Riscos do Projeto}
+
+A \autoref{tab:matriz_riscos_posto} elenca os principais riscos técnicos e operacionais mapeados para a implantação da automação de pista.
+
+\begin{table}[htbp]
+\caption{Matriz de Riscos e Planos de Mitigação}
+\label{tab:matriz_riscos_posto}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l l c c Y @{}}
+\toprule
+\textbf{ID} & \textbf{Descrição do Risco} & \textbf{Prob.} & \textbf{Imp.} & \textbf{Estratégia de Mitigação} \\
+\midrule
+R01 & Queda de conexão com o concentrador serial. & Média & Alto & Implementação de buffer local de abastecimentos em fila SQLite imutável. \\
+R02 & Rejeição de emissão na SEFAZ (timeout fiscal). & Alta & Médio & Armazenamento em contingência offline (NFC-e off) e retransmissão periódica. \\
+R03 & Ruído eletromagnético no cabeamento de pista. & Baixa & Alto & Uso de comunicação RS-485 balanceada com isolamento óptico industrial. \\
+R04 & Divergência entre volume do tanque e vendas. & Média & Médio & Rotina automatizada de fechamento de turno e reconciliação volumétrica. \\
+\bottomrule
+\end{tabularx}
+\end{table}

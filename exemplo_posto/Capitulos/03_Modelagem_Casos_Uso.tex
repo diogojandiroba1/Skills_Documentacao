@@ -1,0 +1,153 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Capitulo 3: Modelagem de Casos de Uso e Modelo Conceitual
+%% Sistema: PostoSmart - Automação e Gestão de Postos de Combustíveis
+%% Autor: Diogo Santos Pires Jandiroba
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Modelagem de Casos de Uso e Análise Conceitual}
+\label{cap:modelagem_casos_uso}
+
+\section{Diagrama de Casos de Uso (UML Use Case)}
+
+A \autoref{fig:diagrama_casos_uso_posto} apresenta os casos de uso centrais do sistema PostoSmart e as interações com os atores operacionais de pista e retaguarda.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.88, every node/.style={font=\small\sffamily}]
+    % Limite do Sistema
+    \draw[thick, primary, rounded corners=6pt] (-2.2,-4.2) rectangle (6.2,5.2);
+    \node[anchor=north west, font=\bfseries\color{primary}] at (-2.0,4.9) {Sistema PostoSmart};
+    
+    % Atores
+    \node[actor] (frentista) at (-4.2, 2.2) {};
+    \node[anchor=north, font=\small\bfseries] at (-4.2, 1.6) {Frentista};
+    
+    \node[actor] (caixa) at (-4.2, -0.8) {};
+    \node[anchor=north, font=\small\bfseries, align=center] at (-4.2, -1.4) {Operador\\de Caixa};
+    
+    \node[actor] (gerente) at (8.2, 0.5) {};
+    \node[anchor=north, font=\small\bfseries, align=center] at (8.2, -0.1) {Gerente\\do Posto};
+    
+    % Casos de Uso
+    \node[usecase] (uc04) at (2.0, 4.0) {UC04: Fechar Turno\\e Conciliar Caixa};
+    \node[usecase] (uc01) at (2.0, 2.3) {UC01: Autorizar e Capturar\\Abastecimento};
+    \node[usecase] (uc02) at (2.0, 0.5) {UC02: Registrar Venda\\e Formas de Pagamento};
+    \node[usecase] (uc02_sub) at (2.0, -1.4) {UC02.1: Emitir\\NFC-e / SAT Fiscal};
+    \node[usecase] (uc03) at (2.0, -3.0) {UC03: Monitorar Tanques\\e Nível de Estoque};
+    
+    % Associações de Atores
+    \draw[line_plain] (frentista) -- (uc01);
+    \draw[line_plain] (caixa) -- (uc02);
+    \draw[line_plain] (caixa) -- (uc04);
+    \draw[line_plain] (gerente) -- (uc03);
+    \draw[line_plain] (gerente) -- (uc04);
+    
+    % Relacionamento <<include>>
+    \draw[line_dashed] (uc02) -- node[right, font=\scriptsize\color{secondary}] {$\ll$include$\gg$} (uc02_sub);
+\end{tikzpicture}
+\caption{Diagrama de Casos de Uso do PostoSmart}\label{fig:diagrama_casos_uso_posto}
+\end{figure}
+
+\section{Especificação Textual de Caso de Uso Expandida}
+
+\subsection{UC01: Autorizar e Capturar Abastecimento de Combustível}
+\paragraph{Atores:} Frentista (Primário), Concentrador de Bombas (Secundário/Hardware).
+\paragraph{Pré-condições:} Bico em repouso; concentrador online e operante; tanque de combustível com volume superior ao nível de corte (RN02); bico sem pendência bloqueante (RN01).
+\paragraph{Pós-condições:} Abastecimento registrado em banco local com litragem e valor; bico bloqueado ou pronto para nova operação; item liberado na fila do PDV.
+
+\paragraph{Fluxo Principal:}
+\begin{enumerate}
+    \item O Frentista retira o bico da bomba e aciona a alavanca no veículo do cliente;
+    \item A bomba envia sinal de requisição de liberação ao Concentrador de Bombas;
+    \item O serviço de telemetria do PostoSmart valida que o bico não possui pendências bloqueantes (RN01);
+    \item O sistema envia comando de autorização para o Concentrador, que libera o fluxo de combustível;
+    \item A bomba abastece e exibe pulsos em tempo real;
+    \item Ao término, o Frentista reengata o bico na bomba;
+    \item O Concentrador captura os dados consolidados (litros, preço/L, valor total) e envia o pacote de encerramento ao PostoSmart;
+    \item O PostoSmart grava o registro de abastecimento como \texttt{PENDENTE\_PAGAMENTO} e notifica instantaneamente os terminais de PDV via WebSocket.
+\end{enumerate}
+
+\paragraph{Fluxos Alternativos e Exceções:}
+\begin{itemize}
+    \item \textbf{Exceção 3a (Bico Bloqueado por Pendência -- RN01):} O Concentrador recusa a liberação e emite aviso sonoro. O Frentista deve solicitar ao Caixa a liberação dos abastecimentos anteriores.
+    \item \textbf{Fluxo Alternativo 4a (Modo Automático de Emergência):} Se o sistema perder conexão de rede com o concentrador, este opera no modo \textit{standalone}, armazenando até 200 abastecimentos em memória não-volátil até a reconexão.
+\end{itemize}
+
+\section{Matriz de Rastreabilidade (RF \texorpdfstring{$\times$}{x} UC)}
+
+A \autoref{tab:rastreabilidade_rf_uc_posto} valida que todos os requisitos funcionais elicitados possuem cobertura formal nos casos de uso modelados.
+
+\begin{table}[htbp]
+\caption{Matriz de Rastreabilidade Requisitos Funcionais $\times$ Casos de Uso}
+\label{tab:rastreabilidade_rf_uc_posto}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l Y c c @{}}
+\toprule
+\textbf{Requisito Funcional} & \textbf{Caso de Uso Associado} & \textbf{Complexidade} & \textbf{Status de Cobertura} \\
+\midrule
+RF01 -- Captura de Telemetria & UC01 (Autorizar e Capturar Abastecimento) & Alta & \badgeconcluido \\
+RF02 -- Registro de Venda & UC02 (Registrar Venda e Formas de Pagamento) & Média & \badgeconcluido \\
+RF03 -- Emissão Fiscal & UC02.1 (Emitir NFC-e / SAT Fiscal) & Alta & \badgeconcluido \\
+RF04 -- Monitoramento de Tanques & UC03 (Monitorar Tanques e Nível de Estoque) & Média & \badgeconcluido \\
+RF05 -- Fechamento de Turno & UC04 (Fechar Turno e Conciliar Caixa) & Média & \badgeconcluido \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Modelo Conceitual de Domínio (Classes de Análise)}
+
+A \autoref{fig:modelo_conceitual_posto} detalha as entidades essenciais do negócio e suas cardinalidades estruturais.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.88, every node/.style={font=\small\sffamily}]
+    % Entidades de Domínio
+    \node[block] (tanque) at (-4.5, 2.5) {
+        \textbf{Tanque}\\\hrulefill\\
+        id\_tanque : UUID\\
+        combustivel : String\\
+        capacidade\_litros : Decimal\\
+        volume\_atual : Decimal
+    };
+    
+    \node[block] (bico) at (0, 2.5) {
+        \textbf{Bico}\\\hrulefill\\
+        numero\_bico : Int\\
+        status : StatusBico\\
+        preco\_litro : Decimal
+    };
+    
+    \node[block] (bomba) at (4.5, 2.5) {
+        \textbf{Bomba}\\\hrulefill\\
+        id\_bomba : UUID\\
+        numero\_logico : Int\\
+        fabricante : String
+    };
+    
+    \node[block] (abastecimento) at (0, -2.0) {
+        \textbf{Abastecimento}\\\hrulefill\\
+        id\_abastecimento : UUID\\
+        litros : Decimal\\
+        valor\_total : Decimal\\
+        data\_hora : DateTime\\
+        status : StatusAbastecimento
+    };
+    
+    \node[block] (venda) at (-4.5, -2.0) {
+        \textbf{Venda}\\\hrulefill\\
+        id\_venda : UUID\\
+        numero\_cupom : Int\\
+        chave\_nfce : String\\
+        forma\_pagamento : String\\
+        total\_pago : Decimal
+    };
+    
+    % Conexões com Multiplicidades limpas
+    \draw[line_plain] (tanque) -- node[above, near start, font=\scriptsize] {1} node[below, font=\scriptsize] {fornece} node[above, near end, font=\scriptsize] {1..*} (bico);
+    \draw[line_plain] (bomba) -- node[above, near start, font=\scriptsize] {1} node[below, font=\scriptsize] {contém} node[above, near end, font=\scriptsize] {1..4} (bico);
+    \draw[line_plain] (bico) -- node[left, near start, font=\scriptsize] {1} node[right, font=\scriptsize] {gera} node[left, near end, font=\scriptsize] {0..*} (abastecimento);
+    \draw[line_plain] (abastecimento) -- node[above, near start, font=\scriptsize] {1} node[below, font=\scriptsize] {liquida} node[above, near end, font=\scriptsize] {0..1} (venda);
+\end{tikzpicture}
+\caption{Modelo Conceitual de Classes de Domínio do PostoSmart}\label{fig:modelo_conceitual_posto}
+\end{figure}

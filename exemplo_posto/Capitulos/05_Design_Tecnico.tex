@@ -1,0 +1,235 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Capitulo 5: Documento de Design Detalhado (SDD)
+%% Sistema: PostoSmart - Automação e Gestão de Postos de Combustíveis
+%% Autor: Diogo Santos Pires Jandiroba
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Documento de Design Detalhado (SDD)}
+\label{cap:design_tecnico}
+
+\section{Diagrama de Classes em Nível de Projeto}
+
+A \autoref{fig:classes_projeto_posto} apresenta a estrutura de classes de implementação do módulo de automação de pista e faturamento, detalhando visibilidades, tipos e assinaturas de métodos.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.88, every node/.style={font=\scriptsize\sffamily}]
+    % Classe ConcentradorAdapter
+    \node[block, text width=5.2cm] (adapter) at (-3.5, 2.5) {
+        \textbf{\small ConcentradorAdapter}\\\hrulefill\\
+        - ipAddress : string\\
+        - port : int\\
+        - isConnected : bool\\\hrulefill\\
+        + connect() : void\\
+        + pollBicos() : List<BicoRawEvent>\\
+        + autorizarBico(bicoId: int) : bool\\
+        + bloquearBico(bicoId: int) : bool
+    };
+    
+    % Classe AbastecimentoService
+    \node[block, text width=5.5cm] (service) at (3.5, 2.5) {
+        \textbf{\small AbastecimentoService}\\\hrulefill\\
+        - bicoRepo : IBicoRepository\\
+        - abastecimentoRepo : IAbastecimentoRepo\\\hrulefill\\
+        + processarPulso(evt: BicoRawEvent) : void\\
+        + encerrarAbastecimento(evt: EncerramentoEvt) : Abastecimento\\
+        + verificarRegraTravamento(bicoId: int) : bool
+    };
+    
+    % Classe VendaFiscalService
+    \node[block, text width=5.2cm] (fiscal) at (3.5, -2.2) {
+        \textbf{\small VendaFiscalService}\\\hrulefill\\
+        - sefazClient : ISefazGateway\\
+        - certPath : string\\\hrulefill\\
+        + fecharVenda(abastId: UUID, pgto: FormaPgto) : Venda\\
+        + emitirNFCe(venda: Venda) : ProtocoloFiscal\\
+        + acionarContingencia(venda: Venda) : void
+    };
+    
+    % Classe Entidade Abastecimento
+    \node[block, text width=5.2cm] (entidade) at (-3.5, -2.2) {
+        \textbf{\small Abastecimento (Entity)}\\\hrulefill\\
+        + id : UUID\\
+        + bicoId : int\\
+        + volumeLitros : double\\
+        + valorTotal : double\\
+        + status : StatusAbastecimento\\\hrulefill\\
+        + calcularImpostos() : double\\
+        + associarVenda(vendaId: UUID) : void
+    };
+    
+    % Associações
+    \draw[line] (adapter) -- node[above, font=\tiny] {notifica eventos} (service);
+    \draw[line] (service) -- node[left, font=\tiny] {persiste} (entidade);
+    \draw[line] (fiscal) -- node[above, font=\tiny] {liquida} (entidade);
+\end{tikzpicture}
+\caption{Diagrama de Classes em Nível de Projeto (UML Design Level)}\label{fig:classes_projeto_posto}
+\end{figure}
+
+\section{Diagrama de Sequência: Autorização e Captura de Abastecimento}
+
+A \autoref{fig:sequencia_abastecimento_posto} demonstra a dinâmica temporal de troca de mensagens entre o hardware de pista, o concentrador e o PDV.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.85, every node/.style={font=\scriptsize\sffamily}]
+    % Linhas de Vida (Lifelines)
+    \node[block] (frentista) at (0, 0) {Frentista};
+    \node[block] (bico) at (2.5, 0) {Bico/Bomba};
+    \node[block] (conc) at (5.5, 0) {Concentrador};
+    \node[block] (core) at (8.5, 0) {PostoSmart Core};
+    \node[block] (pdv) at (11.5, 0) {Terminal PDV};
+    
+    \draw[line_dashed] (frentista) -- (0, -6.5);
+    \draw[line_dashed] (bico) -- (2.5, -6.5);
+    \draw[line_dashed] (conc) -- (5.5, -6.5);
+    \draw[line_dashed] (core) -- (8.5, -6.5);
+    \draw[line_dashed] (pdv) -- (11.5, -6.5);
+    
+    % Mensagens
+    \draw[line] (0, -1.0) -- node[above] {1: Desengata bico} (2.5, -1.0);
+    \draw[line] (2.5, -1.5) -- node[above] {2: Pulso REQ\_LIBERA} (5.5, -1.5);
+    \draw[line] (5.5, -2.0) -- node[above] {3: Evento Socket TCP} (8.5, -2.0);
+    
+    % Auto-chamada validação de regra
+    \draw[line] (8.5, -2.4) -- ++(0.8,0) -- ++(0,-0.4) -- node[right] {4: Valida RN01} (8.5, -2.8);
+    
+    \draw[line] (8.5, -3.3) -- node[above] {5: Comando AUTORIZA} (5.5, -3.3);
+    \draw[line] (5.5, -3.8) -- node[above] {6: Libera fluxo combustível} (2.5, -3.8);
+    \draw[line] (0, -4.3) -- node[above] {7: Reengata bico ao término} (2.5, -4.3);
+    \draw[line] (2.5, -4.8) -- node[above] {8: Encerramento (Litros/R\$)} (5.5, -4.8);
+    \draw[line] (5.5, -5.3) -- node[above] {9: Pacote FIM\_ABAST} (8.5, -5.3);
+    \draw[line] (8.5, -5.8) -- node[above] {10: WebSocket Push (Pendente)} (11.5, -5.8);
+\end{tikzpicture}
+\caption{Diagrama de Sequência da Autorização e Captura de Abastecimento}\label{fig:sequencia_abastecimento_posto}
+\end{figure}
+
+\section{Diagrama de Máquina de Estados: Ciclo de Vida do Bico}
+
+A \autoref{fig:maquina_estados_bico} especifica os estados operacionais finitos de um bico de abastecimento.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\small\sffamily}]
+    \node[initial_state] (init) at (-5.5, 0) {};
+    \node[state_node] (repouso) at (-3.5, 0) {Repouso\\(Engatado)};
+    \node[state_node] (aguarda) at (0, 1.8) {Aguardando\\Autorização};
+    \node[state_node] (abastecendo) at (3.5, 0) {Em\\Abastecimento};
+    \node[state_node] (pendente) at (0, -1.8) {Aguardando\\Pagamento};
+    \node[state_node, draw=secondary] (bloqueado) at (-3.5, -1.8) {Bloqueado\\(RN01)};
+    
+    \draw[line] (init) -- (repouso);
+    \draw[line] (repouso) to[bend left=20] node[above left, font=\scriptsize] {Desengate} (aguarda);
+    \draw[line] (aguarda) to[bend left=20] node[above right, font=\scriptsize] {Autorizado} (abastecendo);
+    \draw[line] (abastecendo) to[bend left=20] node[below right, font=\scriptsize] {Reengate} (pendente);
+    \draw[line] (pendente) to[bend left=20] node[left, font=\scriptsize] {Venda Paga} (repouso);
+    \draw[line] (pendente) -- node[below, font=\scriptsize] {$\ge 2$ Pendências} (bloqueado);
+    \draw[line] (bloqueado) -- node[left, font=\scriptsize] {Caixa Liberado} (repouso);
+\end{tikzpicture}
+\caption{Diagrama de Máquina de Estados do Bico de Combustível}\label{fig:maquina_estados_bico}
+\end{figure}
+
+\section{Diagrama de Atividades: Pagamento e Emissão Fiscal}
+
+A \autoref{fig:atividades_fechamento_posto} modela o fluxo de fechamento de venda no caixa com tratamento de contingência fiscal.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9, every node/.style={font=\small\sffamily}]
+    \node[initial_state] (init) at (0, 4.5) {};
+    \node[action_node] (seleciona) at (0, 3.4) {Caixa seleciona abastecimento na grade};
+    \node[action_node] (forma) at (0, 2.2) {Registra forma de pagamento (Cartão/PIX/Dinheiro)};
+    \node[decision_node] (sefaz_ok) at (0, 0.7) {SEFAZ Online?};
+    
+    \node[action_node] (normal) at (3.5, -0.8) {Transmissão síncrona\\NFC-e Normal};
+    \node[action_node] (contingencia) at (-3.5, -0.8) {Geração NFC-e\\Contingência Offline (RN03)};
+    
+    \node[action_node] (imprime) at (0, -2.4) {Impressão do DANFE / QR Code};
+    \node[final_state] (final) at (0, -3.6) {};
+    
+    \draw[line] (init) -- (seleciona);
+    \draw[line] (seleciona) -- (forma);
+    \draw[line] (forma) -- (sefaz_ok);
+    \draw[line] (sefaz_ok) -| node[above, font=\scriptsize] {[Sim]} (normal);
+    \draw[line] (sefaz_ok) -| node[above, font=\scriptsize] {[Não / Timeout > 3s]} (contingencia);
+    \draw[line] (normal) |- (imprime);
+    \draw[line] (contingencia) |- (imprime);
+    \draw[line] (imprime) -- (final);
+\end{tikzpicture}
+\caption{Diagrama de Atividades do Fechamento de Venda e Emissão Fiscal}\label{fig:atividades_fechamento_posto}
+\end{figure}
+
+\section{Esquema Relacional e Mapeamento ORM}
+
+A \autoref{fig:er_banco_posto} exibe o modelo relacional de tabelas físicas com restrições de integridade referencial.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.88, every node/.style={font=\scriptsize\sffamily}]
+    % Tabela tb_tanque
+    \node[block, text width=4.2cm] (tb_tanque) at (-4.5, 2.5) {
+        \textbf{\small tb\_tanque}\\\hrulefill\\
+        \textbf{PK} id\_tanque : UUID\\
+        combustivel : VARCHAR(50)\\
+        capacidade\_l : DECIMAL(10,3)\\
+        volume\_atual\_l : DECIMAL(10,3)
+    };
+    
+    % Tabela tb_bico
+    \node[block, text width=4.2cm] (tb_bico) at (3.2, 2.5) {
+        \textbf{\small tb\_bico}\\\hrulefill\\
+        \textbf{PK} id\_bico : INT\\
+        \textbf{FK} id\_tanque : UUID\\
+        numero\_bico : INT\\
+        preco\_litro : DECIMAL(10,2)\\
+        status : VARCHAR(20)
+    };
+    
+    % Tabela tb_abastecimento
+    \node[block, text width=4.6cm] (tb_abastecimento) at (3.2, -2.0) {
+        \textbf{\small tb\_abastecimento}\\\hrulefill\\
+        \textbf{PK} id\_abastecimento : UUID\\
+        \textbf{FK} id\_bico : INT\\
+        volume\_litros : DECIMAL(10,3)\\
+        valor\_total : DECIMAL(10,2)\\
+        data\_hora : TIMESTAMP\\
+        status : VARCHAR(20)
+    };
+    
+    % Tabela tb_venda
+    \node[block, text width=4.6cm] (tb_venda) at (-4.5, -2.0) {
+        \textbf{\small tb\_venda}\\\hrulefill\\
+        \textbf{PK} id\_venda : UUID\\
+        \textbf{FK} id\_abastecimento : UUID\\
+        chave\_nfce : VARCHAR(44)\\
+        forma\_pagamento : VARCHAR(30)\\
+        data\_emissao : TIMESTAMP
+    };
+    
+    % Relacionamentos com Multiplicidades limpas
+    \draw[line_plain] (tb_tanque) -- node[above, near start, font=\tiny] {1} node[below, font=\tiny] {possui} node[above, near end, font=\tiny] {1..*} (tb_bico);
+    \draw[line_plain] (tb_bico) -- node[left, near start, font=\tiny] {1} node[right, font=\tiny] {origina} node[left, near end, font=\tiny] {0..*} (tb_abastecimento);
+    \draw[line_plain] (tb_abastecimento) -- node[above, near start, font=\tiny] {1} node[below, font=\tiny] {associa} node[above, near end, font=\tiny] {0..1} (tb_venda);
+\end{tikzpicture}
+\caption{Diagrama Entidade-Relacionamento do Banco de Dados Relacional}\label{fig:er_banco_posto}
+\end{figure}
+
+\paragraph{Script DDL SQL de Criação de Tabelas (PostgreSQL / SQLite):}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE tb_bico (
+    id_bico INT PRIMARY KEY,
+    id_tanque UUID NOT NULL REFERENCES tb_tanque(id_tanque),
+    numero_bico INT NOT NULL UNIQUE,
+    preco_litro DECIMAL(10,2) NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'LIVRE'
+);
+
+CREATE TABLE tb_abastecimento (
+    id_abastecimento UUID PRIMARY KEY,
+    id_bico INT NOT NULL REFERENCES tb_bico(id_bico),
+    volume_litros DECIMAL(10,3) NOT NULL,
+    valor_total DECIMAL(10,2) NOT NULL,
+    data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(20) NOT NULL DEFAULT 'PENDENTE'
+);
+\end{lstlisting}
