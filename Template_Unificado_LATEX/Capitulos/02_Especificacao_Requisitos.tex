@@ -1,0 +1,94 @@
+\chapter{Especificação de Requisitos de Software (SRS)}
+\label{chap:especificacao_requisitos}
+
+\section{Visão Geral dos Requisitos}
+Esta seção estabelece o escopo e o contexto operacional dos requisitos de software, estruturados em conformidade com as recomendações das normas \textbf{IEEE Std 830-1998} e \textbf{ISO/IEC/IEEE 29148:2018}.
+
+\subsection{Funções do Produto}
+Resumo das principais capacidades funcionais oferecidas pelo software aos usuários.
+
+\subsection{Classes e Características dos Usuários}
+\begin{itemize}
+    \item \textbf{Administrador do Sistema:} Responsável pela gestão de usuários, controle de permissões e auditoria;
+    \item \textbf{Operador / Usuário Especialista:} Executa as atividades fins do domínio de aplicação;
+    \item \textbf{Cliente / Usuário Final:} Consulta informações e interage via interface pública.
+\end{itemize}
+
+\subsection{Restrições Gerais de Design e Implementação}
+Restrições tecnológicas, regulatórias, de compatibilidade e segurança impostas à solução.
+
+\section{Requisitos Funcionais (RF)}
+Os requisitos funcionais estão catalogados por módulos, identificados de forma unívoca.
+
+\begin{table}[htbp]
+\caption{Quadro de Requisitos Funcionais do Sistema}
+\label{tab:requisitos_funcionais}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l l Y c @{}}
+\toprule
+\textbf{ID} & \textbf{Módulo} & \textbf{Descrição Funcional} & \textbf{Prioridade} \\
+\midrule
+RF01 & Identidade & Permitir autenticação de usuários via JWT com bloqueio após 5 tentativas. & \badgealta \\
+RF02 & Agendamento & Registrar agendamento com verificação automática de conflito de agenda. & \badgealta \\
+RF03 & Prontuário & Permitir registro de evolução médica com histórico imutável assinado. & \badgealta \\
+RF04 & Estoque & Atualizar saldo em tempo real e emitir alerta de ponto de reposição. & \badgemedia \\
+RF05 & Relatórios & Gerar relatórios consolidados em formato PDF e planilha eletrônica. & \badgebaixa \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Atributos e Dicionário de Dados dos Requisitos}
+\begin{table}[htbp]
+\caption{Dicionário de Atributos do Requisito de Agendamento (RF02)}
+\label{tab:dicionario_dados}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l l l c Y @{}}
+\toprule
+\textbf{Campo} & \textbf{Tipo} & \textbf{Tamanho / Formato} & \textbf{Obrigatório} & \textbf{Regra de Validação} \\
+\midrule
+id\_agendamento & UUID & 36 caracteres & Sim & Chave primária gerada pelo sistema. \\
+data\_hora & Datetime & ISO 8601 & Sim & Deve ser no futuro e em horário comercial. \\
+paciente\_id & UUID & 36 caracteres & Sim & Deve existir e estar ativo no cadastro. \\
+status & Enum & [Agendada, Concluída, Cancelada] & Sim & Inicial padrão: Agendada. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Restrições de Domínio e Regras de Negócio (RN)}
+As regras de negócio do sistema regem as validações fundamentais de integridade operacional:
+
+\begin{table}[htbp]
+\caption{Catálogo de Regras de Negócio (RN)}
+\label{tab:regras_negocio}
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{} l l Y @{}}
+\toprule
+\textbf{Código} & \textbf{Nome da Regra} & \textbf{Descrição e Condição de Guarda} \\
+\midrule
+RN01 & Validação de Conflito de Horários & Não é permitido que o mesmo profissional tenha dois atendimentos agendados com sobreposição temporal no mesmo consultório ou horário. \\
+RN02 & Imutabilidade de Registros Clínicos & Registros de atendimento e prescrições médicas finalizados não podem ser alterados nem excluídos, sendo permitidas apenas retificações mediante novas entradas assinadas digitalmente. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Requisitos Não Funcionais (RNF)}
+\begin{table}[htbp]
+\caption{Quadro de Requisitos Não Funcionais}
+\label{tab:requisitos_nao_funcionais}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l l Y l @{}}
+\toprule
+\textbf{ID} & \textbf{Categoria} & \textbf{Especificação e Métrica} & \textbf{Padrão / Critério} \\
+\midrule
+RNF01 & Desempenho & O tempo de resposta para operações comuns deve ser $\le 2{,}0$ segundos sob carga nominal de 100 requisições/s. & $95\%$ das requisições. \\
+RNF02 & Segurança & Senhas devem ser armazenadas com hash Argon2 ou Bcrypt com salt aleatório. & OWASP Top 10. \\
+RNF03 & Disponibilidade & O sistema deve manter índice de disponibilidade de no mínimo $99{,}5\%$ em produção. & SLA acordado. \\
+RNF04 & Conformidade & Todos os dados pessoais sensíveis devem ser tratados em conformidade estrita com a LGPD. & Lei nº 13.709/2018. \\
+\bottomrule
+\end{tabularx}
+\end{table}

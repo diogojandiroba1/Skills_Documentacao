@@ -1,0 +1,83 @@
+\chapter{Design Técnico e Modelagem Detalhada}
+\label{chap:design_tecnico}
+
+\section{Mapeamento Objeto-Relacional (ORM)}
+O mapeamento objeto-relacional traduz o modelo conceitual de domínio para esquemas físicos de persistência em banco relacional, garantindo integridade referencial através de chaves primárias e estrangeiras bem definidas.
+
+\subsection{Esquema Físico Textual}
+\begin{lstlisting}[language=SQL, caption={Esquema Relacional das Tabelas Principais (DDL Parcial)}]
+CREATE TABLE tb_usuario (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    nome VARCHAR(120) NOT NULL,
+    email VARCHAR(120) UNIQUE NOT NULL,
+    senha_hash VARCHAR(255) NOT NULL,
+    papel VARCHAR(30) NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE,
+    criado_em TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tb_agendamento (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    cliente_id UUID NOT NULL REFERENCES tb_usuario(id),
+    profissional_id UUID NOT NULL REFERENCES tb_usuario(id),
+    data_hora TIMESTAMP WITH TIME ZONE NOT NULL,
+    status VARCHAR(20) DEFAULT 'AGENDADO',
+    CONSTRAINT unq_horario_profissional UNIQUE (profissional_id, data_hora)
+);
+\end{lstlisting}
+
+\section{Diagrama de Classes em Nível de Projeto}
+Diferente do diagrama de análise, o diagrama de projeto especifica as classes de implementação: controladores, casos de uso, repositórios, entidades e DTOs, incluindo visibilidade (\texttt{+}, \texttt{-}, \texttt{\#}), tipos de retorno e parâmetros de métodos.
+
+\paragraph{Diretriz de Decomposição de Diagramas:}
+Para evitar poluição visual e cruzamento desordenado de linhas, o diagrama de classes em nível de projeto deve ser apresentado dividido por módulos funcionais (subpacotes), acompanhado de tabela sintética de métodos e atributos.
+
+\section{Diagramas Dinâmicos}
+
+\subsection{Diagramas de Sequência}
+Representam a ordem temporal das trocas de mensagens entre objetos e serviços durante a execução de um caso de uso crítico.
+
+\begin{center}
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}\small\textbf{[Diagrama de Sequência -- UC01 Agendamento]}\\\textit{Insira o diagrama correspondente exportado em Imagens/}\vspace{1cm}}}
+\end{center}
+
+\subsection{Diagramas de Máquinas de Estados}
+Modelam o ciclo de vida e as transições de estado permitidas para entidades centrais da regra de negócio (ex.: Consulta, Pedido, Prescrição).
+
+\begin{table}[htbp]
+\caption{Matriz de Transição de Estados da Entidade Agendamento}
+\label{tab:transicao_estados}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l Y Y l @{}}
+\toprule
+\textbf{Estado Origem} & \textbf{Evento / Ação} & \textbf{Condição de Guarda} & \textbf{Estado Destino} \\
+\midrule
+Solicitado & Confirmar Agendamento & Horário válido e sem colisão & Agendado \\
+Agendado & Iniciar Atendimento & Presença do cliente confirmada & Em Atendimento \\
+Agendado & Cancelar & Solicitação com antecedência $\ge 2$h & Cancelado \\
+Em Atendimento & Finalizar Consulta & Prontuário preenchido e assinado & Concluído \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Diagramas de Atividades}
+Ilustram fluxos operacionais completos com bifurcações condicionais, paralelismo (fork/join) e raias de responsabilidade (swimlanes) entre diferentes setores ou sistemas.
+
+\section{Status dos Casos de Uso Implementáveis}
+\begin{table}[htbp]
+\caption{Quadro de Status e Cobertura de Implementação}
+\label{tab:status_implementacao}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l Y c l @{}}
+\toprule
+\textbf{Caso de Uso} & \textbf{Nome do Módulo} & \textbf{Status Atual} & \textbf{Responsável} \\
+\midrule
+UC01 & Autenticação e RBAC & \badgeconcluido & Back-end Team \\
+UC02 & Agendamento e Grade & \badgeconcluido & Back-end Team \\
+UC03 & Prontuário Eletrônico & \badgeemprogresso & Full-stack Team \\
+UC04 & Gestão de Estoque & \badgenaoiciada & Back-end Team \\
+\bottomrule
+\end{tabularx}
+\end{table}

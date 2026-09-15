@@ -1,0 +1,151 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% estilo.sty
+%% Pacote de Estilo Minimalista e Executivo para Engenharia de Software
+%% Padrão de Mercado (Enterprise Tech Spec & Architecture Design)
+%% Autor: Diogo Santos Pires Jandiroba
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{estilo}[2026/09/14 v2.5 Estilo Executivo Minimalista de Mercado]
+
+% Pacotes Gráficos e Vetoriais
+\RequirePackage{graphicx}
+\RequirePackage[export]{adjustbox}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc,fit}
+
+% Tabelas Limpas Padrão Executivo (booktabs)
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{longtable}
+\RequirePackage{array}
+\RequirePackage{colortbl}
+\RequirePackage{multirow}
+\RequirePackage{float}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headergray}{RGB}{243, 244, 246} % Fundo suave do cabeçalho da tabela
+\definecolor{linegray}{RGB}{229, 231, 235}   % Linhas de grade sutis
+\colorlet{tableheader}{headergray}
+
+% Ambientes de Destaque Minimalistas (tcolorbox com barra lateral fina, sem caixas infantis)
+\RequirePackage[most]{tcolorbox}
+
+% 1. Bloco de Destaque Geral / Nota Técnica
+\newtcolorbox{destaque}[1][Nota Técnica]{
+    blanker,
+    borderline west={2.0pt}{0pt}{textmuted},
+    left=12pt,
+    top=4pt,
+    bottom=4pt,
+    fonttitle=\bfseries\small\color{primary},
+    title={#1\par\vspace{2pt}},
+    before skip=10pt,
+    after skip=10pt
+}
+
+% 2. Bloco de Decisão Arquitetural / ADR / Solução Adotada (Minimalista sem fundo estranho)
+\newtcolorbox{decisao}[1][Decisão de Projeto]{
+    blanker,
+    borderline west={2.5pt}{0pt}{primary},
+    left=12pt,
+    top=4pt,
+    bottom=4pt,
+    fonttitle=\bfseries\normalsize\color{primary},
+    title={#1\par\vspace{3pt}},
+    before skip=12pt,
+    after skip=12pt
+}
+
+% 3. Bloco de Restrição Crítica / Segurança / LGPD (Minimalista sem fundo estranho)
+\newtcolorbox{restricao}[1][Restrição Crítica / Conformidade]{
+    blanker,
+    borderline west={2.5pt}{0pt}{primary},
+    left=12pt,
+    top=4pt,
+    bottom=4pt,
+    fonttitle=\bfseries\small\color{primary},
+    title={#1\par\vspace{2pt}},
+    before skip=10pt,
+    after skip=10pt
+}
+
+% Compatibilidade com código legado se houver
+\let\notabox\destaque
+\let\endnotabox\enddestaque
+\let\decisaobox\decisao
+\let\enddecisaobox\enddecisao
+\let\alertainfo\restricao
+\let\endalertainfo\endrestricao
+\let\regrabox\destaque
+\let\endregrabox\enddestaque
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LISTINGS E FORMATAÇÃO DE CÓDIGO FONTE (MONO CORPORATIVO)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{listings}
+
+\lstdefinestyle{moderncode}{
+    backgroundcolor=\color{bgneutral},
+    basicstyle=\ttfamily\small\color{primary},
+    keywordstyle=\bfseries\color{primary},
+    commentstyle=\itshape\color{textmuted},
+    stringstyle=\color{secondary},
+    numberstyle=\tiny\color{textmuted},
+    numbers=left,
+    numbersep=8pt,
+    stepnumber=1,
+    breaklines=true,
+    breakatwhitespace=true,
+    frame=single,
+    rulecolor=\color{borderline},
+    tabsize=2,
+    showstringspaces=false,
+    captionpos=b,
+    xleftmargin=12pt,
+    framexleftmargin=12pt
+}
+
+\lstset{style=moderncode}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BADGES DE STATUS E PRIORIDADE (SÓBRIOS E FORMAIS)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\badgealta}{\textbf{\footnotesize [ALTA]}}
+\newcommand{\badgemedia}{\textbf{\footnotesize [MÉDIA]}}
+\newcommand{\badgebaixa}{\textbf{\footnotesize [BAIXA]}}
+
+\newcommand{\badgeconcluido}{\textbf{\footnotesize [CONCLUÍDO]}}
+\newcommand{\badgeemprogresso}{\textbf{\footnotesize [EM ANDAMENTO]}}
+\newcommand{\badgenaoiciada}{\textbf{\footnotesize [PENDENTE]}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MACROS PARA INCLUSÃO PADRONIZADA DE DIAGRAMAS E FIGURAS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\incluirdiagrama}[3]{%
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth,height=0.45\textheight,keepaspectratio]{#1}
+    \caption{#2}\label{#3}
+  \end{figure}
+}
+
+\newcommand{\incluirdiagramalargo}[3]{%
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth,height=0.65\textheight,keepaspectratio]{#1}
+    \caption{#2}\label{#3}
+  \end{figure}
+}
+
+\newcommand{\incluirdiagramacompacto}[3]{%
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth,height=0.35\textheight,keepaspectratio]{#1}
+    \caption{#2}\label{#3}
+  \end{figure}
+}
+
+\endinput

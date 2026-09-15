@@ -1,0 +1,47 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% main_individual.tex
+%% Modelo para Compilação de Documento Técnico Individual / Avulso
+%% Padrão de Mercado (Enterprise Tech Spec & Architecture Whitepaper)
+%% Autor: Diogo Santos Pires Jandiroba
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[individual]{modern-engsoft}
+\usepackage{estilo}
+
+% Metadados Corporativos para o Documento Individual
+\empresa{Software Architecture \& Systems Engineering}
+\projeto{Enterprise Health Platform}
+\documentotipo{Documento de Arquitetura de Software (SAD)}
+\title{Arquitetura de Software e Decisões de Design}
+\subtitulo{Conforme as Normas ISO/IEC/IEEE 42010 e ArchCaMo}
+\titulocurto{Enterprise Platform -- SAD}
+\versao{v1.0.0}
+\statusdoc{Aprovado para Implementação}
+\classificacao{Confidencial -- Uso Interno}
+\local{Brasil}
+\date{Setembro de 2026}
+
+% Autoria Exclusiva de Mercado
+\autor{Diogo Santos Pires Jandiroba}
+\funcao{Lead Software Engineer \& Solutions Architect}
+
+\begin{document}
+
+\imprimircapa
+
+\tableofcontents
+\newpage
+
+% Para compilar outro documento avulso, basta descomentar o respectivo include abaixo:
+%\include{Capitulos/01_Plano_Projeto}
+%\include{Capitulos/02_Especificacao_Requisitos}
+%\include{Capitulos/03_Modelagem_Casos_Uso}
+\include{Capitulos/04_Arquitetura_Software}
+%\include{Capitulos/05_Design_Tecnico}
+%\include{Capitulos/06_Plano_Testes}
+%\include{Capitulos/07_Implantacao_DevOps}
+
+\bibliographystyle{plain}
+\bibliography{Bibliografia}
+
+\end{document}

@@ -1,0 +1,122 @@
+\chapter{Plano de Projeto e Viabilidade}
+\label{chap:plano_projeto}
+
+\section{Termo de Abertura do Projeto (Project Charter)}
+Este documento estabelece formalmente a autorização e o escopo estratégico para o desenvolvimento da plataforma de software, definindo objetivos corporativos, partes interessadas e alinhamento de mercado.
+
+\subsection{Visão do Produto e Declaração de Posicionamento}
+\textbf{Para} organizações de saúde e clínicas médicas, \textbf{cujo} desafio reside na descentralização operacional e fragmentação de prontuários, \textbf{o} Sistema de Gestão de Clínica (SGC) \textbf{é uma} plataforma corporativa de prontuário eletrônico e gestão operacional integrada \textbf{que} automatiza agendamentos, histórico clínico e faturamento em tempo real, \textbf{diferente de} sistemas legados engessados e planilhas desconexas, \textbf{nosso produto} oferece arquitetura modular assíncrona com soberania total de dados e conformidade estrita com a LGPD desde a concepção.
+
+\subsection{Mapeamento de Partes Interessadas (Matriz Poder $\times$ Interesse)}
+A gestão de stakeholders segue a Matriz de Mendelow para orientar as estratégias de comunicação e engajamento:
+\begin{itemize}
+    \item \textbf{Gerenciar de Perto (Alto Poder, Alto Interesse):} Diretores da Clínica, Corpo Clínico Chefe e Arquiteto de Software;
+    \item \textbf{Manter Satisfeito (Alto Poder, Baixo Interesse):} Encarregado de Proteção de Dados (DPO) e Auditores Externos;
+    \item \textbf{Manter Informado (Baixo Poder, Alto Interesse):} Recepcionistas, Atendentes e Pacientes;
+    \item \textbf{Monitorar (Baixo Poder, Baixo Interesse):} Prestadores de serviços periféricos de manutenção física.
+\end{itemize}
+
+\section{Definição do Problema e Cenário Atual}
+Apresentação detalhada das ineficiências, gargalos e riscos identificados no cenário atual que justificam a construção do software.
+
+\section{Objetivos do Sistema}
+\subsection{Objetivo Geral}
+Desenvolver uma solução de software corporativa, segura e escalável para unificar a gestão assistencial e administrativa.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}
+    \item Automatizar os processos operacionais críticos da recepção e consultórios;
+    \item Garantir rastreabilidade integral dos registros e auditoria imutável de ações clínicas;
+    \item Assegurar conformidade técnica com requisitos de segurança e legislação aplicável (LGPD).
+\end{itemize}
+
+\section{Estudo de Viabilidade e Soluções Alternativas}
+\begin{table}[htbp]
+\caption{Matriz Comparativa de Abordagens de Solução}
+\label{tab:comparativo_solucoes}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l Y Y l @{}}
+\toprule
+\textbf{Abordagem} & \textbf{Vantagens} & \textbf{Desvantagens} & \textbf{Veredito} \\
+\midrule
+Desenvolvimento Próprio & Aderência total ao negócio, controle do código e soberania LGPD. & Maior tempo inicial de construção. & \textbf{Adotada} \\
+Software as a Service (SaaS) & Implantação imediata e suporte do fornecedor. & Custo recorrente elevado, dependência de terceiros. & Descartada \\
+Customização Open-source & Custo zero de licença e base pré-existente. & Esforço de adaptação equivalente a refazer o núcleo. & Descartada \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Solução Adotada e Justificativa Técnica (Rationale)}
+Optou-se pelo desenvolvimento próprio do sistema para assegurar soberania sobre os dados sensíveis dos pacientes, eliminar custos de licenciamento recorrentes por assento e permitir total controle sobre a arquitetura de segurança, garantindo conformidade com a LGPD desde a concepção.
+
+\section{Especificação de Componentes e Infraestrutura}
+\subsection{Hardware e Periféricos}
+Especificação dos nós de produção, estações de trabalho e dispositivos móveis necessários para operação.
+
+\subsection{Stack de Software}
+Linguagens, frameworks, bibliotecas e sistemas gerenciadores de banco de dados adotados.
+
+\subsection{Redes e Hospedagem}
+Topologia de rede local, links redundantes de comunicação externa e provedor de computação em nuvem.
+
+\section{Organização da Equipe de Desenvolvimento}
+\begin{table}[htbp]
+\caption{Alocação de Responsabilidades da Equipe (Matriz RACI Sintética)}
+\label{tab:equipe_raci}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l l Y @{}}
+\toprule
+\textbf{Perfil / Função} & \textbf{Responsável} & \textbf{Responsabilidades Principais} \\
+\midrule
+Arquiteto de Software & Engenheiro de Software Sênior & Decisões estruturais, modelos 4+1 e ADRs. \\
+Engenheiro de Requisitos & Analista de Negócios / Requisitos & Elicitação, especificação IEEE 830 e validação. \\
+Desenvolvedores Front/Back & Equipe de Desenvolvimento & Construção e testes unitários/integrados. \\
+Engenheiro de DevOps/QA & Especialista em Infra/Testes & CI/CD, ambientes, pipelines de teste e deploy. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Gerenciamento de Tempo e Cronograma}
+\subsection{Estrutura Analítica do Projeto (WBS / EAP)}
+Decomposição hierárquica do escopo em pacotes de trabalho mensuráveis.
+
+\subsection{Cronograma Sintético e Marcos de Entrega}
+\begin{table}[htbp]
+\caption{Cronograma Macro e Marcos Formais de Entrega}
+\label{tab:marcos_entrega}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l l Y l @{}}
+\toprule
+\textbf{Marco} & \textbf{Período} & \textbf{Entregáveis Consolidados} & \textbf{Status} \\
+\midrule
+M1: Planejamento & Semanas 1 a 2 & Plano de Projeto, WBS e Estimativas. & \badgeconcluido \\
+M2: Requisitos & Semanas 2 a 5 & IEEE 830, Casos de Uso e Protótipos. & \badgeconcluido \\
+M3: Arquitetura/Design & Semanas 5 a 7 & SAD ISO 42010, ORM e Diagramas UML. & \badgeconcluido \\
+M4: Construção & Semanas 7 a 12 & Módulos implementados e integrados. & \badgeemprogresso \\
+M5: Homologação & Semanas 13 a 14 & Bateria de testes, deploy e validação final. & \badgenaoiciada \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Análise e Gerenciamento de Riscos}
+\begin{table}[htbp]
+\caption{Registro de Riscos do Projeto}
+\label{tab:registro_riscos}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l Y c c Y @{}}
+\toprule
+\textbf{ID} & \textbf{Descrição do Risco} & \textbf{Prob.} & \textbf{Imp.} & \textbf{Ação de Mitigação / Prevenção} \\
+\midrule
+R01 & Desalinhamento de requisitos de negócio & Média & Alto & Prototipação rápida e validação formal. \\
+R02 & Falhas de concorrência em horários e estoque & Média & Alto & Bloqueio pessimista / isolamento transacional ACID. \\
+R03 & Vazamento de dados pessoais/sensíveis & Baixa & Crítico & Criptografia, RBAC granular e logs de auditoria. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Estimativas de Custos e Orçamento}
+Projeção orçamentária considerando infraestrutura em nuvem, ferramentas de apoio, licenças e mão de obra alocada.

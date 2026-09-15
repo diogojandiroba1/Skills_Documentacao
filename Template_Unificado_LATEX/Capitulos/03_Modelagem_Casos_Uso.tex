@@ -1,0 +1,93 @@
+\chapter{Modelagem de Casos de Uso e Análise Conceitual}
+\label{chap:modelagem_casos_uso}
+
+\section{Identificação e Estratégia dos Atores}
+Atores representam os papéis desempenhados por usuários humanos ou sistemas externos que interagem diretamente com as fronteiras do sistema.
+
+\begin{table}[htbp]
+\caption{Quadro de Atores do Sistema}
+\label{tab:atores_sistema}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l l Y @{}}
+\toprule
+\textbf{Ator} & \textbf{Tipo} & \textbf{Descrição do Papel} \\
+\midrule
+Recepcionista & Humano & Realiza agendamentos, confirma atendimentos e cadastra clientes. \\
+Profissional Especialista & Humano & Preenche laudos, registros técnicos e atende demandas especializadas. \\
+Administrador & Humano & Gerencia permissões, audita logs e configura parâmetros do sistema. \\
+Gateway de Pagamento & Sistema Externo & Processa cobranças, emite confirmações de transação financeira. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Diagrama Geral de Casos de Uso}
+A visão geral de casos de uso delimita as funcionalidades disponibilizadas aos diferentes atores. A modelagem detalhada é particionada por módulos funcionais para evitar diagramas monolíticos com cruzamento excessivo de linhas.
+
+\begin{center}
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}\small\textbf{[Diagrama Geral de Casos de Uso]}\\\textit{Insira o arquivo em Imagens/ e utilize o comando \texttt{\textbackslash incluirdiagrama\{Imagens/nome\_arquivo\}\{Legenda\}\{label\}}}\vspace{1cm}}}
+\end{center}
+
+\section{Especificação Textual dos Casos de Uso}
+
+\subsection{UC01 -- Realizar Agendamento}
+\begin{table}[htbp]
+\caption{Especificação Textual do Caso de Uso UC01}
+\label{tab:uc01_especificacao}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l Y @{}}
+\toprule
+\multicolumn{2}{@{}l}{\textbf{UC01 -- Realizar Agendamento de Atendimento}} \\
+\midrule
+\textbf{Atores} & Recepcionista (iniciador), Cliente. \\
+\textbf{Objetivo} & Registrar uma nova sessão de atendimento para o cliente no calendário do profissional. \\
+\textbf{Pré-condições} & O cliente e o profissional devem estar previamente cadastrados e ativos no sistema. \\
+\textbf{Pós-condições} & O horário é bloqueado na agenda e uma notificação de confirmação é enviada. \\
+\midrule
+\multicolumn{2}{@{}l}{\textbf{Fluxo Principal}} \\
+\midrule
+\multicolumn{2}{@{}X}{
+1. A recepcionista acessa a opção de agendamento no sistema. \newline
+2. O sistema solicita a identificação do cliente e a especialidade desejada. \newline
+3. A recepcionista informa o CPF do cliente e seleciona o profissional. \newline
+4. O sistema exibe a grade de horários disponíveis do profissional selecionado. \newline
+5. A recepcionista seleciona a data e horário desejados. \newline
+6. O sistema valida a inexistência de conflitos de horário (RN01). \newline
+7. O sistema solicita a confirmação dos dados da reserva. \newline
+8. A recepcionista confirma a operação. \newline
+9. O sistema persiste o agendamento com status ``Agendado'' e exibe mensagem de sucesso.
+} \\
+\midrule
+\multicolumn{2}{@{}l}{\textbf{Fluxos Alternativos e de Exceção}} \\
+\midrule
+\multicolumn{2}{@{}X}{
+\textbf{FA01 -- Cliente Não Cadastrado (Passo 3):} O sistema permite redirecionar para o cadastro rápido do cliente e retomar o agendamento.\newline
+\textbf{FE01 -- Horário Indisponível / Conflito Simultâneo (Passo 6):} Se outro operador reservar o horário simultaneamente, o sistema informa a colisão e reapresenta os horários livres atualizados.
+} \\
+\midrule
+\textbf{Regras de Negócio} & RN01 (Conflito de horários), RN03 (Antecedência mínima de cancelamento). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Matriz de Rastreabilidade (Requisitos vs Casos de Uso)}
+\begin{table}[htbp]
+\caption{Matriz de Rastreabilidade entre Requisitos Funcionais e Casos de Uso}
+\label{tab:rastreabilidade_rf_uc}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l Y l @{}}
+\toprule
+\textbf{Requisito Funcional} & \textbf{Descrição Sintética} & \textbf{Casos de Uso Associados} \\
+\midrule
+RF01 & Autenticação e Controle de Acesso & UC00 (Autenticar Usuário) \\
+RF02 & Agendamento de Consultas & UC01 (Realizar Agendamento), UC02 (Cancelar Agendamento) \\
+RF03 & Prontuário e Evolução & UC03 (Registrar Atendimento Clínico) \\
+RF04 & Controle de Estoque & UC04 (Dispensar Insumos), UC05 (Repor Estoque) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Diagrama de Classes de Análise / Conceitual de Domínio}
+O modelo de domínio descreve os conceitos e entidades fundamentais de negócio sem detalhes técnicos de implementação (banco de dados, linguagens de programação ou frameworks).

@@ -1,0 +1,82 @@
+\chapter{Plano e Especificação de Testes de Software}
+\label{chap:plano_testes}
+
+\section{Estratégia e Abordagem de Testes}
+A garantia da qualidade do software segue as diretrizes da norma internacional \textbf{ISO/IEC/IEEE 29119}. A estratégia apoia-se no modelo de Pirâmide de Testes, priorizando uma ampla base de testes unitários automatizados, complementada por testes de integração de API e testes ponta a ponta (E2E) para fluxos críticos.
+
+\begin{itemize}
+    \item \textbf{Testes Unitários:} Validação isolada de regras de negócio, entidades de domínio e métodos de serviço;
+    \item \textbf{Testes de Integração:} Validação dos endpoints HTTP, transações com o banco de dados PostgreSQL e geração de tokens JWT;
+    \item \textbf{Testes de Sistema / E2E:} Simulação de fluxos completos do usuário a partir da interface React;
+    \item \textbf{Testes de Desempenho e Carga:} Medição de latência e vazão sob requisições concorrentes via k6 ou JMeter.
+\end{itemize}
+
+\section{Ambientes e Ferramentas de Teste}
+\begin{table}[htbp]
+\caption{Ferramentas do Ecossistema de Testes}
+\label{tab:ferramentas_teste}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l l Y @{}}
+\toprule
+\textbf{Nível de Teste} & \textbf{Ferramenta} & \textbf{Escopo e Utilização} \\
+\midrule
+Unitário (Back-end) & Pytest + pytest-mock & Teste de regras de negócio e validações Pydantic. \\
+Integração (API) & HTTPX + pytest-asyncio & Testes assíncronos das rotas FastAPI em banco de teste. \\
+Unitário (Front-end) & Vitest + React Testing Library & Renderização de componentes e simulação de cliques. \\
+Carga / Estresse & k6 & Teste de pico de acessos simultâneos ao agendamento. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Critérios de Entrada, Suspensão e Aceite}
+\begin{itemize}
+    \item \textbf{Critério de Aceite de Versão:} Cobertura mínima de código $\ge 80\%$ das linhas de negócio, $100\%$ dos testes de regressão passando no pipeline CI e zero bugs de severidade Crítica ou Alta abertos;
+    \item \textbf{Critério de Suspensão:} Falha que impeça o build da imagem Docker ou indisponibilidade do banco de dados nos testes automatizados.
+\end{itemize}
+
+\section{Catálogo de Casos de Teste (CT)}
+Os casos de teste foram especificados de forma determinística e reproduzível, cobrindo cenários nominais e de exceção. A Tabela~\ref{tab:caso_teste_ct01} exemplifica o caso de teste referente ao agendamento de consultas.
+
+\begin{table}[H]
+\caption{Caso de Teste CT01 -- Validação de Conflito de Horário}
+\label{tab:caso_teste_ct01}
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{} l Y @{}}
+\toprule
+\multicolumn{2}{@{}l}{\textbf{CT01 -- Tentativa de Agendamento em Horário Ocupado}} \\
+\midrule
+\textbf{Requisito / UC} & RF02 / UC01 \\
+\textbf{Pré-condições} & Profissional P1 possui agendamento confirmado para o dia D às 14:00. \\
+\textbf{Procedimento} & 
+1. Realizar requisição POST para \texttt{/api/v1/agendamentos};\newline
+2. Enviar payload com \texttt{profissional\_id = P1} e \texttt{data\_hora = D 14:00};\newline
+3. Capturar o código de status HTTP e o corpo da resposta. \\
+\textbf{Resultado Esperado} & Status HTTP 409 (Conflict) com mensagem de erro informando indisponibilidade do horário. Nenhuma linha é duplicada no banco. \\
+\textbf{Critério de Sucesso} & Passagem automática no teste de integração da API. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Matriz de Rastreabilidade (Requisitos vs Testes)}
+A Tabela~\ref{tab:rastreabilidade_testes} consolida o mapeamento bidirecional entre os requisitos e as suítes de teste automatizadas, atestando a cobertura completa de validação.
+
+\begin{table}[H]
+\caption{Matriz de Rastreabilidade entre Requisitos e Casos de Teste}
+\label{tab:rastreabilidade_testes}
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{} l l Y c @{}}
+\toprule
+\textbf{Requisito} & \textbf{Descrição Sintética} & \textbf{Casos de Teste Vinculados} & \textbf{Resultado} \\
+\midrule
+RF01 & Autenticação e JWT & CT-AUTH-01, CT-AUTH-02, CT-AUTH-03 & \badgeconcluido \\
+RF02 & Agendamento de Horários & CT01, CT02, CT-LOAD-01 & \badgeconcluido \\
+RF03 & Prontuário Imutável & CT-PEP-01, CT-PEP-02 & \badgeemprogresso \\
+RNF01 & Tempo de Resposta $\le 2{,}0$s & CT-LOAD-01 (k6 estresse) & \badgeconcluido \\
+\bottomrule
+\end{tabularx}
+\end{table}

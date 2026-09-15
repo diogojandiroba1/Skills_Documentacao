@@ -1,0 +1,71 @@
+# ==============================================================================
+# LaTeX Build & Auxiliary Files
+# ==============================================================================
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.lof
+*.log
+*.lot
+*.nav
+*.nlo
+*.nls
+*.out
+*.pdfsync
+*.ps
+*.run.xml
+*.snm
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.toc
+*.vrb
+*.xdv
+
+# Duplicate and temporary files
+* (1).*
+*~
+*.bak
+*.sav
+*.tmp
+
+# ==============================================================================
+# Operating System Files
+# ==============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ==============================================================================
+# IDEs and Text Editors
+# ==============================================================================
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# ==============================================================================
+# Environment and Local Scratch
+# ==============================================================================
+.env
+.env.local
+scratch/
+.temp/

@@ -1,0 +1,64 @@
+\chapter{Guia de Implantação, DevOps e Runbook Operacional}
+\label{chap:implantacao_devops}
+
+\section{Arquitetura da Esteira de CI/CD}
+A esteira de Integração e Entrega Contínua (CI/CD) automatiza o fluxo de validação e implantação a partir do repositório GitHub via \textbf{GitHub Actions}.
+
+\begin{enumerate}
+    \item \textbf{Estágio de Linting e Formatação:} Execução do Ruff (Python) e ESLint (TypeScript) para garantia de conformidade de código;
+    \item \textbf{Estágio de Testes Automatizados:} Execução paralela de testes unitários e de integração com cobertura mínima exigida;
+    \item \textbf{Estágio de Build e Contêinerização:} Construção das imagens Docker otimizadas multi-stage;
+    \item \textbf{Estágio de Deploy Automático:} Implantação em ambiente de homologação após aprovação de Pull Request na branch principal.
+\end{enumerate}
+
+\section{Matriz de Ambientes e Gerenciamento de Configurações}
+\begin{table}[htbp]
+\caption{Matriz de Ambientes de Execução}
+\label{tab:matriz_ambientes}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l Y Y Y @{}}
+\toprule
+\textbf{Ambiente} & \textbf{Finalidade} & \textbf{Infraestrutura / Host} & \textbf{Estratégia de Deploy} \\
+\midrule
+Desenvolvimento & Testes locais dos desenvolvedores & Docker Compose local & Manual \\
+Homologação & Validação de PO e testes integrados & Servidor Cloud (Staging) & Automático (branch main) \\
+Produção & Ambiente operacional final em tempo real & Instâncias Cloud de Alta Disponibilidade & Manual com aprovação de 2 revisores \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Procedimento de Migração de Banco de Dados}
+As alterações de esquema no banco PostgreSQL são gerenciadas com versionamento estrito via \textbf{Alembic}. Nunca são executadas alterações manuais diretamente no banco de produção.
+
+\begin{lstlisting}[language=bash, caption={Comandos para Migração e Rollback de Banco de Dados}]
+# Aplicar todas as migracoes pendentes ate a versao mais recente
+alembic upgrade head
+
+# Reverter a ultima migracao em caso de anomalia durante deploy
+alembic downgrade -1
+\end{lstlisting}
+
+\section{Runbook Operacional e Monitoramento}
+\subsection{Monitoramento de Saúde e Alertas}
+\begin{itemize}
+    \item Endpoint de Healthcheck: \texttt{GET /api/v1/health} (verifica conectividade com o banco PostgreSQL e serviços de cache);
+    \item Logs Estruturados: Saída em formato JSON com nível (\texttt{INFO}, \texttt{WARNING}, \texttt{ERROR}), timestamp UTC e \texttt{correlation\_id} para rastreabilidade de requisições distribuídas.
+\end{itemize}
+
+\subsection{Procedimentos de Contingência, Backup e Rollback}
+\begin{table}[htbp]
+\caption{Plano de Resposta a Incidentes Operacionais}
+\label{tab:incidentes_runbook}
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{} l Y Y @{}}
+\toprule
+\textbf{Incidente} & \textbf{Ação Imediata} & \textbf{Procedimento de Recuperação} \\
+\midrule
+Falha pós-deploy & Reverter tráfego para a versão de imagem Docker anterior. & Acionar comando de rollback no orchestrator e reverter migração se necessário. \\
+Degradação de banco & Identificar consultas lentas no \texttt{pg\_stat\_activity}. & Reiniciar pool de conexões e escalonar réplica de leitura. \\
+Corrupção de dados & Isolar a aplicação em modo de manutenção. & Restaurar o backup incremental mais recente do Supabase/PostgreSQL. \\
+\bottomrule
+\end{tabularx}
+\end{table}

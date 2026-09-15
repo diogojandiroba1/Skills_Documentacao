@@ -1,0 +1,142 @@
+\chapter{Mapeamento objeto-relacional}
+O mapeamento objeto-relacional consiste na tradução do modelo de classes conceitual para o modelo relacional, estabelecendo como os objetos, seus atributos e associações serão persistidos de forma estruturada no banco de dados.
+
+Abaixo, apresenta-se o esquema relacional em notação textual. Os atributos em \textbf{negrito} representam as Chaves Primárias (PK) e os atributos \underline{sublinhados} indicam as Chaves Estrangeiras (FK).
+
+\subsection{Esquema Relacional Textual}
+
+\subsubsection{Módulo: Pessoas e Acesso}
+\begin{itemize}[itemsep=10pt]
+
+    \item \textbf{Usuario} (\textbf{id\_usuario}, nomeCompleto, cpf, dataNascimento, telefone, email, senhaHash, mfaHabilitado, situacao)
+
+    \item \textbf{Paciente} (\textbf{\underline{id\_usuario}}, cartaoSus, planoSaude)
+    \\{\small $\rightarrow$ id\_usuario referencia Usuario}
+
+
+    \item \textbf{Medico} (\textbf{\underline{id\_usuario}}, crm, especialidade, dataAdmissao)
+    \\{\small $\rightarrow$ id\_usuario referencia Usuario}
+
+    \item \textbf{Recepcionista} (\textbf{\underline{id\_usuario}}, cargo, dataAdmissao)
+    \\{\small $\rightarrow$ id\_usuario referencia Usuario}
+
+    \item \textbf{Farmaceutico} (\textbf{\underline{id\_usuario}}, crf, cargo, dataAdmissao)
+    \\{\small $\rightarrow$ id\_usuario referencia Usuario}
+
+    \item \textbf{Financeiro} (\textbf{\underline{id\_usuario}}, cargo, dataAdmissao)
+    \\{\small $\rightarrow$ id\_usuario referencia Usuario}
+
+    \item \textbf{Administrador} (\textbf{\underline{id\_usuario}}, cargo, dataAdmissao)
+    \\{\small $\rightarrow$ id\_usuario referencia Usuario}
+
+    \item \textbf{Endereco} (\textbf{id\_endereco}, logradouro, numero, complemento, bairro, cidade, estado, cep, \underline{id\_usuario})
+    \\{\small $\rightarrow$ id\_usuario referencia Usuario}
+
+    \item \textbf{Perfil} (\textbf{id\_perfil}, nome, descricao)
+
+    \item \textbf{UsuarioPerfil} (\textbf{\underline{id\_usuario}}, \textbf{\underline{id\_perfil}}, dataAtribuicao, \underline{id\_atribuidor})
+    \\{\small $\rightarrow$ id\_usuario referencia Usuario; id\_perfil referencia Perfil; id\_atribuidor referencia Usuario}
+
+    \item \textbf{Permissao} (\textbf{id\_permissao}, modulo, acao)
+
+    \item \textbf{PerfilPermissao} (\textbf{\underline{id\_perfil}}, \textbf{\underline{id\_permissao}})
+    \\{\small $\rightarrow$ id\_perfil referencia Perfil; id\_permissao referencia Permissao}
+
+    \item \textbf{LogAuditoria} (\textbf{id\_log}, dataHora, ipOrigem, modulo, operacao, idRegistroAfetado, dadosAnteriores, dadosNovos, resultado, \underline{id\_usuario})
+    \\{\small $\rightarrow$ id\_usuario referencia Usuario}
+    \\{\small \textit{Registra eventos de acesso e operações auditáveis em módulos sensíveis do sistema.}}
+
+\end{itemize}
+
+\subsubsection{Módulo: Agenda e Atendimento}
+\begin{itemize}[itemsep=10pt]
+
+    \item \textbf{GradeHorario} (\textbf{id\_gradehorario}, diaSemana, horaInicio, horaFim, duracaoSlotMinutos, ativa, \underline{id\_medico})
+    \\{\small $\rightarrow$ id\_medico referencia Medico}
+
+    \item \textbf{SlotHorario} (\textbf{id\_slot}, inicio, fim, livre, \underline{id\_gradehorario})
+    \\{\small $\rightarrow$ id\_gradehorario referencia GradeHorario}
+
+    \item \textbf{Consulta} (\textbf{id\_consulta}, dataHoraInicio, dataHoraFim, status, motivo, \underline{id\_paciente}, \underline{id\_medico}, \underline{id\_sala}, \underline{id\_slot})
+    \\{\small $\rightarrow$ id\_paciente referencia Paciente; id\_medico referencia Medico; id\_sala referencia Sala; id\_slot referencia SlotHorario}
+    \\{\small \textit{Status: Agendada, Confirmada, Check-in, Em atendimento, Finalizada, Faturada, Remarcada, Cancelada}}
+
+    \item \textbf{RegistroCheckIn} (\textbf{id\_checkin}, dataHoraCheckIn, origemRegistro, observacao, \underline{id\_consulta})
+    \\{\small $\rightarrow$ id\_consulta referencia Consulta}
+
+
+    \item \textbf{Prontuario} (\textbf{id\_prontuario}, numero, dataAbertura, situacao, \underline{id\_paciente})
+    \\{\small $\rightarrow$ id\_paciente referencia Paciente}
+
+
+    \item \textbf{Anamnese} (\textbf{id\_anamnese}, dataHoraRegistro, queixaPrincipal, historiaAtual, \underline{id\_prontuario}, \underline{id\_medico})
+    \\{\small $\rightarrow$ id\_prontuario referencia Prontuario; id\_medico referencia Medico}
+
+
+    \item \textbf{EvolucaoClinica} (\textbf{id\_evolucao}, dataHoraRegistro, descricao, conduta, \underline{id\_prontuario}, \underline{id\_medico})
+    \\{\small $\rightarrow$ id\_prontuario referencia Prontuario; id\_medico referencia Medico}
+
+
+    \item \textbf{AnexoExame} (\textbf{id\_anexo}, nomeArquivo, tipoArquivo, dataAnexo, tamanhoMb, \underline{id\_prontuario}, \underline{id\_usuario})
+    \\{\small $\rightarrow$ id\_prontuario referencia Prontuario; id\_usuario referencia Usuario}
+
+
+\end{itemize}
+
+\subsubsection{Módulo: Farmácia Clínica}
+\begin{itemize}[itemsep=10pt]
+
+    \item \textbf{Medicamento} (\textbf{id\_medicamento}, nome, controlado, unidadeMedida, estoqueMinimo, codigoAnvisa, ativo)
+
+    \item \textbf{LoteMedicamento} (\textbf{id\_lote}, numeroLote, dataValidade, quantidadeAtual, \underline{id\_medicamento})
+    \\{\small $\rightarrow$ id\_medicamento referencia Medicamento}
+
+
+    \item \textbf{Prescricao} (\textbf{id\_prescricao}, dataEmissao, situacao, numeroReceitaEspecial, \underline{id\_consulta}, \underline{id\_medico}, \underline{id\_paciente})
+
+
+    \item \textbf{ItemPrescricao} (\textbf{id\_item}, dose, frequencia, duracaoDias, orientacaoUso, \underline{id\_prescricao}, \underline{id\_medicamento})
+    \\{\small $\rightarrow$ id\_prescricao referencia Prescricao; id\_medicamento referencia Medicamento}
+
+
+    \item \textbf{Dispensacao} (\textbf{id\_dispensacao}, dataHora, quantidadeDispensada, responsavel, \underline{id\_item\_prescricao}, \underline{id\_lote}, \underline{id\_farmaceutico})
+    \\{\small $\rightarrow$ id\_item\_prescricao referencia ItemPrescricao; id\_lote referencia LoteMedicamento; id\_farmaceutico referencia Farmaceutico}
+
+
+\end{itemize}
+
+\subsubsection{Módulo: Faturamento e Convênios}
+\begin{itemize}[itemsep=10pt]
+
+    \item \textbf{Convenio} (\textbf{id\_convenio}, nomeFantasia, cnpj, percentualCobertura, situacao)
+
+    \item \textbf{ServicoClinico} (\textbf{id\_servico}, codigo, nome, valorReferencia, situacao)
+
+
+    \item \textbf{ContaMedica} (\textbf{id\_conta}, numero, dataGeracao, valorTotal, status, formaPagamento, dataVencimento, dataPagamento, \underline{id\_consulta}, \underline{id\_paciente}, \underline{id\_convenio})
+    \\{\small $\rightarrow$ id\_consulta referencia Consulta; id\_paciente referencia Paciente; id\_convenio referencia Convenio}
+    \\{\small \textit{Status: Pendente, Pago, Cancelado, Em análise}}
+
+    \item \textbf{ItemContaMedica} (\textbf{id\_item\_conta}, quantidade, valorUnitario, valorCoberto, valorParticular, \underline{id\_conta}, \underline{id\_servico})
+    \\{\small $\rightarrow$ id\_conta referencia ContaMedica; id\_servico referencia ServicoClinico}
+
+\end{itemize}
+
+\subsubsection{Módulo: Infraestrutura}
+\begin{itemize}[itemsep=10pt]
+
+    \item \textbf{Sala} (\textbf{id\_sala}, identificador, localizacao, tipoUso, capacidade, situacao)
+
+
+    \item \textbf{Equipamento} (\textbf{id\_equipamento}, identificador, situacao, numeroSerie, modelo, fabricante, dataAquisicao, \underline{id\_sala})
+    \\{\small $\rightarrow$ id\_sala referencia Sala}
+
+
+    \item \textbf{ReservaRecurso} (\textbf{id\_reserva}, dataHoraInicio, dataHoraFim, finalidade, status, \underline{id\_consulta}, \underline{id\_sala}, \underline{id\_equipamento})
+    \\{\small $\rightarrow$ id\_consulta referencia Consulta; id\_sala referencia Sala; id\_equipamento referencia Equipamento}
+
+    \item \textbf{Manutencao} (\textbf{id\_manutencao}, tipo, dataInicio, dataPrevistaTermino, dataEfetivaTermino, situacao, \underline{id\_sala}, \underline{id\_equipamento})
+    \\{\small $\rightarrow$ id\_sala referencia Sala; id\_equipamento referencia Equipamento}
+
+
+\end{itemize}

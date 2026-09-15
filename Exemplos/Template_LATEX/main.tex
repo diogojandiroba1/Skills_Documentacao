@@ -1,0 +1,111 @@
+
+
+\documentclass[english, 
+               brazil, 
+               bsc] %Opções bsc (TCC) e msc (Mestrado)
+               {dcomp-abntex2}
+
+
+
+\usepackage{lipsum} %Retirar para a versão final do documento
+
+\usepackage[linesnumbered]{algorithm2e}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes.geometric, arrows.meta}
+\usepackage{pgfgantt}
+\usepackage{longtable}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes.multipart}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage{svg}
+\usepackage{array}
+\usepackage{float}
+\usepackage{pdflscape}
+\usepackage{needspace}
+\usepackage{caption}
+\usepackage{booktabs}
+\captionsetup[figure]{hypcap=false}
+\captionsetup[figure]{skip=4pt}
+
+\newcommand{\incluirdiagramageral}[3]{%
+    \begin{center}
+        \includegraphics[width=\textwidth,height=0.50\textheight,keepaspectratio]{#1}
+        \captionof{figure}{#2}\label{#3}
+    \end{center}
+}
+
+\newcommand{\incluirdiagramauc}[3]{%
+    \begin{center}
+        \includegraphics[width=\textwidth,height=0.24\textheight,keepaspectratio]{#1}
+        \captionof{figure}{#2}\label{#3}
+    \end{center}
+}
+
+\newcommand{\incluirdiagramapacote}[3]{%
+    \begin{center}
+        \includegraphics[width=\textwidth,height=0.50\textheight,keepaspectratio]{#1}
+        \captionof{figure}{#2}\label{#3}
+    \end{center}
+}
+
+
+\makeindex
+
+\begin{document}
+
+\selectlanguage{brazil}
+
+\frenchspacing 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ELEMENTOS PRÉ-TEXTUAIS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pretextual
+
+\titulo{Sistema de Gestão de Clínica}
+\autor{
+       Beatriz Baroni Sousa \\
+       Breno Thiago Argemiro Santos\\
+       Diogo Santos Pires Jandiroba \\
+       Lucas Rian Jacinto Santos \\
+       Luis Felipe Ramalho Carvalho \\
+       Luiz Antonio Santos Biano \\
+       Vinícius De Jesus Carmo \\}
+
+\inserirInformacoesPDF
+
+\imprimircapa
+
+\mostrarSUMARIO
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ELEMENTOS TEXTUAIS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textual
+\include{Conteudo/01_Introdução}
+\include{Conteudo/02_Map_O_R}
+\include{Conteudo/03_Diagramas_Classe}
+\include{Conteudo/04_Diagramas_dinamicos}
+\include{Conteudo/05_Arquitetura}
+\include{Conteudo/06_Status_dos_Casos_de_Uso}
+\phantompart
+%\bibliography{Bibliografia}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ELEMENTOS PÓS-TEXTUAIS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\postextual
+
+\renewcommand{\chapnumfont}{\chaptitlefont}
+\renewcommand{\afterchapternum}{}
+
+
+\end{document}

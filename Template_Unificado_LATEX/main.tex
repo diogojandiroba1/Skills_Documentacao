@@ -1,0 +1,53 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% main.tex
+%% Documento Técnico Consolidado de Engenharia de Software
+%% Padrão de Mercado (Enterprise Tech Spec & Architecture Whitepaper)
+%% Autor: Diogo Santos Pires Jandiroba
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[consolidado]{modern-engsoft}
+\usepackage{estilo}
+
+% Metadados Corporativos do Projeto e do Documento
+\empresa{Empresa XXX}
+\projeto{Projeto XXX}
+\documentotipo{Especificação Técnica Consolidada de Software}
+\title{Especificação Técnica e Arquitetura do Sistema}
+\subtitulo{Documentação Integral do Ciclo de Vida de Software}
+\titulocurto{Empresa XXX}
+\versao{v1.0.0}
+\statusdoc{Aprovado para Implementação}
+\classificacao{Uso Interno / Externo}
+\local{Brasil}
+\date{Setembro de 2026}
+
+% Autoria Exclusiva de Mercado
+\autor{Diogo Santos Pires Jandiroba}
+\funcao{Lead Software Engineer \& Solutions Architect}
+
+\begin{document}
+
+% Elementos Pré-Textuais
+\imprimircapa
+
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+\newpage
+
+% Elementos Textuais (Os Módulos do Ciclo de Vida)
+\include{Capitulos/01_Plano_Projeto}
+\include{Capitulos/02_Especificacao_Requisitos}
+\include{Capitulos/03_Modelagem_Casos_Uso}
+\include{Capitulos/04_Arquitetura_Software}
+\include{Capitulos/05_Design_Tecnico}
+\include{Capitulos/06_Plano_Testes}
+\include{Capitulos/07_Implantacao_DevOps}
+
+% Elementos Pós-Textuais
+\bibliographystyle{plain}
+\bibliography{Bibliografia}
+
+\end{document}
