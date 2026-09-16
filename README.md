@@ -199,15 +199,15 @@ A tabela abaixo sintetiza a cobertura do ciclo de vida de software, associando c
   5. Política de Fim de Vida e Descontinuação (Deprecation & EOL).
 - **Referência:** SWEBOK v4 Cap. 9; **ISO/IEC/IEEE 14764:2022**; IEEE Std 1219-1998; Práticas ITIL v4 / SRE.
 
-### 12. `doc-integrador-final` -- Orquestrador e Integrador Técnico
-- **Para que serve:** Atua como o editor técnico chefe que audita, harmoniza e consolida todos os artefatos gerados em uma Especificação Técnica Consolidada no template LaTeX unificado.
+### 12. `doc-integrador-final` -- Orquestrador, Auditor e Integrador Técnico
+- **Para que serve:** Atua como o editor técnico chefe que audita inconsistências cruzadas entre capítulos, aplica revisão ortográfica formal em PT-BR, executa o módulo *Humanizer* para expurgar clichês e jargões de IA, e consolida todos os artefatos no template LaTeX unificado.
 - **Estrutura Obrigatória:**
-  1. Harmonização Terminológica e Conceitual entre todos os capítulos.
-  2. Auditoria de Rastreabilidade Ponta a Ponta ($\text{Problema} \rightarrow \text{RF} \rightarrow \text{UC} \rightarrow \text{ADR} \rightarrow \text{Classe/ORM} \rightarrow \text{Teste}$).
-  3. Resolução e Validação de Referências Cruzadas e Citações Bibliográficas.
-  4. Matriz Global de Rastreabilidade do Ciclo de Vida Completo.
-  5. Execução do Ciclo de Compilação em 4 Passagens com zero erros fatais.
-- **Referência:** SWEBOK v4 Caps. 8, 11 e 12; **ISO/IEC/IEEE 15288:2023**; ISO/IEC/IEEE 12207:2017.
+  1. **Auditoria Ativa de Divergências Intercapítulos:** Mapeamento de contradições de stack tecnológica, requisitos órfãos, inconsistências entre modelo conceitual e DDL SQL, e divergências de SLAs.
+  2. **Revisão Ortográfica e Gramatical Rigorosa:** Aplicação estrita do Novo Acordo Ortográfico da Língua Portuguesa, regência verbal/nominal e concordância.
+  3. **Módulo "Humanizer" e Desintoxicação de IA (PT-BR):** Expulsa vícios robóticos de LLM (*"é importante ressaltar"*, *"vale destacar"*, *"no cenário atual"*, *"em suma"*, *"papel crucial"*), eliminando parágrafos ociosos (*fluff*) e garantindo redação técnica direta, assertiva e autoral.
+  4. **Auditoria de Rastreabilidade Ponta a Ponta e Diagramas StarUML v7.0:** Verificação da cadeia $\text{Problema} \rightarrow \text{RF} \rightarrow \text{UC} \rightarrow \text{ADR} \rightarrow \text{Classe/ORM} \rightarrow \text{Teste}$ e presença dos diagramas em 300 DPI com fundo branco em `Imagens/`.
+  5. **Execução do Ciclo de Compilação em 4 Passagens:** Compilação automatizada com zero erros fatais e sumários/referências perfeitamente resolvidos.
+- **Referência:** SWEBOK v4 Caps. 8, 11 e 12; **ISO/IEC/IEEE 15288:2023**; ISO/IEC/IEEE 12207:2017; Novo Acordo Ortográfico.
 
 ---
 
