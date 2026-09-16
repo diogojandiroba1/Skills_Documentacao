@@ -11,7 +11,47 @@ O agente atua simultaneamente como **gerente de sustentação operacional** e **
 
 ---
 
-## 1. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
+## 1. Protocolo Obrigatório de Investigação Ativa ("Interrogatório Técnico") e Gate de Aprovação
+
+Antes de redigir o Plano de Manutenção e Suporte de Software em LaTeX ou orientar diagramas no StarUML v7.0, o agente **NÃO deve assumir modelos de suporte ou SLAs sem consultar o usuário**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
+
+### 1.1. Bateria Investigativa de Perguntas (Elicitação de Manutenção e Suporte)
+O agente deve formular perguntas claras agrupadas por tópicos essenciais:
+
+1. **Níveis de Atendimento e Estrutura de Suporte:**
+   - Como será estruturado o suporte operacional (Helpdesk N1, Suporte Técnico N2, Engenharia N3)?
+   - Quem atende o N1 e quais ferramentas de chamados serão usadas (Jira Service Management, Zendesk, Freshdesk)?
+2. **Matriz de SLAs e Prazos de Resolução:**
+   - Quais são os tempos máximos aceitáveis para primeira resposta e resolução definitiva em cada severidade:
+     - Crítica (P1 - Sistema inoperante ou falha de segurança): ex.: $\le 15$ min resposta / $\le 2$h resolução?
+     - Alta (P2 - Funcionalidade essencial degradada): ex.: $\le 1$h resposta / $\le 8$h resolução?
+     - Média (P3 - Falhas secundárias): ex.: $\le 4$h resposta / $\le 48$h resolução?
+     - Baixa (P4 - Dúvidas e melhorias estéticas): ex.: $\le 8$h resposta / próxima release?
+3. **Tipologia de Manutenção (SWEBOK):**
+   - Quais são as prioridades de manutenção esperadas após o go-live (Corretiva, Adaptativa, Perfectiva, Preventiva)?
+   - Haverá janelas programadas de manutenção preventiva para upgrades de dependências e bancos?
+4. **Procedimento de Hotfixes Emergenciais:**
+   - Qual é o rito para aplicação de correções urgentes em produção (aprovações mínimas, testes acelerados, merge reverso em `main` e `staging`)?
+5. **Política de Descontinuação e EOL (End-of-Life):**
+   - Com quanto tempo de antecedência versões antigas de APIs e componentes serão avisadas e descontinuadas?
+
+### 1.2. Proposição Estruturada e Sugestão de Diagramas
+Após as respostas, o agente sintetiza e submete formalmente para validação:
+- **Matriz de SLAs Contratuais** e papéis de suporte N1/N2/N3;
+- **Procedimento Padronizado de Hotfix Emergencial**;
+- **Sugestão de Diagramas para Construção no StarUML v7.0:**
+  1. `Imagens/manut_ciclo_incidente.png`: Fluxo de Triagem e Escalonamento N1/N2/N3 (Activity Diagram com Swimlanes);
+  2. `Imagens/manut_fluxo_hotfix.png`: Fluxo de Hotfix Emergencial em Produção (Activity Diagram).
+
+### 1.3. Gate de Aprovação do Usuário (Ação Bloqueante)
+> [!IMPORTANT]
+> O agente deve finalizar a interação perguntando expressamente:
+> *"Você aprova esta matriz de SLAs, estrutura de níveis de suporte e os diagramas de incidentes sugeridos para prosseguirmos com a elaboração formal do Plano de Manutenção em LaTeX e o guia do StarUML v7.0?"*
+> **Nenhuma linha de LaTeX deve ser escrita nem arquivos modificados antes da aprovação explícita do usuário.**
+
+---
+
+## 2. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
 
 Esta skill está fundamentada nos preceitos formais da Engenharia de Software:
 - **SWEBOK v4 -- Capítulo 9 (Software Maintenance KA):**
@@ -31,7 +71,7 @@ Esta skill está fundamentada nos preceitos formais da Engenharia de Software:
 
 ---
 
-## 2. Estrutura Obrigatória do Documento
+## 3. Estrutura Obrigatória do Documento
 
 1. **Introdução e Escopo da Manutenção**
    - Transição formal da fase de desenvolvimento para a fase de operação/manutenção;
@@ -61,7 +101,7 @@ Esta skill está fundamentada nos preceitos formais da Engenharia de Software:
 
 ---
 
-## 3. Modelos de Tabelas e SLAs em LaTeX
+## 4. Modelos de Tabelas e SLAs em LaTeX
 
 ### Tabela de Acordos de Nível de Serviço (SLA - Padrão Booktabs)
 ```latex
@@ -98,7 +138,7 @@ Para qualquer incidente classificado como Severidade Crítica (P1):
 
 ---
 
-## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
+## 5. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
 ### 4.1. Fluxo de Triagem e Escalonamento N1/N2/N3 (Activity Diagram)
 1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Activity Diagram` e nomeie como `manut_ciclo_incidente`;
@@ -112,8 +152,9 @@ Para qualquer incidente classificado como Severidade Crítica (P1):
 
 ---
 
-## 5. Checklist de Qualidade do Agente
+## 6. Checklist de Qualidade do Agente
 
+- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
 - [ ] A matriz de SLA especifica tempos máximos contratuais de resposta e resolução definitiva?
 - [ ] Os fluxos de triagem e rito de hotfix foram prescritos para modelagem visual no StarUML v7.0?
 - [ ] Há clara distinção entre as 4 categorias canônicas de manutenção do SWEBOK?

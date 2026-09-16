@@ -11,7 +11,40 @@ O integrador atua também como **Auditor de Qualidade Visual dos Diagramas**, as
 
 ---
 
-## 1. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
+## 1. Protocolo Obrigatório de Investigação Ativa ("Interrogatório Técnico") e Gate de Aprovação
+
+Antes de consolidar a compilação final do documento completo ou gerar relatórios de auditoria, o agente **NÃO deve assumir o fechamento de artefatos sem consultar e validar com o usuário**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
+
+### 1.1. Bateria Investigativa de Perguntas (Auditoria e Consolidação Final)
+O agente deve formular perguntas claras agrupadas por tópicos essenciais:
+
+1. **Metadados e Identificação Oficial:**
+   - Quais são os dados formais definitivos para a capa e folha de rosto (Instituição, Nome Oficial do Sistema, Subtítulo, Versão SemVer ex.: 1.0.0, Nome dos Autores e Equipe)?
+2. **Escopo dos Capítulos a Consolidar:**
+   - Todos os capítulos disponíveis devem ser incluídos na compilação unificada (`main.tex`) ou algum capítulo deve ser compilado isoladamente com capa própria (`main_individual.tex`)?
+3. **Auditoria de Imagens e Diagramas do StarUML v7.0:**
+   - Todos os diagramas prescritos foram devidamente modelados no StarUML v7.0 e exportados para `Template_Unificado_LATEX/Imagens/` em 300 DPI com fundo branco?
+   - Há algum diagrama pendente de exportação que ainda precise de orientação passo a passo?
+4. **Resolução de Rastreabilidade e Requisitos Órfãos:**
+   - Há requisitos funcionais ou casos de uso que foram alterados durante a modelagem que precisem de ajuste na Matriz Global de Rastreabilidade?
+5. **Critérios de Fechamento Editorial:**
+   - Há exigências específicas de formatação ou inclusão de apêndices/anexos adicionais?
+
+### 1.2. Proposição Estruturada e Relatório de Pré-Integração
+Após as respostas, o agente sintetiza e submete formalmente para validação:
+- **Relatório Preliminar de Integridade:** Lista de capítulos presentes, status de cada diagrama em `Imagens/` e conferência de citações bibliográficas;
+- **Esboço da Matriz Global de Rastreabilidade** ($RF \leftrightarrow UC \leftrightarrow ADR \leftrightarrow Classe \leftrightarrow Teste$);
+- **Proposta de Configuração Final de Metadados** em `main.tex`.
+
+### 1.3. Gate de Aprovação do Usuário (Ação Bloqueante)
+> [!IMPORTANT]
+> O agente deve finalizar a interação perguntando expressamente:
+> *"Você aprova os metadados consolidados, a relação de diagramas exportados e a estrutura final para iniciarmos a compilação oficial em 4 passagens do documento unificado?"*
+> **Nenhuma compilação final ou alteração de metadados deve ser realizada antes da aprovação explícita do usuário.**
+
+---
+
+## 2. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
 
 Esta skill sintetiza e orquestra o ciclo de vida completo de engenharia de software com base em:
 - **SWEBOK v4 -- Áreas de Conhecimento Transversais e Síntese do Ciclo de Vida:**
@@ -24,7 +57,7 @@ Esta skill sintetiza e orquestra o ciclo de vida completo de engenharia de softw
 
 ---
 
-## 2. Atribuições Centrais da Skill
+## 3. Atribuições Centrais da Skill
 
 1. **Harmonização Terminológica e Conceitual**
    - Garantir que todas as entidades e atores recebam exatamente o mesmo nome ao longo de todos os 7 capítulos (ex.: se no capítulo de requisitos a entidade chama-se `Paciente`, ela não pode aparecer como `Cliente` no design de banco ou `Usuário` nos casos de uso sem justificativa explícita de papel);
@@ -53,7 +86,7 @@ Esta skill sintetiza e orquestra o ciclo de vida completo de engenharia de softw
 
 ---
 
-## 3. Roteiro de Verificação e Compilação
+## 4. Roteiro de Verificação e Compilação
 
 ### Etapa 1: Inspeção de Integridade dos Arquivos
 Verifique se os 7 capítulos modulares estão presentes na pasta `Capitulos/`:
@@ -95,7 +128,7 @@ pdflatex -interaction=nonstopmode main.tex
 
 ---
 
-## 4. Matriz Global de Rastreabilidade do Projeto
+## 5. Matriz Global de Rastreabilidade do Projeto
 
 O integrador deve manter no documento consolidado a matriz global resumida:
 
@@ -120,8 +153,9 @@ RF04 & UC05 (Estoque) & ADR-02 (Estoque) & \texttt{tb\_insumo} & CT-EST-01 & \ba
 
 ---
 
-## 5. Checklist Final de Entrega do Agente Integrador
+## 6. Checklist Final de Entrega do Agente Integrador
 
+- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
 - [ ] A compilação LaTeX executa com zero erros fatais?
 - [ ] Todos os diagramas foram gerados pelo StarUML v7.0 e exportados com resolução adequada em `Imagens/`?
 - [ ] Os placeholders temporários foram ativados com os diagramas reais exportados?

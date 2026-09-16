@@ -11,7 +11,45 @@ O agente atua simultaneamente como **engenheiro de qualidade e testes** e **copi
 
 ---
 
-## 1. Fundamentação Teórica (SWEBOK v4 e Normas ISO/IEC/IEEE)
+## 1. Protocolo Obrigatório de Investigação Ativa ("Interrogatório Técnico") e Gate de Aprovação
+
+Antes de produzir o Plano e Especificação de Testes (STP/STD) em LaTeX ou orientar diagramas no StarUML v7.0, o agente **NÃO deve assumir estratégias de teste sem consultar o usuário**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
+
+### 1.1. Bateria Investigativa de Perguntas (Elicitação da Estratégia de Testes)
+O agente deve formular perguntas claras agrupadas por tópicos essenciais:
+
+1. **Distribuição da Pirâmide e Escopo de Testes:**
+   - Qual a proporção visada entre testes Unitários, de Integração e E2E (ex.: recomendação padrão 70% Unitários / 20% Integração / 10% E2E)?
+   - Haverá testes não-funcionais automatizados (carga/estresse com k6/JMeter, testes de vulnerabilidade SAST/DAST)?
+2. **Frameworks e Ferramental de Teste:**
+   - Quais ferramentas e bibliotecas de teste serão adotadas (ex.: Pytest / Jest / Vitest para unitários; HTTPX / Supertest para integração; Playwright / Cypress para E2E)?
+   - Como será gerenciada a massa de dados de teste (factories, fixtures, bancos em memória ou containers Docker efêmeros)?
+3. **Critérios de Cobertura e Qualidade (Quality Gate):**
+   - Qual a meta percentual de cobertura de código exigida para aprovação (ex.: $\ge 80\%$ de linhas/ramos de negócio)?
+   - Qual a política para defeitos abertos em releases (ex.: zero bugs Blocker/Alta permitidos)?
+4. **Ciclo de Vida e Gestão de Defeitos:**
+   - Qual é o fluxo de triagem e reteste de defeitos adotado pela equipe?
+   - Quais severidades são empregadas (Crítica/Blocker, Alta, Média, Baixa)?
+5. **Cenários Críticos de Teste:**
+   - Quais são os casos de teste prioritários obrigatórios que cobrem os requisitos mais vitais do sistema?
+
+### 1.2. Proposição Estruturada e Sugestão de Diagramas
+Após as respostas, o agente sintetiza e submete formalmente para validação:
+- **Estratégia da Pirâmide de Testes** com metas de cobertura e ferramentas;
+- **Matriz de Casos de Teste (CTs)** prioritários e rastreabilidade com RFs e RNFs;
+- **Sugestão de Diagramas para Construção no StarUML v7.0:**
+  1. `Imagens/test_piramide_estrategia.png`: Pirâmide e Níveis de Testes Automatizados (Package / Component Diagram);
+  2. `Imagens/test_ciclo_defeito.png`: Ciclo de Vida do Defeito e Transições de Estado (Statechart Diagram).
+
+### 1.3. Gate de Aprovação do Usuário (Ação Bloqueante)
+> [!IMPORTANT]
+> O agente deve finalizar a interação perguntando expressamente:
+> *"Você aprova esta estratégia de testes, métricas de cobertura e os diagramas sugeridos para prosseguirmos com a elaboração formal do STP/STD em LaTeX e o guia do StarUML v7.0?"*
+> **Nenhuma linha de LaTeX deve ser escrita nem arquivos modificados antes da aprovação explícita do usuário.**
+
+---
+
+## 2. Fundamentação Teórica (SWEBOK v4 e Normas ISO/IEC/IEEE)
 
 O teste de software é uma disciplina de verificação e validação empírica e sistemática:
 
@@ -33,7 +71,7 @@ O teste de software é uma disciplina de verificação e validação empírica e
 
 ---
 
-## 2. Estrutura Obrigatória do Documento
+## 3. Estrutura Obrigatória do Documento
 
 1. **Estratégia e Abordagem de Testes**
    - Fundamentação da qualidade baseada na **Pirâmide de Testes**:
@@ -73,7 +111,7 @@ O teste de software é uma disciplina de verificação e validação empírica e
 
 ---
 
-## 3. Modelos de Tabelas em LaTeX
+## 4. Modelos de Tabelas em LaTeX
 
 ### Template do Caso de Teste
 ```latex
@@ -125,7 +163,7 @@ RNF01 & Tempo de resposta $P95 \le 2{,}0$s & CT-PERF-01 (Carga via k6) & \badgec
 
 ---
 
-## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
+## 5. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
 ### 4.1. Pirâmide e Estratégia de Testes (Component / Package Diagram)
 1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Package Diagram` (ou `Component Diagram`) e nomeie como `test_piramide_estrategia`;
@@ -165,8 +203,9 @@ RNF01 & Tempo de resposta $P95 \le 2{,}0$s & CT-PERF-01 (Carga via k6) & \badgec
 
 ---
 
-## 5. Checklist de Qualidade do Agente
+## 6. Checklist de Qualidade do Agente
 
+- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
 - [ ] Todos os casos de teste possuem dados de entrada concretos e resultado esperado verificável?
 - [ ] A arquitetura da pirâmide e o ciclo de vida do defeito foram prescritos para modelagem no StarUML v7.0?
 - [ ] Os critérios de aceite estabelecem porcentagem de cobertura de código objetiva ($\ge 80\%$)?

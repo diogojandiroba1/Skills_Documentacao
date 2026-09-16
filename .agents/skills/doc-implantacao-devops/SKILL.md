@@ -11,7 +11,48 @@ O agente atua simultaneamente como **especificador de processos operacionais e i
 
 ---
 
-## 1. Fundamentação Teórica (SWEBOK v4 e Normas ISO/IEC/IEEE)
+## 1. Protocolo Obrigatório de Investigação Ativa ("Interrogatório Técnico") e Gate de Aprovação
+
+Antes de redigir o Guia de Implantação, DevOps e Runbook em LaTeX ou orientar os diagramas no StarUML v7.0, o agente **NÃO deve assumir ferramentas ou infraestrutura sem consultar o usuário**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
+
+### 1.1. Bateria Investigativa de Perguntas (Elicitação de DevOps e Operações)
+O agente deve formular perguntas claras agrupadas por tópicos essenciais:
+
+1. **Plataforma de CI/CD e Gates de Qualidade:**
+   - Qual plataforma de CI/CD será adotada (GitHub Actions, GitLab CI, Jenkins)?
+   - Quais barreiras bloqueantes devem existir no pipeline (linters, testes unitários, testes de integração, scan SAST com SonarQube/Trivy)?
+   - O deploy em produção é contínuo automático ou exige aprovação manual formal?
+2. **Infraestrutura e Provedor Cloud:**
+   - Onde o sistema rodará (AWS, GCP, Azure, DigitalOcean, VPS ou On-Premise)?
+   - A infraestrutura será gerenciada via Docker Compose, Kubernetes (EKS/GKE), ECS ou instâncias dedicadas?
+   - O banco relacional será gerenciado (RDS/Cloud SQL) ou rodará em contêiner autohospedado?
+3. **Estratégia de Deploy e Zero-Downtime:**
+   - Qual estratégia de implantação é desejada: *Rolling Update*, *Blue-Green Deployment* ou *Canary Release*?
+   - Como são gerenciadas as variáveis sensíveis e segredos (GitHub Secrets, AWS Secrets Manager, HashiCorp Vault)?
+4. **Migração e Versionamento de Banco:**
+   - Qual ferramenta de migração será empregada (Flyway, Liquibase, Alembic, Prisma Migrate)?
+   - Qual é a política de rollback em caso de falha de migração no banco?
+5. **Observabilidade, Métricas e Runbook:**
+   - Quais ferramentas de monitoramento e logs serão adotadas (Prometheus/Grafana, Datadog, ELK/Loki, CloudWatch)?
+   - Quais são os principais incidentes operacionais previstos e os limites de recuperação (RTO e RPO)?
+
+### 1.2. Proposição Estruturada e Sugestão de Diagramas
+Após as respostas, o agente sintetiza e submete formalmente para validação:
+- **Arquitetura da Esteira CI/CD** e matriz de ambientes (Dev, Staging, Produção);
+- **Políticas de Rollback e Runbook Operacional**;
+- **Sugestão de Diagramas para Construção no StarUML v7.0:**
+  1. `Imagens/devops_pipeline_cicd.png`: Fluxo Automatizado da Esteira CI/CD com Raias (Activity Diagram com Swimlanes);
+  2. `Imagens/devops_topologia_infra.png`: Topologia de Infraestrutura e Ambientes (Deployment Diagram com nós, contêineres e portas).
+
+### 1.3. Gate de Aprovação do Usuário (Ação Bloqueante)
+> [!IMPORTANT]
+> O agente deve finalizar a interação perguntando expressamente:
+> *"Você aprova este pipeline de CI/CD, topologia de infraestrutura e os diagramas sugeridos para prosseguirmos com a elaboração formal do Guia de DevOps em LaTeX e o guia do StarUML v7.0?"*
+> **Nenhuma linha de LaTeX deve ser escrita nem arquivos modificados antes da aprovação explícita do usuário.**
+
+---
+
+## 2. Fundamentação Teórica (SWEBOK v4 e Normas ISO/IEC/IEEE)
 
 A disciplina de DevOps e Operações de Software assegura a transição estável do código homologado para o ambiente produtivo:
 
@@ -29,7 +70,7 @@ A disciplina de DevOps e Operações de Software assegura a transição estável
 
 ---
 
-## 2. Estrutura Obrigatória do Documento
+## 3. Estrutura Obrigatória do Documento
 
 1. **Arquitetura da Esteira de CI/CD**
    - Mapeamento das etapas automatizadas no pipeline (GitHub Actions / GitLab CI):
@@ -69,7 +110,7 @@ A disciplina de DevOps e Operações de Software assegura a transição estável
 
 ---
 
-## 3. Modelos de Código e Tabelas em LaTeX
+## 4. Modelos de Código e Tabelas em LaTeX
 
 ### Esteira de CI/CD (Pipeline)
 ```latex
@@ -122,7 +163,7 @@ Queda da fibra local & Indisponibilidade de acesso na clínica. & Roteador comut
 
 ---
 
-## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
+## 5. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
 ### 4.1. Modelagem da Esteira de CI/CD (Activity Diagram)
 1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Activity Diagram` e nomeie como `devops_pipeline_cicd`;
@@ -172,8 +213,9 @@ Queda da fibra local & Indisponibilidade de acesso na clínica. & Roteador comut
 
 ---
 
-## 5. Checklist de Qualidade do Agente
+## 6. Checklist de Qualidade do Agente
 
+- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
 - [ ] A esteira de CI/CD possui barreiras de qualidade bloqueantes (falha em testes impede avanço)?
 - [ ] A pipeline e a topologia de infraestrutura foram prescritas para modelagem no StarUML v7.0?
 - [ ] Os procedimentos de rollback cobrem tanto a aplicação quanto as migrações de banco?

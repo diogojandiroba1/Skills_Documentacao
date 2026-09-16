@@ -11,7 +11,48 @@ O agente atua simultaneamente como **especificador técnico das estruturas de da
 
 ---
 
-## 1. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO/OMG)
+## 1. Protocolo Obrigatório de Investigação Ativa ("Interrogatório Técnico") e Gate de Aprovação
+
+Antes de produzir a especificação de Design Detalhado (SDD), DDL de banco de dados ou orientar diagramas no StarUML v7.0, o agente **NÃO deve assumir contratos de classes ou esquemas físicos sem consultar o usuário**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
+
+### 1.1. Bateria Investigativa de Perguntas (Elicitação de Design e Modelagem)
+O agente deve formular perguntas claras agrupadas por tópicos essenciais:
+
+1. **Esquema Relacional e Persistência (ORM / DDL):**
+   - Qual SGBD relacional e ORM serão adotados (ex.: PostgreSQL com Prisma / Hibernate / SQLAlchemy)?
+   - Como serão tratadas chaves primárias (UUID v4 vs Bigint sequencial)?
+   - Há estratégias especiais de herança no banco (Single Table, Class Table / Joined, Concrete Table)?
+   - Quais índices de performance e restrições de integridade referencial (`ON DELETE CASCADE/RESTRICT`) são essenciais?
+2. **Diagrama de Classes de Projeto (Design Classes):**
+   - Quais padrões de projeto (Design Patterns GoF) devem ser aplicados (ex.: Repository Pattern, Service Layer, Factory, Strategy, Observer)?
+   - Qual a convenção de visibilidade e encapsulamento adotada?
+3. **Diagramas Dinâmicos de Sequência:**
+   - Quais são os cenários transacionais mais complexos que exigem detalhamento temporal de mensagens (ex.: Transação de Pagamento, Cancelamento com Estorno, Atendimento com Dispensação)?
+   - Como são tratados erros e fallbacks nos blocos combinados (`alt`/`opt`)?
+4. **Ciclo de Vida de Entidades (Máquinas de Estado):**
+   - Quais entidades do domínio possuem estados transitórios complexos (ex.: Pedido, Consulta, Fatura)?
+   - Quais eventos e condições de guarda disparam cada transição?
+5. **Diagramas de Atividades (Workflows):**
+   - Há processos de negócio com bifurcações e sincronizações paralelas (`fork`/`join`) e múltiplos atores que justifiquem raias (`swimlanes`)?
+
+### 1.2. Proposição Estruturada e Sugestão de Diagramas
+Após as respostas, o agente sintetiza e submete formalmente para validação:
+- **Resumo do Esquema Físico de Banco** e classes de projeto por módulo;
+- **Sugestão de Diagramas Técnicos para Construção no StarUML v7.0:**
+  1. `Imagens/cls_projeto_<modulo>.png`: Diagrama de Classes de Projeto com visibilidades, tipos e métodos;
+  2. `Imagens/seq_<caso_uso>.png`: Diagrama de Sequência detalhando a interação entre Controller, Service, Repository e Database;
+  3. `Imagens/dsm_<entidade>.png`: Máquina de Estados da entidade de ciclo de vida complexo;
+  4. `Imagens/act_<processo>.png`: Diagrama de Atividades com raias de responsabilidade (swimlanes).
+
+### 1.3. Gate de Aprovação do Usuário (Ação Bloqueante)
+> [!IMPORTANT]
+> O agente deve finalizar a interação perguntando expressamente:
+> *"Você aprova estas decisões de design detalhado, a modelagem de classes e a relação de diagramas sugeridos para prosseguirmos com a redação formal em LaTeX e o guia do StarUML v7.0?"*
+> **Nenhuma linha de LaTeX deve ser escrita nem arquivos modificados antes da aprovação explícita do usuário.**
+
+---
+
+## 2. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO/OMG)
 
 O design de software detalhado conecta a arquitetura conceitual ao código-fonte executável:
 
@@ -29,7 +70,7 @@ O design de software detalhado conecta a arquitetura conceitual ao código-fonte
 
 ---
 
-## 2. Estrutura Obrigatória do Documento
+## 3. Estrutura Obrigatória do Documento
 
 1. **Mapeamento Objeto-Relacional (ORM / Esquema Físico de Banco de Dados)**
    - Definição textual estruturada de todas as tabelas do banco de dados relacional (PostgreSQL);
@@ -54,7 +95,7 @@ O design de software detalhado conecta a arquitetura conceitual ao código-fonte
 
 ---
 
-## 3. Modelos de Código e Tabelas em LaTeX
+## 4. Modelos de Código e Tabelas em LaTeX
 
 ### DDL do Esquema Relacional
 ```latex
@@ -106,7 +147,7 @@ CREATE INDEX idx_consulta_paciente ON tb_consulta(paciente_id);
 
 ---
 
-## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
+## 5. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
 O agente deve prescrever ao desenvolvedor o roteiro de criação de cada modelo no **StarUML v7.0**:
 
@@ -226,8 +267,9 @@ O agente deve prescrever ao desenvolvedor o roteiro de criação de cada modelo 
 
 ---
 
-## 5. Checklist de Qualidade do Agente
+## 6. Checklist de Qualidade do Agente
 
+- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
 - [ ] Todas as classes de projeto possuem visibilidade explícita (`+`, `-`, `#`), atributos tipados e métodos com parâmetros e retornos?
 - [ ] O esquema de banco relacional define chaves primárias, estrangeiras e constraints de integridade referencial?
 - [ ] O guia StarUML v7.0 especifica o tipo exato de cada diagrama (Class, Sequence, Statechart, Activity) e suas ferramentas da Toolbox?

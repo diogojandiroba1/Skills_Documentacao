@@ -11,7 +11,46 @@ O agente atua simultaneamente como **gerente de configuração de software** e *
 
 ---
 
-## 1. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
+## 1. Protocolo Obrigatório de Investigação Ativa ("Interrogatório Técnico") e Gate de Aprovação
+
+Antes de redigir o Plano de Gerência de Configuração de Software (SCM Plan) em LaTeX ou orientar diagramas no StarUML v7.0, o agente **NÃO deve assumir políticas de branching ou processos de release sem consultar o usuário**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
+
+### 1.1. Bateria Investigativa de Perguntas (Elicitação de SCM)
+O agente deve formular perguntas claras agrupadas por tópicos essenciais:
+
+1. **Modelo de Branching e Fluxo de Trabalho Git:**
+   - Qual estratégia de branches a equipe adotará (GitFlow clássico, Trunk-Based Development, GitHub Flow)?
+   - Quais branches serão protegidas (ex.: `main` e `staging` imutáveis contra direct push e force push)?
+   - Quantos revisores (approvals) são exigidos para aprovar um Pull Request (ex.: mínimo de 1 ou 2 aprovadores)?
+2. **Convenção de Commits e Rastreabilidade:**
+   - Será adotado o padrão *Conventional Commits 1.0.0* (`feat:`, `fix:`, `refactor:`, `chore:`, `docs:`)?
+   - Os commits e PRs devem obrigatoriamente referenciar IDs de Issues ou Requisitos (ex.: `feat(auth): login RBAC #12`)?
+3. **Versionamento Semântico e Baselines:**
+   - Como será calculada a versão (SemVer 2.0.0 manual ou via automação SemVer / Release Please / Semantic Release)?
+   - Em que momentos são congeladas as *baselines* de versão (fim de sprint, marcos contratuais)?
+4. **Comitê de Controle de Mudanças (CCB):**
+   - Quem compõe o CCB (ex.: Tech Lead, Arquiteto, Product Owner, QA Lead)?
+   - Qual é o limiar de mudança que exige aprovação formal do CCB (ex.: alterações de contrato de API pública, quebras de schema de banco, requisitos extras de escopo)?
+5. **Itens de Configuração (CIs) e Auditorias:**
+   - Quais itens de configuração serão controlados e auditados formalmente (código backend, frontend, DDLs, Dockerfiles, IaC, documentos LaTeX)?
+
+### 1.2. Proposição Estruturada e Sugestão de Diagramas
+Após as respostas, o agente sintetiza e submete formalmente para validação:
+- **Modelo de Branching e Regras de Proteção** acordadas;
+- **Fluxo do Comitê de Mudanças (CCB)** e política SemVer;
+- **Sugestão de Diagramas para Construção no StarUML v7.0:**
+  1. `Imagens/scm_branching_model.png`: Estratégia de Branching no Git com Raias (Activity Diagram com Swimlanes);
+  2. `Imagens/scm_fluxo_ccb.png`: Ciclo de Mudança e Aprovação CCB (Statechart Diagram).
+
+### 1.3. Gate de Aprovação do Usuário (Ação Bloqueante)
+> [!IMPORTANT]
+> O agente deve finalizar a interação perguntando expressamente:
+> *"Você aprova este modelo de branching, regras de proteção de branch e o fluxo do CCB sugeridos para prosseguirmos com a elaboração formal do SCM Plan em LaTeX e o guia do StarUML v7.0?"*
+> **Nenhuma linha de LaTeX deve ser escrita nem arquivos modificados antes da aprovação explícita do usuário.**
+
+---
+
+## 2. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
 
 Esta skill está fundamentada nos preceitos formais da Engenharia de Software:
 - **SWEBOK v4 -- Capítulo 6 (Software Configuration Management KA):**
@@ -28,7 +67,7 @@ Esta skill está fundamentada nos preceitos formais da Engenharia de Software:
 
 ---
 
-## 2. Estrutura Obrigatória do Documento
+## 3. Estrutura Obrigatória do Documento
 
 1. **Introdução e Escopo do SCM**
    - Propósito do plano de gerência de configuração no ciclo de vida;
@@ -63,7 +102,7 @@ Esta skill está fundamentada nos preceitos formais da Engenharia de Software:
 
 ---
 
-## 3. Modelos de Tabelas e Fluxos em LaTeX
+## 4. Modelos de Tabelas e Fluxos em LaTeX
 
 ### Matriz de Itens de Configuração (CIs)
 ```latex
@@ -100,7 +139,7 @@ A branch principal (\texttt{main}) é estritamente protegida contra \textit{dire
 
 ---
 
-## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
+## 5. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
 ### 4.1. Estratégia de Branching no Git (Activity Diagram)
 1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Activity Diagram` e nomeie como `scm_branching_model`;
@@ -114,8 +153,9 @@ A branch principal (\texttt{main}) é estritamente protegida contra \textit{dire
 
 ---
 
-## 5. Checklist de Qualidade do Agente
+## 6. Checklist de Qualidade do Agente
 
+- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
 - [ ] A estratégia de branches está explicitada com regras formais de proteção?
 - [ ] A política de SemVer 2.0.0 define os critérios objetivos para MAJOR, MINOR e PATCH?
 - [ ] O fluxo do CCB e o modelo de branches foram orientados para modelagem no StarUML v7.0?

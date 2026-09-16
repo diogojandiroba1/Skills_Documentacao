@@ -25,10 +25,20 @@ A partir desta versão, **não utilizamos mais diagramas como código (PlantUML,
 Para instalar a versão completa do StarUML v7.0 (sem marca d'água na exportação), acesse o tutorial oficial da comunidade:  
 👉 **[Tutorial de Instalação do StarUML v7.0 Pro (Remover Marca d'Água)](https://github.com/rodyuzuriaga/Get-full-version-of-StarUML-7.0.0-Pro-Remove-Watermark)**
 
-### 🤖 Novo Papel dos Agentes de IA
-Os agentes atuam em conjunto com o usuário através de um duplo papel:
-1. **Gerador da Documentação Formal:** Redige o conteúdo técnico rigoroso, tabelas `booktabs`, especificações textuais de Casos de Uso, catálogo de ADRs e matrizes de rastreabilidade em LaTeX.
-2. **Copiloto / Assistente de Modelagem no StarUML v7.0:** Fornece um roteiro textual passo a passo, detalhando exatamente como o usuário deve construir visualmente cada diagrama no StarUML (árvore do *Model Explorer*, tipo de diagrama, elementos da Toolbox, estereótipos, visibilidades `+`, `-`, `#`, métodos, tipos de retorno, multiplicidades, conexões e alinhamento).
+### 🤖 Papel e Fluxo de Atuação dos Agentes de IA
+Os agentes atuam em estrita parceria com o usuário seguindo um fluxo mandatório de 3 etapas:
+
+1. **Investigação Técnica Ativa ("Interrogatório Técnico"):**
+   - O agente **não assume premissas às cegas nem inventa dados de negócio**.
+   - Antes de redigir qualquer documento, ele realiza uma rodada de perguntas investigativas estruturadas por tópicos essenciais (escopo, regras de negócio, personas, volumetria, restrições tecnológicas, integrações, requisitos não-funcionais, etc.), oferecendo opções fundamentadas com prós, contras e recomendação técnica de Engenharia de Software.
+
+2. **Proposição Estruturada e Gate de Aprovação do Usuário:**
+   - Com base nas respostas, o agente sintetiza o escopo e apresenta a **proposta detalhada da documentação**, acompanhada da **sugestão nominal de diagramas no StarUML v7.0** que melhor comunicam aquela solução.
+   - **Gate Bloqueante:** O agente solicita formalmente a aprovação do usuário e **só avança para a escrita após o aval explícito**.
+
+3. **Redação Formal em LaTeX e Copiloto de Modelagem no StarUML v7.0:**
+   - **Gerador da Documentação Formal:** Redige o conteúdo técnico rigoroso, tabelas `booktabs`, especificações textuais de Casos de Uso, catálogo de ADRs e matrizes de rastreabilidade em LaTeX.
+   - **Copiloto / Assistente de Modelagem no StarUML v7.0:** Fornece um roteiro textual passo a passo, detalhando exatamente como o usuário deve construir visualmente cada diagrama no StarUML (árvore do *Model Explorer*, tipo de diagrama, elementos da Toolbox, estereótipos, visibilidades `+`, `-`, `#`, métodos, tipos de retorno, multiplicidades, conexões e alinhamento).
 
 ### 📋 Catálogo Oficial de Diagramas e Nomenclatura
 

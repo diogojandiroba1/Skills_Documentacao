@@ -11,7 +11,46 @@ O agente atua simultaneamente como **especificador formal da documentação téc
 
 ---
 
-## 1. Fundamentação Teórica (SWEBOK v4 e Padrões OMG/Cockburn)
+## 1. Protocolo Obrigatório de Investigação Ativa ("Interrogatório Técnico") e Gate de Aprovação
+
+Antes de gerar qualquer especificação de Casos de Uso ou orientar diagramas no StarUML v7.0, o agente **NÃO deve assumir fluxos ou relacionamentos sem consultar o usuário**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
+
+### 1.1. Bateria Investigativa de Perguntas (Modelagem de Casos de Uso e Domínio)
+O agente deve formular perguntas claras agrupadas por tópicos essenciais:
+
+1. **Atores e Fronteiras:**
+   - Quem são os atores humanos primários (que disparam os fluxos) e secundários (que apenas recebem notificações)?
+   - Há atores de sistemas externos ou APIs (ex.: Gateway de Pagamento, SMS/E-mail, Sistema Governamental)?
+   - Há especialização entre atores (ex.: `Médico` especializa `Profissional de Saúde`)?
+2. **Mapeamento RF $\rightarrow$ Casos de Uso:**
+   - Quais requisitos funcionais viram Casos de Uso diretos?
+   - Há casos de uso compartilhados ou reutilizáveis que justificam `<<include>>` (ex.: `UC_Autenticar`, `UC_RegistrarAuditoria`)?
+   - Há fluxos opcionais ou condicionais que justificam `<<extend>>` com extension points claros (ex.: `UC_SolicitarAutorizacaoConvenio` estendendo `UC_EmitirGuia`)?
+3. **Fluxos Críticos e Exceções:**
+   - Para os casos de uso vitais do sistema: qual é o fluxo principal (passo a passo da interação Ator $\leftrightarrow$ Sistema)?
+   - Quais são os principais fluxos de exceção e regras de validação que o sistema deve tratar?
+4. **Modelo Conceitual de Domínio:**
+   - Quais são as entidades centrais do negócio (ex.: `Paciente`, `Consulta`, `Prontuario`, `Medicamento`)?
+   - Quais são as cardinalidades/multiplicidades reais entre elas (`1..1`, `1..*`, `0..*`)?
+   - Existem composições fortes (onde a entidade-filho deixa de existir se o pai for removido)?
+
+### 1.2. Proposição Estruturada e Sugestão de Diagramas
+Após as respostas, o agente sintetiza e submete formalmente para validação:
+- **Catálogo Preliminar de Casos de Uso por Módulo** com atores e relacionamentos `<<include>>`/`<<extend>>`;
+- **Sugestão de Diagramas para Construção no StarUML v7.0:**
+  1. `Imagens/uc_geral.png`: Diagrama Geral de Casos de Uso com fronteira do sistema e atores;
+  2. `Imagens/uc_<modulo>.png`: Diagramas de Casos de Uso modulares (4 a 6 UCs por pacote para legibilidade);
+  3. `Imagens/cls_conceitual_dominio.png`: Modelo Conceitual de Classes de Análise com associações e multiplicidades.
+
+### 1.3. Gate de Aprovação do Usuário (Ação Bloqueante)
+> [!IMPORTANT]
+> O agente deve finalizar a interação perguntando expressamente:
+> *"Você aprova esta lista de Casos de Uso, divisão por pacotes e entidades do Modelo Conceitual para prosseguirmos com a especificação textual em LaTeX e o guia do StarUML v7.0?"*
+> **Nenhuma linha de LaTeX deve ser escrita nem arquivos modificados antes da aprovação explícita do usuário.**
+
+---
+
+## 2. Fundamentação Teórica (SWEBOK v4 e Padrões OMG/Cockburn)
 
 * **SWEBOK v4 (Software Engineering Body of Knowledge):**
   * **Chapter 1 -- Software Requirements (Subárea 2.3: Conceptual Modeling):** O modelo conceitual traduz os requisitos textuais em representações comportamentais rigorosas de fluxos de tarefas orientadas a objetivos de negócio (*Goal-Oriented Requirements*).
@@ -23,7 +62,7 @@ O agente atua simultaneamente como **especificador formal da documentação téc
 
 ---
 
-## 2. Estrutura Obrigatória do Documento
+## 3. Estrutura Obrigatória do Documento
 
 1. **Atores do Sistema**
    - Identificação de todos os atores humanos (papéis operacionais) e sistemas externos;
@@ -56,7 +95,7 @@ O agente atua simultaneamente como **especificador formal da documentação téc
 
 ---
 
-## 3. Template de Especificação Textual em LaTeX
+## 4. Template de Especificação Textual em LaTeX
 
 ```latex
 \begin{table}[htbp]
@@ -104,7 +143,7 @@ O agente atua simultaneamente como **especificador formal da documentação téc
 
 ---
 
-## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
+## 5. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
 O agente deve fornecer ao usuário instruções formais e determinísticas para construir os diagramas no **StarUML v7.0**, seguindo rigorosamente os passos abaixo:
 
@@ -176,8 +215,9 @@ O agente deve fornecer ao usuário instruções formais e determinísticas para 
 
 ---
 
-## 5. Checklist de Qualidade do Agente
+## 6. Checklist de Qualidade do Agente
 
+- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
 - [ ] Todos os casos de uso possuem nome no infinitivo descrevendo o objetivo do ator?
 - [ ] Todo caso de uso prioritário possui pré-condições, pós-condições e fluxos de exceção?
 - [ ] A numeração dos passos do fluxo principal é consistente e lógica?

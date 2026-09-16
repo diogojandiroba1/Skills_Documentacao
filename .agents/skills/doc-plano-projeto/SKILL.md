@@ -11,7 +11,46 @@ O agente atua simultaneamente como **gerente técnico de projeto** e **copiloto 
 
 ---
 
-## 1. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
+## 1. Protocolo Obrigatório de Investigação Ativa ("Interrogatório Técnico") e Gate de Aprovação
+
+Antes de gerar qualquer conteúdo LaTeX para o Plano de Projeto ou sugerir os diagramas no StarUML v7.0, o agente **NUNCA deve assumir premissas arbitrárias**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
+
+### 1.1. Bateria Investigativa de Perguntas (Elicitação Técnica)
+O agente deve formular perguntas claras, agrupadas por tópicos essenciais, apresentando opções técnicas com prós, contras e recomendação:
+
+1. **Visão Estratégica e Dores Centrais:**
+   - Qual é a dor de negócio central que o software visa sanar? Como a operação funciona atualmente (planilhas, papel, sistema legado falho)?
+   - Qual é a proposta de valor única (declaração de posicionamento / Elevator Pitch)?
+2. **Escopo, Objetivos e Trade-offs:**
+   - O que está expressamente **dentro** do escopo e o que fica **fora** do escopo nesta release?
+   - Quais são os objetivos gerais e metas específicas (SMART) mensuráveis?
+   - Existe preferência ou pré-disposição para desenvolvimento próprio vs SaaS vs open-source?
+3. **Stakeholders e Governança:**
+   - Quem são os atores envolvidos, operadores e patrocinadores (para mapeamento na Matriz Poder $\times$ Interesse de Mendelow)?
+   - Qual é o modelo de ciclo de vida de desenvolvimento adotado (Scrum, Kanban, Iterativo/Incremental)?
+4. **Prazos, Orçamento e Equipe:**
+   - Qual é a estimativa de prazo total e se há alguma data-limite regulatória ou comercial inegociável?
+   - Qual é o perfil e quantidade de desenvolvedores/engenheiros disponíveis?
+   - Premissas de infraestrutura: foco em nuvem pública (CAPEX reduzido, OPEX mensal) ou servidores dedicados/on-premise?
+5. **Mapeamento de Riscos:**
+   - Quais ameaças técnicas, humanas ou externas são mais temidas no projeto?
+
+### 1.2. Proposição Estruturada e Sugestão de Diagramas
+Após as respostas, o agente sintetiza o escopo e apresenta formalmente:
+- **Resumo do Escopo e Marcos (Milestones)**;
+- **Sugestão de Diagramas no StarUML v7.0:**
+  1. `Imagens/proj_wbs_escopo.png`: Estrutura Analítica do Projeto (WBS/EAP) em decomposição hierárquica por fases;
+  2. `Imagens/proj_gantt_cronograma.png`: Diagrama de Gantt com raias de fases, predecessores, caminho crítico (CPM) e marcos contratuais.
+
+### 1.3. Gate de Aprovação do Usuário (Ação Bloqueante)
+> [!IMPORTANT]
+> O agente deve finalizar a interação perguntando expressamente:
+> *"Você aprova esta estrutura de escopo, cronograma preliminar e a relação de diagramas sugeridos para prosseguirmos com a redação formal do capítulo LaTeX e o guia do StarUML v7.0?"*
+> **Nenhuma linha de LaTeX deve ser escrita nem arquivos modificados antes da aprovação explícita do usuário.**
+
+---
+
+## 2. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
 
 O conteúdo gerado por esta skill deve aderir estritamente aos corpos de conhecimento e normas internacionais:
 
@@ -31,7 +70,7 @@ O conteúdo gerado por esta skill deve aderir estritamente aos corpos de conheci
 
 ---
 
-## 2. Estrutura Obrigatória do Documento
+## 3. Estrutura Obrigatória do Documento
 
 1. **Termo de Abertura e Concepção do Projeto (Project Charter)**
    - **Termo de Abertura Formal:** Propósito executivo, justificativa estratégica de mercado e autorização de início do projeto;
@@ -85,7 +124,7 @@ O conteúdo gerado por esta skill deve aderir estritamente aos corpos de conheci
 
 ---
 
-## 3. Padrões de Tabelas em LaTeX
+## 4. Padrões de Tabelas em LaTeX
 
 ### Tabela de Comparação de Alternativas (Padrão Booktabs)
 ```latex
@@ -108,7 +147,7 @@ Customização Open-source & Custo zero de licença e base pré-existente. & Com
 
 ---
 
-## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
+## 5. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
 ### 4.1. Estrutura Analítica do Projeto (WBS / EAP)
 1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Class Diagram` (ou `Composite Structure Diagram`) e nomeie como `proj_wbs_escopo`;
@@ -178,8 +217,9 @@ O Diagrama de Gantt fornece a visualização executiva do tempo, predecessores e
 
 ---
 
-## 5. Checklist de Qualidade do Agente
+## 6. Checklist de Qualidade do Agente
 
+- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
 - [ ] Todos os custos apresentam distinção clara entre desenvolvimento (CAPEX) e manutenção recorrente (OPEX)?
 - [ ] A WBS cobre 100% do escopo do projeto e foi estruturada conforme as diretrizes do StarUML v7.0?
 - [ ] O Diagrama de Gantt foi modelado no StarUML v7.0 com raias temporais, predecessores e destaque visual do Caminho Crítico (CPM)?

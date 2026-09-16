@@ -11,7 +11,45 @@ O agente atua como **engenheiro de garantia da qualidade** e **copiloto de model
 
 ---
 
-## 1. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
+## 1. Protocolo Obrigatório de Investigação Ativa ("Interrogatório Técnico") e Gate de Aprovação
+
+Antes de produzir o Plano de Garantia da Qualidade de Software (SQAP) em LaTeX ou orientar diagramas no StarUML v7.0, o agente **NÃO deve assumir processos ou métricas de qualidade sem consultar o usuário**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
+
+### 1.1. Bateria Investigativa de Perguntas (Elicitação de SQA)
+O agente deve formular perguntas claras agrupadas por tópicos essenciais:
+
+1. **Padrões de Código e Análise Estática (SAST/Linters):**
+   - Quais ferramentas de análise estática e linters serão adotadas (SonarQube, Ruff, ESLint, Trivy)?
+   - Quais regras e métricas serão bloqueantes no Quality Gate (ex.: complexidade ciclomática máxima $\le 10$, duplicação $< 3\%$, zero vulnerabilidades críticas/altas)?
+2. **Processo de Revisão por Pares (Code Review):**
+   - Quais são as regras para submissão de Pull Requests (tamanho máximo de linhas, templates de PR, linters passando)?
+   - Quantas aprovações técnicas são necessárias e quem tem autoridade para aprovar o merge?
+3. **Definition of Ready (DoR) e Definition of Done (DoD):**
+   - Quais critérios definem que um requisito está pronto para ser desenvolvido (DoR)?
+   - Quais critérios rigorosos definem que uma funcionalidade está finalizada e pronta para release (DoD: testes, review, documentação, migração de banco)?
+4. **Métricas de Qualidade de Produto e Processo:**
+   - Quais métricas DORA serão acompanhadas (Deployment Frequency, Lead Time for Changes, Change Failure Rate, MTTR)?
+   - Qual a meta de cobertura de testes automatizados exigida no DoD (ex.: $\ge 80\%$)?
+5. **Auditorias e Melhoria Contínua:**
+   - Qual será a periodicidade das auditorias de processo e conformidade arquitetural?
+   - Como serão conduzidas as análises de causa-raiz pós-incidente (Post-Mortem sem culpados)?
+
+### 1.2. Proposição Estruturada e Sugestão de Diagramas
+Após as respostas, o agente sintetiza e submete formalmente para validação:
+- **Catálogo de Padrões e Regras de Quality Gate**;
+- **Definition of Done (DoD)** e matriz de métricas de qualidade;
+- **Sugestão de Diagramas para Construção no StarUML v7.0:**
+  1. `Imagens/sqa_processo_revisao.png`: Fluxo de Revisão de Código e Verificação de DoD com Raias (Activity Diagram com Swimlanes).
+
+### 1.3. Gate de Aprovação do Usuário (Ação Bloqueante)
+> [!IMPORTANT]
+> O agente deve finalizar a interação perguntando expressamente:
+> *"Você aprova estas políticas de garantia de qualidade, critérios de DoD/DoR e o fluxo de revisão sugeridos para prosseguirmos com a elaboração formal do SQAP em LaTeX e o guia do StarUML v7.0?"*
+> **Nenhuma linha de LaTeX deve ser escrita nem arquivos modificados antes da aprovação explícita do usuário.**
+
+---
+
+## 2. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
 
 Esta skill está fundamentada nos preceitos formais da Engenharia de Software:
 - **SWEBOK v4 -- Capítulo 5 (Software Quality KA):**
@@ -25,7 +63,7 @@ Esta skill está fundamentada nos preceitos formais da Engenharia de Software:
 
 ---
 
-## 2. Estrutura Obrigatória do Documento
+## 3. Estrutura Obrigatória do Documento
 
 1. **Propósito e Escopo da Garantia da Qualidade**
    - Papel da SQA independente no projeto;
@@ -65,7 +103,7 @@ Esta skill está fundamentada nos preceitos formais da Engenharia de Software:
 
 ---
 
-## 3. Modelos de Tabelas e Checklists em LaTeX
+## 4. Modelos de Tabelas e Checklists em LaTeX
 
 ### Definition of Done (DoD) Padronizada
 ```latex
@@ -102,7 +140,7 @@ MTTR (Recuperação) & Alertas do Datadog/Cloud & Média inferior a 30 minutos e
 
 ---
 
-## 4. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
+## 5. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
 
 ### 4.1. Fluxo de Revisão de Código e Verificação de DoD (Activity Diagram)
 1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Activity Diagram` e nomeie como `sqa_processo_revisao`;
@@ -123,8 +161,9 @@ MTTR (Recuperação) & Alertas do Datadog/Cloud & Média inferior a 30 minutos e
 
 ---
 
-## 5. Checklist de Qualidade do Agente
+## 6. Checklist de Qualidade do Agente
 
+- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
 - [ ] Os critérios de Definition of Done (DoD) e Definition of Ready (DoR) são objetivos e verificáveis?
 - [ ] O processo formal de revisão de código e auditoria foi modelado no StarUML v7.0?
 - [ ] As ferramentas de análise estática e linters estão configuradas com limites bloqueantes?

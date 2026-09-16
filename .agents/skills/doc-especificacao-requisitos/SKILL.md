@@ -9,7 +9,45 @@ Esta skill orienta o agente na elicitação, análise, especificação e valida�
 
 ---
 
-## 1. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
+## 1. Protocolo Obrigatório de Investigação Ativa ("Interrogatório Técnico") e Gate de Aprovação
+
+Antes de redigir qualquer requisito ou regra de negócio em LaTeX, o agente **NÃO deve assumir premissas arbitrárias nem inventar dados**. É obrigatório realizar uma rodada investigativa estruturada com o usuário.
+
+### 1.1. Bateria Investigativa de Perguntas (Elicitação de Requisitos)
+O agente deve formular perguntas claras agrupadas por tópicos essenciais, apresentando opções técnicas e boas práticas:
+
+1. **Módulos Funcionais e Escopo:**
+   - Quais são os grandes módulos funcionais do sistema (ex.: M1: Gestão de Identidade/RBAC, M2: Cadastros Centrais, M3: Operação Principal, M4: Financeiro/Faturamento, M5: Auditoria/Relatórios)?
+   - Há recursos secundários que devem ser deixados explicitamente fora da primeira release?
+2. **Perfis de Usuário e Acessos (RBAC):**
+   - Quais são os perfis de acesso ao sistema (ex.: Administrador, Operador, Cliente/Paciente, Fiscal/Auditor)?
+   - Quais ações cada perfil pode e NÃO pode executar?
+3. **Regras de Negócio Invariantes (RNs):**
+   - Quais regras de negócio condicionam as operações (ex.: bloqueios temporais, validações documentais, limites de desconto, exigência de aprovação por alçada)?
+   - Quais são as condições de guarda obrigatórias?
+4. **Dicionário de Dados e Validações:**
+   - Quais campos e formatos específicos são exigidos nas principais entidades (formatos de chave, máscaras, tipos primitivos, unicidade)?
+5. **Requisitos Não-Funcionais Mensuráveis (ISO 25010):**
+   - Qual o tempo máximo aceitável de resposta nas transações críticas (ex.: $P95 \le 1{,}5$s)?
+   - Qual a volumetria esperada de requisições por segundo e usuários simultâneos?
+   - Quais são os requisitos legais e de segurança (LGPD, autenticação multifator MFA, tempo de expiração de sessão JWT, retenção de logs)?
+
+### 1.2. Proposição Estruturada dos Requisitos
+Após a resposta do usuário, o agente sintetiza e submete para validação:
+- **Matriz de Módulos Funcionais** planejados;
+- **Lista Preliminar de RFs** com priorização MoSCoW (`Must`, `Should`, `Could`);
+- **Relação de Regras de Negócio (RNs)** vinculadas aos requisitos;
+- **Metas Quantitativas de RNFs** (desempenho, segurança e disponibilidade).
+
+### 1.3. Gate de Aprovação do Usuário (Ação Bloqueante)
+> [!IMPORTANT]
+> O agente deve finalizar a interação perguntando expressamente:
+> *"Você aprova esta divisão de módulos, catálogo preliminar de requisitos funcionais/regras de negócio e métricas de qualidade para iniciarmos a redação formal em LaTeX?"*
+> **Nenhum arquivo `.tex` deve ser gerado ou modificado antes da aprovação explícita do usuário.**
+
+---
+
+## 2. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
 
 O trabalho do agente deve refletir rigorosamente os princípios de Engenharia de Requisitos:
 
@@ -28,7 +66,7 @@ O trabalho do agente deve refletir rigorosamente os princípios de Engenharia de
 
 ---
 
-## 2. Estrutura Padrão do Documento
+## 3. Estrutura Padrão do Documento
 
 1. **Visão Geral dos Requisitos**
    - **Perspectiva do Produto:** Se o software é independente ou componente de um sistema maior;
@@ -67,7 +105,7 @@ O trabalho do agente deve refletir rigorosamente os princípios de Engenharia de
 
 ---
 
-## 3. Modelos de Tabelas e Código em LaTeX
+## 4. Modelos de Tabelas e Código em LaTeX
 
 ### Requisitos Funcionais por Módulo
 ```latex
@@ -132,7 +170,7 @@ RN02 & Bloqueio por Tentativas & Bloquear a conta por 15 minutos após 5 tentati
 
 ---
 
-## 4. Diretrizes para Evitar Ambiguidade nos Requisitos
+## 5. Diretrizes para Evitar Ambiguidade nos Requisitos
 
 - **Evite Termos Vagos:** Nunca use expressões como *"rápido"*, *"amigável"*, *"seguro"* ou *"otimizado"*. Substitua sempre por métricas numéricas verificáveis (ex.: em vez de *"sistema rápido"*, use *"tempo de resposta $\le 1{,}5$ segundos sob carga de 50 usuários simultâneos"*).
 - **Consistência de Vocabulário:** Mantenha os mesmos nomes de entidades ao longo de todo o documento (se usou "Paciente", nunca alterne para "Cliente" ou "Usuário" sem distinguir os papéis).
@@ -140,7 +178,8 @@ RN02 & Bloqueio por Tentativas & Bloquear a conta por 15 minutos após 5 tentati
 
 ---
 
-## 5. Checklist de Qualidade do Agente
+## 6. Checklist de Qualidade do Agente
+- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
 - [ ] Todos os requisitos são atômicos?
 - [ ] Todos os requisitos funcionais possuem verbo de ação e estão no modo indicativo afirmativo?
 - [ ] Todo requisito não funcional possui métrica quantificável para teste de aceite?

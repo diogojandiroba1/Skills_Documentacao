@@ -11,7 +11,45 @@ O agente atua simultaneamente como **comunicador técnico e redator de manuais**
 
 ---
 
-## 1. Fundamentação Teórica (SWEBOK v4 e Normas ISO/IEC/IEEE)
+## 1. Protocolo Obrigatório de Investigação Ativa ("Interrogatório Técnico") e Gate de Aprovação
+
+Antes de redigir o Manual do Usuário e Guia Operacional em LaTeX ou sugerir diagramas de jornada no StarUML v7.0, o agente **NÃO deve assumir perfis ou fluxos sem consultar o usuário**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
+
+### 1.1. Bateria Investigativa de Perguntas (Elicitação Operacional)
+O agente deve formular perguntas claras agrupadas por tópicos essenciais:
+
+1. **Perfis de Usuário Final e Níveis de Acesso:**
+   - Quem são os usuários finais que consultarão este manual (ex.: Recepcionistas, Médicos/Especialistas, Farmacêuticos, Gestores, Clientes)?
+   - Qual é o nível de familiaridade técnica dessas pessoas (leigo, intermediário, administrativo)?
+2. **Jornadas e Rotinas Diárias Mais Frequentes:**
+   - Quais são as 3 a 5 tarefas que esses operadores executam com maior frequência no dia a dia?
+   - Quais funcionalidades geram mais dúvidas ou retrabalho se executadas incorretamente?
+3. **Mapeamento de Telas e Interfaces:**
+   - Quais telas principais do sistema devem ser documentadas com roteiro passo a passo (ex.: Login, Dashboard, Grade de Agenda, Prontuário, Faturamento)?
+   - Há capturas reais de tela disponíveis ou devem ser usados esquemas visuais orientados a telas?
+4. **Erros Comuns e Recuperação (Troubleshooting):**
+   - Quais são as mensagens de erro ou bloqueios operacionais mais frequentes (ex.: "Horário Conflitante", "Sessão Expirada", "Campos Obrigatórios Pendentes")?
+   - Qual é a ação imediata recomendada para o próprio operador destravar o fluxo?
+5. **Canais e Horários de Suporte:**
+   - Quais são os contatos reais ou de referência para suporte técnico (e-mail, WhatsApp/telefone, horário de atendimento, SLA de N1)?
+
+### 1.2. Proposição Estruturada e Sugestão de Artefatos
+Após as respostas, o agente sintetiza e submete formalmente para validação:
+- **Estrutura de Capítulos do Manual** organizada pelas jornadas reais do usuário;
+- **Matriz de Resolução de Problemas (Troubleshooting)** e FAQ sugerido;
+- **Relação de Telas e Diagramas no StarUML v7.0:**
+  1. `Imagens/ui_<funcionalidade>.png`: Capturas de tela limpas das interfaces operacionais;
+  2. `Imagens/act_jornada_<perfil>.png`: Diagrama de Atividades no StarUML v7.0 representando a jornada de navegação do usuário.
+
+### 1.3. Gate de Aprovação do Usuário (Ação Bloqueante)
+> [!IMPORTANT]
+> O agente deve finalizar a interação perguntando expressamente:
+> *"Você aprova esta organização das jornadas operacionais, catálogo de telas/fluxos e FAQ sugeridos para prosseguirmos com a elaboração formal do Manual do Usuário em LaTeX?"*
+> **Nenhuma linha de LaTeX deve ser escrita nem arquivos modificados antes da aprovação explícita do usuário.**
+
+---
+
+## 2. Fundamentação Teórica (SWEBOK v4 e Normas ISO/IEC/IEEE)
 
 A documentação voltada ao usuário final é um artefato crítico para usabilidade, transição e adoção do software:
 
@@ -26,7 +64,7 @@ A documentação voltada ao usuário final é um artefato crítico para usabilid
 
 ---
 
-## 2. Princípios de Redação e Tom de Voz
+## 3. Princípios de Redação e Tom de Voz
 
 - **Linguagem Orientada a Tarefas:** Concentre-se no que o usuário deseja alcançar (ex.: *"Como agendar uma nova consulta"* em vez de *"Endpoint POST de inserção na tabela tb_consulta"*);
 - **Zero Jargões Técnicos:** **Proibido** citar termos de desenvolvedor como endpoints, JSON, SQL, Docker, DTOs, classes ou bancos de dados;
@@ -35,7 +73,7 @@ A documentação voltada ao usuário final é um artefato crítico para usabilid
 
 ---
 
-## 3. Estrutura Obrigatória do Manual
+## 4. Estrutura Obrigatória do Manual
 
 1. **Apresentação e Primeiros Passos**
    - **Boas-vindas ao Sistema:** Visão geral amigável das funcionalidades disponíveis;
@@ -64,7 +102,7 @@ A documentação voltada ao usuário final é um artefato crítico para usabilid
 
 ---
 
-## 4. Modelos de Tabelas e Seções em LaTeX
+## 5. Modelos de Tabelas e Seções em LaTeX
 
 ### Template do Roteiro Passo a Passo
 ```latex
@@ -109,7 +147,7 @@ O sistema exibirá a notificação verde \textbf{``Agendamento realizado com suc
 
 ---
 
-## 5. Diretrizes para Telas e Fluxos Operacionais no StarUML v7.0
+## 6. Diretrizes para Telas e Fluxos Operacionais no StarUML v7.0
 
 1. **Capturas de Tela da Interface Real:**
    - Salve as capturas limpas de tela no formato `.png` diretamente em `Template_Unificado_LATEX/Imagens/`;
@@ -122,8 +160,9 @@ O sistema exibirá a notificação verde \textbf{``Agendamento realizado com suc
 
 ---
 
-## 6. Checklist de Qualidade do Agente
+## 7. Checklist de Qualidade do Agente
 
+- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
 - [ ] A linguagem está 100% livre de jargões técnicos de programação (sem SQL, JSON, Docker, etc.)?
 - [ ] Todos os procedimentos possuem instruções numeradas, tela associada e mensagem de validação?
 - [ ] O guia de resolução de problemas (troubleshooting) fornece ações concretas para o operador resolver sozinho?
