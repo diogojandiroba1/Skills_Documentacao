@@ -106,15 +106,15 @@ Ao gerar código LaTeX:
 
 Quando uma solicitação exigir a elaboração de um capítulo específico, o agente deve seguir o escopo da respectiva skill em `.agents/skills/`:
 
-1. [`doc-plano-projeto`](file:///c:/Users/Diogo/Desktop/UFS_2026.2/Skills_Documentacao/.agents/skills/doc-plano-projeto/SKILL.md) -- SPMP, Project Charter, WBS, Gantt, Riscos e CAPEX/OPEX (IEEE 1058).
-2. [`doc-especificacao-requisitos`](file:///c:/Users/Diogo/Desktop/UFS_2026.2/Skills_Documentacao/.agents/skills/doc-especificacao-requisitos/SKILL.md) -- SRS/ERS, RFs, RNFs (ISO 25010), RNs e Rastreabilidade (ISO 29148).
-3. [`doc-casos-de-uso`](file:///c:/Users/Diogo/Desktop/UFS_2026.2/Skills_Documentacao/.agents/skills/doc-casos-de-uso/SKILL.md) -- Diagramas de Caso de Uso e Modelo Conceitual de Classes (UML 2.5.1).
-4. [`doc-arquitetura-software`](file:///c:/Users/Diogo/Desktop/UFS_2026.2/Skills_Documentacao/.agents/skills/doc-arquitetura-software/SKILL.md) -- SAD, Modelo 4+1 estendido com Segurança/LGPD e ADRs (ISO 42010).
-5. [`doc-design-detalhado`](file:///c:/Users/Diogo/Desktop/UFS_2026.2/Skills_Documentacao/.agents/skills/doc-design-detalhado/SKILL.md) -- SDD, DDL Relacional, Classes de Projeto, Sequência e Estados (IEEE 1016).
-6. [`doc-plano-testes`](file:///c:/Users/Diogo/Desktop/UFS_2026.2/Skills_Documentacao/.agents/skills/doc-plano-testes/SKILL.md) -- STP/STD, Pirâmide de Testes, Casos de Teste e Gestão de Defeitos (ISO 29119).
-7. [`doc-implantacao-devops`](file:///c:/Users/Diogo/Desktop/UFS_2026.2/Skills_Documentacao/.agents/skills/doc-implantacao-devops/SKILL.md) -- Pipelines CI/CD, Docker, Topologia de Nuvem e Runbooks (DORA / 12-Factor).
-8. [`doc-manual-usuario`](file:///c:/Users/Diogo/Desktop/UFS_2026.2/Skills_Documentacao/.agents/skills/doc-manual-usuario/SKILL.md) -- Manual do Usuário, Guias Operacionais, Screenshots e FAQ (ISO 26514).
-9. [`doc-gerencia-configuracao`](file:///c:/Users/Diogo/Desktop/UFS_2026.2/Skills_Documentacao/.agents/skills/doc-gerencia-configuracao/SKILL.md) -- SCM Plan, Branching Model, SemVer e Comitê CCB (IEEE 828).
-10. [`doc-garantia-qualidade`](file:///c:/Users/Diogo/Desktop/UFS_2026.2/Skills_Documentacao/.agents/skills/doc-garantia-qualidade/SKILL.md) -- SQAP, SAST/Linters, Quality Gates, DoR/DoD e Auditorias (IEEE 730).
-11. [`doc-plano-manutencao`](file:///c:/Users/Diogo/Desktop/UFS_2026.2/Skills_Documentacao/.agents/skills/doc-plano-manutencao/SKILL.md) -- Suporte N1/N2/N3, Matriz de SLAs, Manutenções e Hotfixes (ISO 14764).
-12. [`doc-integrador-final`](file:///c:/Users/Diogo/Desktop/UFS_2026.2/Skills_Documentacao/.agents/skills/doc-integrador-final/SKILL.md) -- Auditoria de divergências intercapítulos, consolidação editorial e compilação LaTeX.
+1. [`doc-plano-projeto`](.agents/skills/doc-plano-projeto/SKILL.md) -- SPMP, Project Charter, WBS, Gantt, Riscos e CAPEX/OPEX (IEEE 1058).
+2. [`doc-especificacao-requisitos`](.agents/skills/doc-especificacao-requisitos/SKILL.md) -- SRS/ERS, RFs, RNFs (ISO 25010), RNs e Rastreabilidade (ISO 29148).
+3. [`doc-casos-de-uso`](.agents/skills/doc-casos-de-uso/SKILL.md) -- Diagramas de Caso de Uso e Modelo Conceitual de Classes (UML 2.5.1).
+4. [`doc-arquitetura-software`](.agents/skills/doc-arquitetura-software/SKILL.md) -- SAD, Modelo 4+1 estendido com Segurança/LGPD e ADRs (ISO 42010).
+5. [`doc-design-detalhado`](.agents/skills/doc-design-detalhado/SKILL.md) -- SDD, DDL Relacional, Classes de Projeto, Sequência e Estados (IEEE 1016).
+6. [`doc-plano-testes`](.agents/skills/doc-plano-testes/SKILL.md) -- STP/STD, Pirâmide de Testes, Casos de Teste e Gestão de Defeitos (ISO 29119).
+7. [`doc-implantacao-devops`](.agents/skills/doc-implantacao-devops/SKILL.md) -- Pipelines CI/CD, Docker, Topologia de Nuvem e Runbooks (DORA / 12-Factor).
+8. [`doc-manual-usuario`](.agents/skills/doc-manual-usuario/SKILL.md) -- Manual do Usuário, Guias Operacionais, Screenshots e FAQ (ISO 26514).
+9. [`doc-gerencia-configuracao`](.agents/skills/doc-gerencia-configuracao/SKILL.md) -- SCM Plan, Branching Model, SemVer e Comitê CCB (IEEE 828).
+10. [`doc-garantia-qualidade`](.agents/skills/doc-garantia-qualidade/SKILL.md) -- SQAP, SAST/Linters, Quality Gates, DoR/DoD e Auditorias (IEEE 730).
+11. [`doc-plano-manutencao`](.agents/skills/doc-plano-manutencao/SKILL.md) -- Suporte N1/N2/N3, Matriz de SLAs, Manutenções e Hotfixes (ISO 14764).
+12. [`doc-integrador-final`](.agents/skills/doc-integrador-final/SKILL.md) -- Auditoria de divergências intercapítulos, consolidação editorial e compilação LaTeX.
