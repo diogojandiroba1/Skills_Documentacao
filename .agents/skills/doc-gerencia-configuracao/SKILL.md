@@ -1,37 +1,43 @@
 ---
 name: doc-gerencia-configuracao
-description: Guia o agente na elaboração do Plano de Gerência de Configuração de Software (SCM Plan) em conformidade com a norma IEEE Std 828, abordando estratégia de branching, baselines, SemVer, controle de mudanças (CCB) e modelagem no StarUML v7.0.
+description: Guia o agente na elaboração do Plano de Gerência de Configuração de Software (SCM Plan), cobrindo estratégia de branching, baselines, SemVer, controle de mudanças (CCB), tabelas com cabeçalho bege e geração de modelos em sugests_diagrams/.
 ---
 
 # Skill: Plano de Gerência de Configuração de Software (SCM Plan)
 
-Esta skill orienta o agente na formulação do **Plano de Gerência de Configuração de Software (SCM Plan - Software Configuration Management Plan)**, estruturado com base na norma internacional **IEEE Std 828** e nas melhores práticas de engenharia de software e DevOps de mercado.
+Esta skill orienta o agente na formulação do **Plano de Gerência de Configuração de Software (SCM Plan - Software Configuration Management Plan)**, cobrindo o controle de versão, modelo de branching, baselines, SemVer e o fluxo de controle de mudanças.
 
-O agente atua simultaneamente como **gerente de configuração de software** e **copiloto de modelagem visual no StarUML v7.0**, prescrevendo como modelar o fluxo de branches e o ciclo de vida de solicitações de mudança (RFC/CCB).
+O agente atua com rigor de engenharia:
+1. Conduz o interrogatório técnico e confirma se é **Documento Novo do Zero** ou **Próximo Capítulo Lógico**;
+2. Segue as melhores práticas de gerência de configuração à risca, mas **sem citar nominalmente as normas no texto** (ex.: sem citar IEEE 828 ou SWEBOK no corpo do documento);
+3. Gera as tabelas com **linhas e colunas claras** e cabeçalho em **bege claro** (`\rowcolor{tableheaderbeige}`);
+4. Gera os modelos de apoio em `sugests_diagrams/<nome_diagrama>/` contendo `.puml`, `.png` e `.md`, mantendo o `.tex` livre de tutoriais do StarUML.
 
 ---
 
 ## 1. Protocolo Obrigatório de Investigação Ativa ("Interrogatório Técnico") e Gate de Aprovação
 
-Antes de redigir o Plano de Gerência de Configuração de Software (SCM Plan) em LaTeX ou orientar diagramas no StarUML v7.0, o agente **NÃO deve assumir políticas de branching ou processos de release sem consultar o usuário**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
+Antes de redigir o Plano de Gerência de Configuração de Software (SCM Plan) em LaTeX ou sugerir diagramas, o agente **NÃO deve assumir políticas de branching ou processos de release sem consultar o usuário**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
 
 ### 1.1. Bateria Investigativa de Perguntas (Elicitação de SCM)
 O agente deve formular perguntas claras agrupadas por tópicos essenciais:
 
-1. **Modelo de Branching e Fluxo de Trabalho Git:**
+1. **Contexto e Fronteira do Documento:**
+   - Trata-se de um **Novo Projeto do Zero** ou do **Próximo Capítulo Lógico** (após o Manual do Usuário) do projeto atual?
+2. **Modelo de Branching e Fluxo de Trabalho Git:**
    - Qual estratégia de branches a equipe adotará (GitFlow clássico, Trunk-Based Development, GitHub Flow)?
    - Quais branches serão protegidas (ex.: `main` e `staging` imutáveis contra direct push e force push)?
-   - Quantos revisores (approvals) são exigidos para aprovar um Pull Request (ex.: mínimo de 1 ou 2 aprovadores)?
-2. **Convenção de Commits e Rastreabilidade:**
-   - Será adotado o padrão *Conventional Commits 1.0.0* (`feat:`, `fix:`, `refactor:`, `chore:`, `docs:`)?
-   - Os commits e PRs devem obrigatoriamente referenciar IDs de Issues ou Requisitos (ex.: `feat(auth): login RBAC #12`)?
-3. **Versionamento Semântico e Baselines:**
-   - Como será calculada a versão (SemVer 2.0.0 manual ou via automação SemVer / Release Please / Semantic Release)?
+   - Quantos revisores são exigidos para aprovar um Pull Request?
+3. **Convenção de Commits e Rastreabilidade:**
+   - Será adotado o padrão *Conventional Commits* (`feat:`, `fix:`, `refactor:`, `chore:`, `docs:`)?
+   - Os commits e PRs devem obrigatoriamente referenciar IDs de Issues ou Requisitos?
+4. **Versionamento Semântico e Baselines:**
+   - Como será calculada a versão (SemVer 2.0.0 manual ou via automação)?
    - Em que momentos são congeladas as *baselines* de versão (fim de sprint, marcos contratuais)?
-4. **Comitê de Controle de Mudanças (CCB):**
+5. **Comitê de Controle de Mudanças (CCB):**
    - Quem compõe o CCB (ex.: Tech Lead, Arquiteto, Product Owner, QA Lead)?
-   - Qual é o limiar de mudança que exige aprovação formal do CCB (ex.: alterações de contrato de API pública, quebras de schema de banco, requisitos extras de escopo)?
-5. **Itens de Configuração (CIs) e Auditorias:**
+   - Qual é o limiar de mudança que exige aprovação formal do CCB?
+6. **Itens de Configuração (CIs) e Auditorias:**
    - Quais itens de configuração serão controlados e auditados formalmente (código backend, frontend, DDLs, Dockerfiles, IaC, documentos LaTeX)?
 
 ### 1.2. Proposição Estruturada e Sugestão de Diagramas
@@ -45,64 +51,39 @@ Após as respostas, o agente sintetiza e submete formalmente para validação:
 ### 1.3. Gate de Aprovação do Usuário (Ação Bloqueante)
 > [!IMPORTANT]
 > O agente deve finalizar a interação perguntando expressamente:
-> *"Você aprova este modelo de branching, regras de proteção de branch e o fluxo do CCB sugeridos para prosseguirmos com a elaboração formal do SCM Plan em LaTeX e o guia do StarUML v7.0?"*
+> *"Você aprova este modelo de branching, regras de proteção de branch e o fluxo do CCB sugeridos para prosseguirmos com a elaboração formal do SCM Plan em LaTeX e a geração dos modelos de apoio em sugests_diagrams/?"*
 > **Nenhuma linha de LaTeX deve ser escrita nem arquivos modificados antes da aprovação explícita do usuário.**
 
 ---
 
-## 2. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
+## 2. Diretrizes Normativas e de Estilo
 
-Esta skill está fundamentada nos preceitos formais da Engenharia de Software:
-- **SWEBOK v4 -- Capítulo 6 (Software Configuration Management KA):**
-  - *1. Management of the SCM Process:* Contexto organizacional, plano de SCM, monitoramento e vigilância de processos.
-  - *2. Software Configuration Identification:* Identificação de Itens de Configuração (CIs), esquema de nomenclatura de artefatos, linhas de base (*baselines*) e aquisição de CIs.
-  - *3. Software Configuration Control:* Fluxo formal de controle de mudanças (submissão, avaliação técnica/financeira, aprovação via CCB, implementação e verificação).
-  - *4. Software Configuration Status Accounting:* Registro contínuo, rastreabilidade e relatórios de status dos itens de configuração.
-  - *5. Software Configuration Auditing:* Auditorias Funcionais de Configuração (FCA - conformidade com requisitos) e Físicas de Configuração (PCA - completude física da entrega).
-  - *6. Software Release Management and Delivery:* Versionamento, compilação de releases, empacotamento, entrega e recuperação de desastres.
-- **IEEE Std 828-2012 (*Standard for Configuration Management in Systems and Software Engineering*):** Norma de referência internacional que padroniza o ciclo de vida da gerência de configuração, papéis, responsabilidades e procedimentos de auditoria.
-- **ISO/IEC/IEEE 12207:2017 (Clause 6.3.5 -- Configuration Management Process):** Estabelece o processo de gerência de configuração no ciclo de vida de software.
-- **Semantic Versioning 2.0.0 (SemVer):** Especificação formal para controle determinístico de evolução de APIs e interfaces de software.
-- **Conventional Commits 1.0.0:** Especificação estruturada para histórico de commits legível por humanos e ferramentas de automação.
+- **PROIBIÇÃO DE METACITAÇÕES:** O documento é puramente técnico de governança de configuração do projeto. Não cite no texto termos como *"conforme o IEEE Std 828"*, *"segundo o SWEBOK"*. Aplique os princípios de rastreabilidade, imutabilidade de baselines e controle de mudanças diretamente nas políticas descritas.
+- **GRADE NÍTIDA EM TABELAS:** Todas as matrizes de itens de configuração e regras de controle devem possuir linhas verticais e horizontais explícitas (`|l|Y|...|` e `\hline`), com a linha de cabeçalho em bege claro (`\rowcolor{tableheaderbeige}`) e títulos em negrito.
+- **SEPARAÇÃO DE MODELOS:** O arquivo `.tex` e o PDF final contêm apenas `\incluirdiagrama{...}`. Instruções de modelagem no StarUML v7.0 **NÃO devem ir para o PDF**; devem ser geradas em `sugests_diagrams/<nome_diagrama>/`.
 
 ---
 
 ## 3. Estrutura Obrigatória do Documento
 
 1. **Introdução e Escopo do SCM**
-   - Propósito do plano de gerência de configuração no ciclo de vida;
-   - Itens de Configuração (CIs - Configuration Items) controlados: código-fonte, scripts DDL de banco de dados, arquivos de configuração (`.env.example`, Dockerfiles), documentação técnica e pacotes de release.
+   - Propósito do plano de gerência de configuração e catálogo de Itens de Configuração (CIs).
 
 2. **Estratégia de Controle de Versão e Modelo de Branching**
-   - Definição formal do fluxo de trabalho no Git (Trunk-Based Development ou GitFlow adaptado);
-   - Políticas de branches:
-     - `main`: Código estável em produção (imutável sem Pull Request aprovado);
-     - `staging` / `develop`: Código integrado para homologação;
-     - `feature/*`: Desenvolvimento de novas funcionalidades isoladas;
-     - `hotfix/*`: Correções emergenciais diretamente para a branch de produção;
-     - `release/*`: Estabilização e corte de versão.
-   - Padrão de mensagens de commit (Conventional Commits: `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`).
+   - Definição do fluxo no Git (Trunk-Based / GitFlow) e regras de proteção de branches.
 
 3. **Política de Versionamento Semântico e Baselines**
-   - Especificação do padrão **SemVer 2.0.0** (`MAJOR.MINOR.PATCH`):
-     - `MAJOR`: Quebras de compatibilidade de API ou arquitetura;
-     - `MINOR`: Novas funcionalidades compatíveis com versões anteriores;
-     - `PATCH`: Correções de bugs e vulnerabilidades;
-   - Definição de **Baselines do Projeto:** Momentos formais em que o estado do software é congelado e etiquetado com Git Tags assinadas (ex.: `v1.0.0`, `v1.1.0`).
+   - Especificação do SemVer 2.0.0 (`MAJOR.MINOR.PATCH`) e critérios de congelamento de baselines.
 
 4. **Gerenciamento de Mudanças e Comitê de Controle (CCB)**
-   - Fluxo formal para Solicitações de Mudança (RFC - Request for Change):
-     - Submissão da solicitação $\rightarrow$ Avaliação de impacto técnico e de negócio $\rightarrow$ Aprovação pelo Comitê $\rightarrow$ Implementação em branch $\rightarrow$ Homologação $\rightarrow$ Release;
-   - Composição do **Change Control Board (CCB):** Papéis do Arquiteto, Tech Lead, Product Owner e Engenheiro de Operações.
+   - Fluxo formal para Solicitações de Mudança (RFC) e composição do comitê.
 
 5. **Auditorias de Configuração e Rastreabilidade**
-   - **Auditoria Física de Configuração (PCA):** Verifica se todos os itens de configuração especificados foram efetivamente construídos e entregues;
-   - **Auditoria Funcional de Configuração (FCA):** Valida se o software atende rigorosamente aos requisitos especificados através dos testes automatizados;
-   - Mecanismos de geração automática de **Changelog** a partir dos commits.
+   - Auditorias Físicas (PCA) e Funcionais (FCA) e geração de Changelog.
 
 ---
 
-## 4. Modelos de Tabelas e Fluxos em LaTeX
+## 4. Modelos de Tabelas e Políticas em LaTeX (Grade Nítida e Cabeçalho Bege)
 
 ### Matriz de Itens de Configuração (CIs)
 ```latex
@@ -111,16 +92,15 @@ Esta skill está fundamentada nos preceitos formais da Engenharia de Software:
 \label{tab:itens_configuracao}
 \centering
 \small
-\begin{tabularx}{\textwidth}{@{} l l Y l @{}}
-\toprule
-\textbf{Identificador} & \textbf{Tipo de Item} & \textbf{Repositório / Localização} & \textbf{Responsável} \\
-\midrule
-CI-CODE-BACK & Código Back-end & \texttt{git:backend/src} & Tech Lead Back-end \\
-CI-CODE-FRONT & Código Front-end & \texttt{git:frontend/src} & Tech Lead Front-end \\
-CI-DB-SCHEMA & Migrações de BD & \texttt{git:backend/alembic/versions} & DBA / Engenheiro de Dados \\
-CI-DOC-TECH & Especificação Técnica & \texttt{git:docs/technical\_spec.pdf} & Arquiteto de Software \\
-CI-INFRA-IAC & Configuração Docker & \texttt{git:deploy/docker-compose.yml} & Engenheiro de DevOps \\
-\bottomrule
+\begin{tabularx}{\textwidth}{|l|l|Y|l|}
+\hline
+\rowcolor{tableheaderbeige}
+\textbf{Identificador} & \textbf{Tipo de Item} & \textbf{Repositório / Localização} & \textbf{Responsável} \\ \hline
+CI-CODE-BACK & Código Back-end & \texttt{git:backend/src} & Tech Lead Back-end \\ \hline
+CI-CODE-FRONT & Código Front-end & \texttt{git:frontend/src} & Tech Lead Front-end \\ \hline
+CI-DB-SCHEMA & Migrações de BD & \texttt{git:backend/alembic/versions} & DBA / Engenheiro de Dados \\ \hline
+CI-DOC-TECH & Especificação Técnica & \texttt{git:docs/technical\_spec.pdf} & Arquiteto de Software \\ \hline
+CI-INFRA-IAC & Configuração Docker & \texttt{git:deploy/docker-compose.yml} & Engenheiro de DevOps \\ \hline
 \end{tabularx}
 \end{table}
 ```
@@ -139,24 +119,26 @@ A branch principal (\texttt{main}) é estritamente protegida contra \textit{dire
 
 ---
 
-## 5. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
+## 5. Apoio à Modelagem: Pasta `sugests_diagrams/`
 
-### 4.1. Estratégia de Branching no Git (Activity Diagram)
-1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Activity Diagram` e nomeie como `scm_branching_model`;
-2. **Raias de Branches (Swimlanes):** Crie raias horizontais para: `main (Produção)`, `staging (Homologação)`, `feature/*` e `hotfix/*`;
-3. **Ações:** Modele o fluxo desde `Criar Branch a partir de main/staging`, `Commits locais`, `Pull Request`, `Execução de CI`, `Code Review (2 aprovações)` até `Merge Squash` e `Tag SemVer`.
+Para cada diagrama deste capítulo, o agente deve gerar uma subpasta dedicada em `sugests_diagrams/`:
+- `sugests_diagrams/scm_branching_model/`
+- `sugests_diagrams/scm_fluxo_ccb/`
 
-### 4.2. Ciclo de Mudança e Aprovação CCB (Statechart Diagram)
-1. **No Model Explorer:** Selecione `Model -> Add Diagram -> Statechart Diagram` e nomeie como `scm_fluxo_ccb`;
-2. **Estados da Mudança:** `Proposta` $\rightarrow$ `Em Avaliação de Impacto` $\rightarrow$ `Aprovada pelo CCB` (ou `Rejeitada`) $\rightarrow$ `Em Implementação` $\rightarrow$ `Homologada` $\rightarrow$ `Implantada em Baseline`;
-3. **Exportação:** Exporte via **`File` -> `Export Diagram as` -> `PNG...`** (300 DPI, fundo branco) para `Template_Unificado_LATEX/Imagens/scm_branching_model.png` e `Imagens/scm_fluxo_ccb.png`.
+Cada subpasta conterá obrigatoriamente três arquivos:
+1. `<nome_diagrama>.puml`: Código PlantUML do modelo de SCM;
+2. `<nome_diagrama>.png`: Imagem da prévia do PlantUML;
+3. `<nome_diagrama>.md`: Roteiro textual detalhado para modelar no StarUML v7.0 (Raias de branches, ações, estados de mudança do CCB e exportação para `Template_Unificado_LATEX/Imagens/`).
 
 ---
 
 ## 6. Checklist de Qualidade do Agente
 
-- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
+- [ ] A rodada investigativa confirmou se a demanda é Documento do Zero ou Próximo Capítulo Lógico?
+- [ ] O texto está totalmente livre de citações nominais a normas (IEEE 828, SWEBOK, ISO 12207)?
+- [ ] Todas as tabelas possuem divisão nítida de linhas/colunas e `\rowcolor{tableheaderbeige}`?
 - [ ] A estratégia de branches está explicitada com regras formais de proteção?
 - [ ] A política de SemVer 2.0.0 define os critérios objetivos para MAJOR, MINOR e PATCH?
-- [ ] O fluxo do CCB e o modelo de branches foram orientados para modelagem no StarUML v7.0?
+- [ ] Os modelos de apoio foram gerados em `sugests_diagrams/` com o trio `.puml`, `.png` e `.md`?
+- [ ] Nenhum guia de como usar o StarUML foi injetado dentro do arquivo `.tex` ou no PDF?
 - [ ] Os itens de configuração cobrem código, esquemas de banco, Docker e documentação?

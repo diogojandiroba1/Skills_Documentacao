@@ -1,35 +1,41 @@
 ---
 name: doc-casos-de-uso
-description: Guia o agente na modelagem de casos de uso (UML Use Case) e análise conceitual de domínio, incluindo especificação textual detalhada, matriz de rastreabilidade (RF x UC), modelo conceitual de classes e instrução formal passo a passo para modelagem no StarUML v7.0.
+description: Guia o agente na modelagem de casos de uso (UML Use Case) e análise conceitual de domínio, incluindo especificação textual detalhada em tabelas padronizadas com cabeçalho bege, matriz de rastreabilidade (RF x UC) e geração de modelos em sugests_diagrams/.
 ---
 
 # Skill: Modelagem de Casos de Uso e Análise Conceitual
 
-Esta skill orienta o agente na especificação, detalhamento e auxílio à modelagem dos **Casos de Uso (UML Use Cases)** e do **Modelo Conceitual de Domínio (Classes de Análise)**, fundamentada na Área de Conhecimento de Requisitos e Design do **SWEBOK v4** e no padrão formal **OMG Unified Modeling Language (UML 2.5.1)**.
+Esta skill orienta o agente na especificação, detalhamento e geração de modelos de apoio para os **Casos de Uso (UML Use Cases)** e o **Modelo Conceitual de Domínio (Classes de Análise)**.
 
-O agente atua simultaneamente como **especificador formal da documentação técnica** e **copiloto de modelagem visual no StarUML v7.0**, fornecendo descrições prescritivas para que o usuário construa os diagramas visualmente na ferramenta com rigor profissional.
+O agente atua com rigor de engenharia:
+1. Conduz o interrogatório técnico e confirma se é **Documento Novo do Zero** ou **Próximo Capítulo Lógico**;
+2. Segue as normas de modelagem à risca, mas **sem citar nominalmente as normas no texto** (ex.: sem citar UML 2.5.1, SWEBOK ou Cockburn no texto gerado);
+3. Gera as tabelas com **linhas e colunas claras** e cabeçalho em **bege claro** (`\rowcolor{tableheaderbeige}`);
+4. Gera os modelos de apoio em `sugests_diagrams/<nome_diagrama>/` contendo `.puml`, `.png` e `.md`, mantendo o `.tex` livre de tutoriais do StarUML.
 
 ---
 
 ## 1. Protocolo Obrigatório de Investigação Ativa ("Interrogatório Técnico") e Gate de Aprovação
 
-Antes de gerar qualquer especificação de Casos de Uso ou orientar diagramas no StarUML v7.0, o agente **NÃO deve assumir fluxos ou relacionamentos sem consultar o usuário**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
+Antes de gerar qualquer especificação de Casos de Uso ou sugerir diagramas, o agente **NÃO deve assumir fluxos ou relacionamentos sem consultar o usuário**. É mandatório conduzir uma rodada investigativa estruturada com o usuário.
 
 ### 1.1. Bateria Investigativa de Perguntas (Modelagem de Casos de Uso e Domínio)
 O agente deve formular perguntas claras agrupadas por tópicos essenciais:
 
-1. **Atores e Fronteiras:**
+1. **Contexto e Fronteira do Documento:**
+   - Trata-se de um **Novo Projeto do Zero** ou do **Próximo Capítulo Lógico** (após a Especificação de Requisitos) do projeto atual?
+2. **Atores e Fronteiras:**
    - Quem são os atores humanos primários (que disparam os fluxos) e secundários (que apenas recebem notificações)?
    - Há atores de sistemas externos ou APIs (ex.: Gateway de Pagamento, SMS/E-mail, Sistema Governamental)?
    - Há especialização entre atores (ex.: `Médico` especializa `Profissional de Saúde`)?
-2. **Mapeamento RF $\rightarrow$ Casos de Uso:**
+3. **Mapeamento RF $\rightarrow$ Casos de Uso:**
    - Quais requisitos funcionais viram Casos de Uso diretos?
    - Há casos de uso compartilhados ou reutilizáveis que justificam `<<include>>` (ex.: `UC_Autenticar`, `UC_RegistrarAuditoria`)?
-   - Há fluxos opcionais ou condicionais que justificam `<<extend>>` com extension points claros (ex.: `UC_SolicitarAutorizacaoConvenio` estendendo `UC_EmitirGuia`)?
-3. **Fluxos Críticos e Exceções:**
+   - Há fluxos opcionais ou condicionais que justificam `<<extend>>` com extension points claros?
+4. **Fluxos Críticos e Exceções:**
    - Para os casos de uso vitais do sistema: qual é o fluxo principal (passo a passo da interação Ator $\leftrightarrow$ Sistema)?
    - Quais são os principais fluxos de exceção e regras de validação que o sistema deve tratar?
-4. **Modelo Conceitual de Domínio:**
+5. **Modelo Conceitual de Domínio:**
    - Quais são as entidades centrais do negócio (ex.: `Paciente`, `Consulta`, `Prontuario`, `Medicamento`)?
    - Quais são as cardinalidades/multiplicidades reais entre elas (`1..1`, `1..*`, `0..*`)?
    - Existem composições fortes (onde a entidade-filho deixa de existir se o pai for removido)?
@@ -37,7 +43,7 @@ O agente deve formular perguntas claras agrupadas por tópicos essenciais:
 ### 1.2. Proposição Estruturada e Sugestão de Diagramas
 Após as respostas, o agente sintetiza e submete formalmente para validação:
 - **Catálogo Preliminar de Casos de Uso por Módulo** com atores e relacionamentos `<<include>>`/`<<extend>>`;
-- **Sugestão de Diagramas para Construção no StarUML v7.0:**
+- **Relação de Diagramas para Modelagem no StarUML v7.0:**
   1. `Imagens/uc_geral.png`: Diagrama Geral de Casos de Uso com fronteira do sistema e atores;
   2. `Imagens/uc_<modulo>.png`: Diagramas de Casos de Uso modulares (4 a 6 UCs por pacote para legibilidade);
   3. `Imagens/cls_conceitual_dominio.png`: Modelo Conceitual de Classes de Análise com associações e multiplicidades.
@@ -45,57 +51,42 @@ Após as respostas, o agente sintetiza e submete formalmente para validação:
 ### 1.3. Gate de Aprovação do Usuário (Ação Bloqueante)
 > [!IMPORTANT]
 > O agente deve finalizar a interação perguntando expressamente:
-> *"Você aprova esta lista de Casos de Uso, divisão por pacotes e entidades do Modelo Conceitual para prosseguirmos com a especificação textual em LaTeX e o guia do StarUML v7.0?"*
+> *"Você aprova esta lista de Casos de Uso, divisão por pacotes e entidades do Modelo Conceitual para prosseguirmos com a especificação textual em LaTeX e a geração dos modelos de apoio em sugests_diagrams/?"*
 > **Nenhuma linha de LaTeX deve ser escrita nem arquivos modificados antes da aprovação explícita do usuário.**
 
 ---
 
-## 2. Fundamentação Teórica (SWEBOK v4 e Padrões OMG/Cockburn)
+## 2. Diretrizes Normativas e de Estilo
 
-* **SWEBOK v4 (Software Engineering Body of Knowledge):**
-  * **Chapter 1 -- Software Requirements (Subárea 2.3: Conceptual Modeling):** O modelo conceitual traduz os requisitos textuais em representações comportamentais rigorosas de fluxos de tarefas orientadas a objetivos de negócio (*Goal-Oriented Requirements*).
-  * **Chapter 3 -- Software Design (Subárea 2.2: Object-Oriented Analysis):** Identificação de entidades de domínio do mundo real, atributos fundamentais e relacionamentos semânticos (associação, agregação, composição e multiplicidade), mantendo independência de implementações técnicas.
-* **Normas e Metodologias:**
-  * **OMG Unified Modeling Language (UML) Specification v2.5.1:** Semântica formal para Use Cases, Atores, Fronteiras do Sistema (*System Boundary* / *Subject*), estereótipos de relacionamento (`<<include>>`, `<<extend>>`) e generalização de atores;
-  * **Metodologia de Casos de Uso de Alistair Cockburn:** Estruturação orientada a objetivos (Garantias Mínimas, Garantias de Sucesso, Triggers, Fluxo Básico e Extensões de Exceção);
-  * **ISO/IEC/IEEE 29148:2018:** Rastreabilidade formal bidirecional Requisitos Funcionais $\leftrightarrow$ Casos de Uso ($RF \leftrightarrow UC$).
+- **PROIBIÇÃO DE METACITAÇÕES:** O documento técnico é focado puramente no sistema. Não cite no texto termos como *"conforme a OMG UML 2.5.1"*, *"segundo Cockburn"*, etc. Siga a semântica formal diretamente na redação e estrutura.
+- **GRADE NÍTIDA EM TABELAS:** Todas as especificações textuais de Casos de Uso e matrizes de rastreabilidade devem ter linhas verticais e horizontais explícitas (`|l|Y|` e `\hline`), com cabeçalho bege claro (`\rowcolor{tableheaderbeige}`) e títulos em negrito.
+- **SEPARAÇÃO DE MODELOS:** O PDF final contém apenas as figuras incluídas via `\incluirdiagrama{...}`. O passo a passo para desenhar no StarUML v7.0 **NÃO deve ir para o PDF**. Ele deve ser gerado na subpasta `sugests_diagrams/<nome_diagrama>/`.
 
 ---
 
 ## 3. Estrutura Obrigatória do Documento
 
 1. **Atores do Sistema**
-   - Identificação de todos os atores humanos (papéis operacionais) e sistemas externos;
-   - Descrição detalhada das responsabilidades de cada ator e relações de generalização/herança de papéis (ex.: `Médico` especializa `Profissional de Saúde`).
+   - Identificação de atores humanos e sistemas externos, com responsabilidades e hierarquia de papéis.
 
 2. **Diagrama Geral e Particionamento por Pacotes Funcionais**
-   - **Diagrama Geral de Casos de Uso:** Visão macro delimitando as fronteiras do sistema e seus grandes módulos;
-   - **Diagramas de Casos de Uso por Módulo Funcional:** Cada pacote (ex.: Agenda, Prontuário, Farmácia, Faturamento) deve possuir seu próprio diagrama isolado, contendo entre **4 e 6 casos de uso** para garantir legibilidade.
+   - **Diagrama Geral de Casos de Uso:** Visão macro delimitando as fronteiras do sistema;
+   - **Diagramas de Casos de Uso por Módulo Funcional:** Cada pacote contendo entre **4 e 6 casos de uso**.
 
 3. **Especificação Textual Detalhada dos Casos de Uso**
-   - Todo caso de uso prioritário deve ser detalhado segundo o template formal:
-     - **ID e Nome:** `UCxx -- Nome no Infinitivo` (ex.: `UC01 -- Realizar Agendamento`);
-     - **Atores:** Indicando quem inicia a interação (ator primário) e quem é notificado (ator secundário);
-     - **Objetivo / Breve Descrição:** Resumo do valor entregue ao ator;
-     - **Pré-condições:** Condições de estado necessárias antes do início do fluxo;
-     - **Pós-condições:** Estado garantido do sistema após o sucesso da operação;
-     - **Fluxo Principal dos Eventos:** Sequência numerada passo a passo (interação Ator $\rightarrow$ Sistema $\rightarrow$ Ator);
-     - **Fluxos Alternativos (FA):** Caminhos secundários de sucesso;
-     - **Fluxos de Exceção (FE):** Tratamento de falhas, erros de validação e cancelamentos;
-     - **Regras de Negócio e Requisitos Vinculados:** Rastreabilidade direta para as RNs e RFs.
+   - Todo caso de uso prioritário deve ser detalhado segundo o template tabular.
 
 4. **Matrizes de Rastreabilidade**
    - Matriz Requisitos Funcionais $\times$ Casos de Uso ($RF \leftrightarrow UC$);
    - Matriz Casos de Uso $\times$ Classes de Análise ($UC \leftrightarrow Entidades$).
 
 5. **Modelo Conceitual de Domínio (Diagrama de Classes de Análise)**
-   - Representação puramente orientada ao problema (entidades de negócio e conceitos do mundo real);
-   - Sem tipos de banco de dados (ex.: VARCHAR, INT), chaves primárias artificiais ou métodos técnicos;
-   - Relações conceituais com multiplicidades explícitas em ambas as pontas (`1..1`, `1..*`, `0..*`), além de Agregações e Composições.
+   - Representação orientada ao problema, sem tipos de banco de dados ou métodos técnicos;
+   - Multiplicidades explícitas em ambas as pontas (`1..1`, `1..*`, `0..*`), além de Agregações e Composições.
 
 ---
 
-## 4. Template de Especificação Textual em LaTeX
+## 4. Template de Especificação Textual em LaTeX (Grade Nítida e Cabeçalho Bege)
 
 ```latex
 \begin{table}[htbp]
@@ -103,20 +94,19 @@ Após as respostas, o agente sintetiza e submete formalmente para validação:
 \label{tab:uc01_detalhado}
 \centering
 \small
-\begin{tabularx}{\textwidth}{@{} l Y @{}}
-\toprule
-\multicolumn{2}{@{}l}{\textbf{UC01 -- Realizar Agendamento de Consulta}} \\
-\midrule
-\textbf{Atores} & Recepcionista (ator primário), Paciente, Profissional de Saúde. \\
-\textbf{Objetivo} & Reservar um horário na agenda de um profissional para um paciente específico. \\
-\textbf{Pré-condições} & O paciente e o profissional devem estar cadastrados e com status ativo. \\
-\textbf{Pós-condições} & O horário é reservado na agenda e notificação é despachada. \\
-\midrule
-\multicolumn{2}{@{}l}{\textbf{Fluxo Principal dos Eventos}} \\
-\midrule
-\multicolumn{2}{@{}p{\linewidth}@{}}{
+\begin{tabularx}{\textwidth}{|l|Y|}
+\hline
+\rowcolor{tableheaderbeige}
+\multicolumn{2}{|l|}{\textbf{UC01 -- Realizar Agendamento de Consulta}} \\ \hline
+\textbf{Atores} & Recepcionista (ator primário), Paciente, Profissional de Saúde. \\ \hline
+\textbf{Objetivo} & Reservar um horário na agenda de um profissional para um paciente específico. \\ \hline
+\textbf{Pré-condições} & O paciente e o profissional devem estar cadastrados e com status ativo. \\ \hline
+\textbf{Pós-condições} & O horário é reservado na agenda e notificação é despachada. \\ \hline
+\rowcolor{tableheaderbeige}
+\multicolumn{2}{|l|}{\textbf{Fluxo Principal dos Eventos}} \\ \hline
+\multicolumn{2}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{
 1. A recepcionista acessa o módulo de agendamentos no sistema. \newline
-2. O sistema solicita a identificação do paciente (CPF ou Cartão SUS). \newline
+2. O sistema solicita a identificação do paciente (CPF ou código). \newline
 3. A recepcionista insere os dados do paciente. \newline
 4. O sistema valida o paciente e solicita a escolha da especialidade ou profissional. \newline
 5. A recepcionista seleciona o profissional desejado e o intervalo de datas. \newline
@@ -126,102 +116,41 @@ Após as respostas, o agente sintetiza e submete formalmente para validação:
 9. O sistema solicita a confirmação dos dados e o tipo de convênio/particular. \newline
 10. A recepcionista confirma o agendamento. \newline
 11. O sistema persiste a reserva com status ``Agendado'' e exibe mensagem de confirmação.
-} \\
-\midrule
-\multicolumn{2}{@{}l}{\textbf{Fluxos Alternativos e de Exceção}} \\
-\midrule
-\multicolumn{2}{@{}p{\linewidth}@{}}{
+} \\ \hline
+\rowcolor{tableheaderbeige}
+\multicolumn{2}{|l|}{\textbf{Fluxos Alternativos e de Exceção}} \\ \hline
+\multicolumn{2}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{
 \textbf{FA01 -- Paciente Não Cadastrado (Passo 4):} O sistema oferece opção de cadastro rápido. A recepcionista realiza o cadastro básico e retorna imediatamente ao Passo 5. \newline
 \textbf{FE01 -- Conflito Simultâneo de Horário (Passo 8):} Se o horário selecionado foi reservado por outro operador no mesmo instante, o sistema emite alerta, atualiza a grade e retorna ao Passo 6.
-} \\
-\midrule
-\textbf{Rastreabilidade} & Atende ao requisito \textbf{RF02} e cumpre as regras \textbf{RN01} e \textbf{RN03}. \\
-\bottomrule
+} \\ \hline
+\textbf{Rastreabilidade} & Atende ao requisito \textbf{RF02} e cumpre as regras \textbf{RN01} e \textbf{RN03}. \\ \hline
 \end{tabularx}
 \end{table}
 ```
 
 ---
 
-## 5. Guia Passo a Passo de Modelagem no StarUML v7.0 (Auxiliar do Agente)
+## 5. Apoio à Modelagem: Pasta `sugests_diagrams/`
 
-O agente deve fornecer ao usuário instruções formais e determinísticas para construir os diagramas no **StarUML v7.0**, seguindo rigorosamente os passos abaixo:
+Para cada diagrama deste capítulo, o agente deve gerar uma subpasta dedicada em `sugests_diagrams/`:
+- `sugests_diagrams/uc_geral/`
+- `sugests_diagrams/uc_<modulo>/`
+- `sugests_diagrams/cls_conceitual_dominio/`
 
-### 4.1. Modelagem de Casos de Uso (Geral e Modular)
-
-1. **Estruturação no Model Explorer:**
-   - No painel lateral direito (*Model Explorer*), clique com o botão direito no modelo raiz (`Model`) e selecione **`Add` -> `Package`**;
-   - Nomeie o pacote como `Modelagem_Casos_Uso` e crie subpacotes para cada módulo (ex.: `Modulo_Agendamento`, `Modulo_Atendimento`);
-   - Clique com o botão direito no pacote e selecione **`Add Diagram` -> `Use Case Diagram`**.
-
-2. **Criação e Posicionamento dos Elementos:**
-   - **Fronteira do Sistema (Subject):** Na Toolbox à esquerda (*Use Case*), clique em **`System Boundary`** (ou `Subject`), arraste um retângulo amplo para o centro do canvas e nomeie com o título do subsistema (ex.: `Sistema VitaCare -- Módulo Agendamento`);
-   - **Atores:** Na Toolbox, selecione **`Actor`**. Posicione atores primários (iniciadores) à esquerda da fronteira e atores secundários (sistemas externos ou destinatários de alertas) à direita;
-   - **Casos de Uso:** Na Toolbox, selecione **`UseCase`** e insira as elipses dentro da fronteira do sistema. Nomeie sempre com verbo no infinitivo seguido do objeto (ex.: `Realizar Agendamento`, `Confirmar Presença`).
-
-3. **Estabelecimento de Relacionamentos Semânticos:**
-   - **Associação Ator-UC:** Utilize a ferramenta **`Association`** ligando o ator ao caso de uso que ele aciona;
-   - **Inclusão (`<<include>>`):** Selecione a ferramenta **`Include`**, clique no caso de uso base e arraste até o caso de uso incluído (ex.: de `Realizar Agendamento` para `Validar Conflito de Horário`). O StarUML v7.0 renderizará automaticamente a linha tracejada com ponta aberta e o estereótipo `<<include>>`;
-   - **Extensão (`<<extend>>`):** Selecione a ferramenta **`Extend`**, clique no caso de uso extensor/opcional e arraste até o caso de uso base. Configure pontos de extensão (*Extension Points*) no painel de propriedades (*Editors / Properties*);
-   - **Generalização de Atores:** Utilize **`Generalization`** ligando o ator especialista ao ator genérico (ex.: `Médico` $\rightarrow$ `Profissional de Saúde`).
-
-4. **Diretrizes de Layout e Alinhamento no Canvas:**
-   - Mantenha alinhamento estrito em grade (*Format -> Layout -> Align Left / Distribute Vertically*);
-   - Evite absolutamente linhas diagonais longas que atravessem a fronteira do sistema;
-   - Mantenha no máximo **4 a 6 Use Cases** por diagrama modular;
-   - Conectores devem ser mantidos no estilo **Rectilinear** ou **Oblique limpo** (*Format -> Line Style -> Rectilinear*).
-
----
-
-### 4.2. Modelagem do Diagrama Conceitual de Classes (Domínio)
-
-1. **Adição do Diagrama:**
-   - No *Model Explorer*, clique no pacote de domínio e selecione **`Add Diagram` -> `Class Diagram`**;
-   - Nomeie o diagrama como `Diagrama_Conceitual_Dominio`.
-
-2. **Criação de Entidades de Domínio:**
-   - Na Toolbox (*Class*), selecione **`Class`** e clique no canvas;
-   - Nomeie cada entidade no singular com inicial maiúscula (ex.: `Paciente`, `Agendamento`, `Consulta`, `Profissional`);
-   - Clique com o botão direito na classe e escolha **`Add` -> `Attribute`** para inserir os atributos essenciais de negócio com tipos primitivos conceituais (ex.: `nome: String`, `dataNascimento: Date`, `telefone: String`). Não insira detalhes técnicos de banco de dados (ex.: INT UNSIGNED, VARCHAR, sequences).
-
-3. **Definição de Relacionamentos e Multiplicidades:**
-   - Utilize **`Association`** entre classes que possuem vínculo semântico;
-   - No painel de propriedades de cada extremidade (*End1* e *End2*), preencha:
-     - `Multiplicity`: `1`, `0..1`, `1..*`, `*` ou `0..*`;
-     - `Aggregation`: configure `shared` para Agregações ou `composite` para Composições (ex.: `Prontuario` composto por `ItemEvolucao`);
-     - `Role Name`: rótulo semântico do papel (ex.: `+paciente`, `+horarioReservado`).
-
----
-
-### 4.3. Exportação e Inclusão no Template LaTeX
-
-1. **Procedimento de Exportação no StarUML v7.0:**
-   - Abra o diagrama finalizado no canvas;
-   - Acesse o menu: **`File` -> `Export Diagram as` -> `PNG...`** (ou `PDF...`);
-   - No diálogo de exportação:
-     - Selecione resolução de **2x** ou **3x (300 DPI)** para máxima qualidade;
-     - Assegure que o fundo esteja definido como **branco** (não transparente);
-   - Salve os arquivos com a nomenclatura padronizada na pasta `Template_Unificado_LATEX/Imagens/`:
-     - Diagrama Geral de Casos de Uso: `Imagens/uc_geral.png`
-     - Diagrama Modular de Casos de Uso: `Imagens/uc_<modulo>.png` (ex.: `Imagens/uc_agendamento.png`)
-     - Diagrama Conceitual de Classes: `Imagens/cls_conceitual_dominio.png`
-
-2. **Ativação no LaTeX (`Capitulos/03_Modelagem_Casos_Uso.tex`):**
-   ```latex
-   \incluirdiagrama{Imagens/uc_geral.png}{Diagrama Geral de Casos de Uso do Sistema}{fig:uc_geral}
-   \incluirdiagrama{Imagens/uc_agendamento.png}{Diagrama de Casos de Uso -- Módulo Agendamento}{fig:uc_agendamento}
-   \incluirdiagrama{Imagens/cls_conceitual_dominio.png}{Modelo Conceitual de Classes de Domínio}{fig:cls_conceitual}
-   ```
+Cada subpasta conterá obrigatoriamente três arquivos:
+1. `<nome_diagrama>.puml`: Código PlantUML do modelo;
+2. `<nome_diagrama>.png`: Renderização prévia do PlantUML;
+3. `<nome_diagrama>.md`: Roteiro passo a passo formal instruindo o usuário a modelar no StarUML v7.0 (System Boundary, Actors, UseCases, `<<include>>`, `<<extend>>`, multiplicidades, visibilidades e exportação para `Template_Unificado_LATEX/Imagens/`).
 
 ---
 
 ## 6. Checklist de Qualidade do Agente
 
-- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
+- [ ] A rodada investigativa confirmou se a demanda é Documento do Zero ou Próximo Capítulo Lógico?
+- [ ] O texto está totalmente livre de citações nominais a normas (UML 2.5.1, Cockburn, SWEBOK)?
+- [ ] Todas as tabelas possuem divisão nítida de linhas/colunas e `\rowcolor{tableheaderbeige}`?
 - [ ] Todos os casos de uso possuem nome no infinitivo descrevendo o objetivo do ator?
 - [ ] Todo caso de uso prioritário possui pré-condições, pós-condições e fluxos de exceção?
-- [ ] A numeração dos passos do fluxo principal é consistente e lógica?
-- [ ] O guia de modelagem no StarUML v7.0 prescreve elementos, relacionamentos e nomes exatos de arquivos?
-- [ ] Os diagramas de casos de uso foram particionados por módulo (máximo de 4 a 6 UCs por diagrama)?
+- [ ] Os modelos de apoio foram criados em `sugests_diagrams/` com o trio `.puml`, `.png` e `.md`?
+- [ ] Nenhum guia de como usar o StarUML foi injetado dentro do arquivo `.tex` ou no PDF?
 - [ ] As classes conceituais possuem atributos sem tipos de implementação e com multiplicidades explícitas em todas as extremidades?
-- [ ] A matriz de rastreabilidade cobre 100% dos requisitos funcionais mapeados?

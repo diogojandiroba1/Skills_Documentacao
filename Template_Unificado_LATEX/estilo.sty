@@ -13,8 +13,9 @@
 \RequirePackage[export]{adjustbox}
 \RequirePackage{tikz}
 \usetikzlibrary{shapes,arrows,positioning,calc,fit}
+\RequirePackage{pgfgantt}
 
-% Tabelas Limpas Padrão Executivo (booktabs)
+% Tabelas Estruturadas com Grade Nítida e Cabeçalho Diferenciado
 \RequirePackage{booktabs}
 \RequirePackage{tabularx}
 \RequirePackage{longtable}
@@ -26,9 +27,12 @@
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \newcolumntype{C}{>{\centering\arraybackslash}X}
 
-\definecolor{headergray}{RGB}{243, 244, 246} % Fundo suave do cabeçalho da tabela
-\definecolor{linegray}{RGB}{229, 231, 235}   % Linhas de grade sutis
-\colorlet{tableheader}{headergray}
+% Cores de Tabelas: Cabeçalho Bege Claro e Linhas de Grade Nítidas
+\definecolor{tableheaderbeige}{RGB}{245, 242, 235} % Bege claro suave para cabeçalhos (#F5F2EB)
+\definecolor{tableborder}{RGB}{180, 180, 180}      % Linhas de grade nítidas
+\definecolor{headergray}{RGB}{245, 242, 235}       % Compatibilidade
+\definecolor{linegray}{RGB}{180, 180, 180}         % Compatibilidade
+\colorlet{tableheader}{tableheaderbeige}
 
 % Ambientes de Destaque Minimalistas (tcolorbox com barra lateral fina, sem caixas infantis)
 \RequirePackage[most]{tcolorbox}

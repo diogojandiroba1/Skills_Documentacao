@@ -36,14 +36,13 @@ Desenvolver uma solução de software corporativa, segura e escalável para unif
 \label{tab:comparativo_solucoes}
 \centering
 \small
-\begin{tabularx}{\textwidth}{@{} l Y Y l @{}}
-\toprule
-\textbf{Abordagem} & \textbf{Vantagens} & \textbf{Desvantagens} & \textbf{Veredito} \\
-\midrule
-Desenvolvimento Próprio & Aderência total ao negócio, controle do código e soberania LGPD. & Maior tempo inicial de construção. & \textbf{Adotada} \\
-Software as a Service (SaaS) & Implantação imediata e suporte do fornecedor. & Custo recorrente elevado, dependência de terceiros. & Descartada \\
-Customização Open-source & Custo zero de licença e base pré-existente. & Esforço de adaptação equivalente a refazer o núcleo. & Descartada \\
-\bottomrule
+\begin{tabularx}{\textwidth}{|l|Y|Y|l|}
+\hline
+\rowcolor{tableheaderbeige}
+\textbf{Abordagem} & \textbf{Vantagens} & \textbf{Desvantagens} & \textbf{Veredito} \\ \hline
+Desenvolvimento Próprio & Aderência total ao negócio, controle do código e soberania LGPD. & Maior tempo inicial de construção. & \textbf{Adotada} \\ \hline
+Software as a Service (SaaS) & Implantação imediata e suporte do fornecedor. & Custo recorrente elevado, dependência de terceiros. & Descartada \\ \hline
+Customização Open-source & Custo zero de licença e base pré-existente. & Esforço de adaptação equivalente a refazer o núcleo. & Descartada \\ \hline
 \end{tabularx}
 \end{table}
 
@@ -66,15 +65,14 @@ Topologia de rede local, links redundantes de comunicação externa e provedor d
 \label{tab:equipe_raci}
 \centering
 \small
-\begin{tabularx}{\textwidth}{@{} l l Y @{}}
-\toprule
-\textbf{Perfil / Função} & \textbf{Responsável} & \textbf{Responsabilidades Principais} \\
-\midrule
-Arquiteto de Software & Engenheiro de Software Sênior & Decisões estruturais, modelos 4+1 e ADRs. \\
-Engenheiro de Requisitos & Analista de Negócios / Requisitos & Elicitação, especificação IEEE 830 e validação. \\
-Desenvolvedores Front/Back & Equipe de Desenvolvimento & Construção e testes unitários/integrados. \\
-Engenheiro de DevOps/QA & Especialista em Infra/Testes & CI/CD, ambientes, pipelines de teste e deploy. \\
-\bottomrule
+\begin{tabularx}{\textwidth}{|l|l|Y|}
+\hline
+\rowcolor{tableheaderbeige}
+\textbf{Perfil / Função} & \textbf{Responsável} & \textbf{Responsabilidades Principais} \\ \hline
+Arquiteto de Software & Engenheiro de Software Sênior & Decisões estruturais, modelos 4+1 e ADRs. \\ \hline
+Engenheiro de Requisitos & Analista de Negócios / Requisitos & Elicitação, especificação formal e validação. \\ \hline
+Desenvolvedores Front/Back & Equipe de Desenvolvimento & Construção e testes unitários/integrados. \\ \hline
+Engenheiro de DevOps/QA & Especialista em Infra/Testes & CI/CD, ambientes, pipelines de teste e deploy. \\ \hline
 \end{tabularx}
 \end{table}
 
@@ -107,38 +105,83 @@ Decomposição hierárquica do escopo em pacotes de trabalho mensuráveis. A \au
 \label{tab:marcos_entrega}
 \centering
 \small
-\begin{tabularx}{\textwidth}{@{} l l Y l @{}}
-\toprule
-\textbf{Marco} & \textbf{Período} & \textbf{Entregáveis Consolidados} & \textbf{Status} \\
-\midrule
-M1: Planejamento & Semanas 1 a 2 & Plano de Projeto, WBS e Estimativas. & \badgeconcluido \\
-M2: Requisitos & Semanas 2 a 5 & IEEE 830, Casos de Uso e Protótipos. & \badgeconcluido \\
-M3: Arquitetura/Design & Semanas 5 a 7 & SAD ISO 42010, ORM e Diagramas UML. & \badgeconcluido \\
-M4: Construção & Semanas 7 a 12 & Módulos implementados e integrados. & \badgeemprogresso \\
-M5: Homologação & Semanas 13 a 14 & Bateria de testes, deploy e validação final. & \badgenaoiciada \\
-\bottomrule
+\begin{tabularx}{\textwidth}{|l|l|Y|l|}
+\hline
+\rowcolor{tableheaderbeige}
+\textbf{Marco} & \textbf{Período} & \textbf{Entregáveis Consolidados} & \textbf{Status} \\ \hline
+M1: Planejamento & Semanas 1 a 2 & Plano de Projeto, WBS e Estimativas. & \badgeconcluido \\ \hline
+M2: Requisitos & Semanas 2 a 5 & Especificação de Requisitos, Casos de Uso e Protótipos. & \badgeconcluido \\ \hline
+M3: Arquitetura/Design & Semanas 5 a 7 & Documento de Arquitetura, Modelo de Dados e Diagramas UML. & \badgeconcluido \\ \hline
+M4: Construção & Semanas 7 a 12 & Módulos implementados e integrados. & \badgeemprogresso \\ \hline
+M5: Homologação & Semanas 13 a 14 & Bateria de testes, deploy e validação final. & \badgenaoiciada \\ \hline
 \end{tabularx}
 \end{table}
 
 \subsection{Diagrama de Gantt do Projeto}
-A \autoref{fig:proj_gantt} apresenta a distribuição temporal das frentes de trabalho, dependências de precedência e o caminho crítico (CPM) modelados no StarUML v7.0.
+A \autoref{fig:proj_gantt} apresenta a distribuição temporal das frentes de trabalho, dependências de precedência e o caminho crítico (CPM) implementados nativamente via \texttt{pgfgantt}.
 
-% PLACEHOLDER STARUML v7.0: Diagrama de Gantt e Cronograma de Atividades
-% Ferramenta: StarUML v7.0 -> Model -> Add Diagram -> Activity Diagram (com Raias/Swimlanes)
-% Arquivo: Imagens/proj_gantt_cronograma.png (Exportar em PNG 300 DPI ou PDF vetorial)
-% Descomente a linha abaixo apos salvar o arquivo no diretorio Imagens/:
-% \incluirdiagrama{Imagens/proj_gantt_cronograma.png}{Diagrama de Gantt e Cronograma de Atividades}{fig:proj_gantt}
 \begin{figure}[htbp]
     \centering
-    \fbox{\parbox{0.9\textwidth}{\centering\vspace{1cm}%
-        \textbf{[Diagrama de Gantt e Cronograma de Atividades -- StarUML v7.0]}\\%
-        \textit{Modelar no StarUML v7.0 e exportar para: \texttt{Imagens/proj\_gantt\_cronograma.png}}\\%
-        \small Menu: \texttt{File -> Export Diagram as -> PNG...} (Fundo branco, alta resolução 300 DPI)\\%
-        \vspace{0.3cm}%
-        \footnotesize Para ativar a imagem real, descomente no arquivo \texttt{.tex}:\\
-        \texttt{\textbackslash incluirdiagrama\{Imagens/proj\_gantt\_cronograma.png\}\{Diagrama de Gantt e Cronograma de Atividades\}\{fig:proj_gantt\}}%
-    \vspace{1cm}}}
-    \caption{Diagrama de Gantt e Cronograma de Atividades do Projeto (Placeholder StarUML v7.0)}
+    \resizebox{\textwidth}{!}{
+    \begin{ganttchart}[
+        % Configuração de Grade
+        vgrid={*1{draw=gray!25, dashed}},
+        hgrid={*1{draw=gray!20}},
+        x unit=0.8cm,
+        y unit chart=0.60cm,
+        y unit title=0.55cm,
+        title/.append style={fill=white, draw=black, thick},
+        title label font=\bfseries\footnotesize,
+        % Barras Padrão (Frentes Paralelas / Secundárias)
+        bar/.append style={fill=blue!20!purple!25, draw=blue!50!purple!70, rounded corners=1pt},
+        bar height=0.50,
+        bar label font=\scriptsize,
+        % Grupos de Fases
+        group/.append style={fill=gray!25, draw=black!80, rounded corners=1.5pt},
+        group height=0.25,
+        group label font=\bfseries\scriptsize,
+        % Marcos Formais de Entrega
+        milestone/.append style={shape=diamond, fill=black, draw=black, scale=0.9},
+        milestone label font=\bfseries\scriptsize
+    ]{1}{12} % Definição do intervalo total de semanas (ex: 1 a 12)
+        
+        % 1. Cabeçalho de Meses (Número de semanas por mês)
+        \gantttitle{Mês 1}{3}
+        \gantttitle{Mês 2}{5}
+        \gantttitle{Mês 3}{4} \\
+        
+        % 2. Cabeçalho de Semanas
+        \gantttitle{S1}{1} \gantttitle{S2}{1} \gantttitle{S3}{1}
+        \gantttitle{S4}{1} \gantttitle{S5}{1} \gantttitle{S6}{1} \gantttitle{S7}{1} \gantttitle{S8}{1}
+        \gantttitle{S9}{1} \gantttitle{S10}{1} \gantttitle{S11}{1} \gantttitle{S12}{1} \\
+        
+        % FASE 1
+        \ganttgroup{Fase 1: Concepção \& Infraestrutura}{1}{2} \\
+        % Para tarefa no Caminho Crítico, sobrescrever estilo da barra:
+        \ganttbar[bar/.append style={fill=magenta!35!purple!55, draw=magenta!70!black}]{1.1 Atividade Crítica A}{1}{2} \\
+        % Para tarefa paralela, usar o estilo padrão:
+        \ganttbar{1.2 Atividade Paralela B}{1}{2} \\
+        
+        % FASE 2
+        \ganttgroup{Fase 2: Serviços Núcleo (MVP)}{2}{6} \\
+        \ganttbar[bar/.append style={fill=magenta!35!purple!55, draw=magenta!70!black}]{2.1 Atividade Crítica C}{2}{4} \\
+        \ganttbar{2.2 Atividade Paralela D}{3}{4} \\
+        \ganttbar[bar/.append style={fill=magenta!35!purple!55, draw=magenta!70!black}]{2.3 Atividade Crítica E}{5}{6} \\
+        \ganttmilestone{Parte 1: Entrega Parcial (Data)}{6} \\
+        
+        % FASE 3
+        \ganttgroup{Fase 3: Construção \& Integração}{7}{9} \\
+        \ganttbar[bar/.append style={fill=magenta!35!purple!55, draw=magenta!70!black}]{3.1 Atividade Crítica F}{7}{8} \\
+        \ganttbar{3.2 Atividade Paralela G}{8}{9} \\
+        
+        % FASE 4
+        \ganttgroup{Fase 4: Homologação \& Entrega}{10}{12} \\
+        \ganttbar[bar/.append style={fill=magenta!35!purple!55, draw=magenta!70!black}]{4.1 Testes de Carga e Validação}{10}{11} \\
+        \ganttbar{4.2 Documentação Final}{11}{12} \\
+        \ganttmilestone{Parte 2: Entrega Final (Data)}{12}
+    \end{ganttchart}
+    }
+    \caption{Diagrama de Gantt com mapeamento do Caminho Crítico (em destaque), marcos de entrega e frentes paralelas de desenvolvimento.}
     \label{fig:proj_gantt}
 \end{figure}
 
@@ -148,14 +191,13 @@ A \autoref{fig:proj_gantt} apresenta a distribuição temporal das frentes de tr
 \label{tab:registro_riscos}
 \centering
 \small
-\begin{tabularx}{\textwidth}{@{} l Y c c Y @{}}
-\toprule
-\textbf{ID} & \textbf{Descrição do Risco} & \textbf{Prob.} & \textbf{Imp.} & \textbf{Ação de Mitigação / Prevenção} \\
-\midrule
-R01 & Desalinhamento de requisitos de negócio & Média & Alto & Prototipação rápida e validação formal. \\
-R02 & Falhas de concorrência em horários e estoque & Média & Alto & Bloqueio pessimista / isolamento transacional ACID. \\
-R03 & Vazamento de dados pessoais/sensíveis & Baixa & Crítico & Criptografia, RBAC granular e logs de auditoria. \\
-\bottomrule
+\begin{tabularx}{\textwidth}{|l|Y|c|c|Y|}
+\hline
+\rowcolor{tableheaderbeige}
+\textbf{ID} & \textbf{Descrição do Risco} & \textbf{Prob.} & \textbf{Imp.} & \textbf{Ação de Mitigação / Prevenção} \\ \hline
+R01 & Desalinhamento de requisitos de negócio & Média & Alto & Prototipação rápida e validação formal. \\ \hline
+R02 & Falhas de concorrência em horários e estoque & Média & Alto & Bloqueio pessimista / isolamento transacional ACID. \\ \hline
+R03 & Vazamento de dados pessoais/sensíveis & Baixa & Crítico & Criptografia, RBAC granular e logs de auditoria. \\ \hline
 \end{tabularx}
 \end{table}
 

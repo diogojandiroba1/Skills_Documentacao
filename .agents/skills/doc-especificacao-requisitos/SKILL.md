@@ -1,11 +1,17 @@
 ---
 name: doc-especificacao-requisitos
-description: Guia o agente na especificação de requisitos de software (SRS / ERS) conforme IEEE Std 830-1998 e ISO/IEC/IEEE 29148, abordando requisitos funcionais (RF), dicionário de atributos, regras de negócio (RN) e requisitos não funcionais (RNF).
+description: Guia o agente na especificação de requisitos de software (SRS / ERS), abordando requisitos funcionais (RF), dicionário de atributos, regras de negócio (RN), requisitos não funcionais (RNF) e tabelas padronizadas com cabeçalho bege.
 ---
 
 # Skill: Especificação de Requisitos de Software (SRS / ERS)
 
-Esta skill orienta o agente na elicitação, análise, especificação e validação formal da **Especificação de Requisitos de Software (SRS - Software Requirements Specification)** em estrita conformidade com as normas internacionais **ISO/IEC/IEEE 29148:2018** e **IEEE Std 830-1998**, fundamentada na Área de Conhecimento de Requisitos do **SWEBOK v4**.
+Esta skill orienta o agente na elicitação, análise, especificação e validação formal da **Especificação de Requisitos de Software (SRS - Software Requirements Specification)**, estruturada para garantir clareza, verificabilidade e rastreabilidade total.
+
+O agente atua com rigor de engenharia:
+1. Conduz o interrogatório técnico e confirma se é **Documento Novo do Zero** ou **Próximo Capítulo Lógico**;
+2. Segue os preceitos de engenharia de requisitos à risca, mas **sem citar nominalmente normas no texto** (ex.: sem citar ISO 29148 ou IEEE 830 no corpo da SRS);
+3. Gera as tabelas com **linhas e colunas claras** e cabeçalho em **bege claro** (`\rowcolor{tableheaderbeige}`);
+4. Entrega requisitos atômicos, testáveis e com priorização MoSCoW.
 
 ---
 
@@ -16,18 +22,20 @@ Antes de redigir qualquer requisito ou regra de negócio em LaTeX, o agente **N�
 ### 1.1. Bateria Investigativa de Perguntas (Elicitação de Requisitos)
 O agente deve formular perguntas claras agrupadas por tópicos essenciais, apresentando opções técnicas e boas práticas:
 
-1. **Módulos Funcionais e Escopo:**
+1. **Contexto e Fronteira do Documento:**
+   - Trata-se de um **Novo Projeto do Zero** ou do **Próximo Capítulo Lógico** (após o Plano de Projeto) do projeto atual?
+2. **Módulos Funcionais e Escopo:**
    - Quais são os grandes módulos funcionais do sistema (ex.: M1: Gestão de Identidade/RBAC, M2: Cadastros Centrais, M3: Operação Principal, M4: Financeiro/Faturamento, M5: Auditoria/Relatórios)?
    - Há recursos secundários que devem ser deixados explicitamente fora da primeira release?
-2. **Perfis de Usuário e Acessos (RBAC):**
+3. **Perfis de Usuário e Acessos (RBAC):**
    - Quais são os perfis de acesso ao sistema (ex.: Administrador, Operador, Cliente/Paciente, Fiscal/Auditor)?
    - Quais ações cada perfil pode e NÃO pode executar?
-3. **Regras de Negócio Invariantes (RNs):**
+4. **Regras de Negócio Invariantes (RNs):**
    - Quais regras de negócio condicionam as operações (ex.: bloqueios temporais, validações documentais, limites de desconto, exigência de aprovação por alçada)?
    - Quais são as condições de guarda obrigatórias?
-4. **Dicionário de Dados e Validações:**
+5. **Dicionário de Dados e Validações:**
    - Quais campos e formatos específicos são exigidos nas principais entidades (formatos de chave, máscaras, tipos primitivos, unicidade)?
-5. **Requisitos Não-Funcionais Mensuráveis (ISO 25010):**
+6. **Requisitos Não-Funcionais Mensuráveis:**
    - Qual o tempo máximo aceitável de resposta nas transações críticas (ex.: $P95 \le 1{,}5$s)?
    - Qual a volumetria esperada de requisições por segundo e usuários simultâneos?
    - Quais são os requisitos legais e de segurança (LGPD, autenticação multifator MFA, tempo de expiração de sessão JWT, retenção de logs)?
@@ -47,22 +55,11 @@ Após a resposta do usuário, o agente sintetiza e submete para validação:
 
 ---
 
-## 2. Fundamentação Teórica (SWEBOK v4 e Normas IEEE/ISO)
+## 2. Diretrizes Normativas e de Estilo
 
-O trabalho do agente deve refletir rigorosamente os princípios de Engenharia de Requisitos:
-
-* **SWEBOK v4 (Software Engineering Body of Knowledge):**
-  * **Chapter 1 -- Software Requirements:**
-    * *Requirements Fundamentals:* Distinção formal entre requisitos funcionais (comportamento observável do sistema), restrições de domínio e requisitos não funcionais (qualidades sistêmicas de confiabilidade, desempenho e segurança);
-    * *Requirements Elicitation:* Captura sistemática de necessidades de múltiplos perfis de usuários e cenários operacionais;
-    * *Requirements Analysis:* Classificação estruturada, modelagem conceitual de dados e resolução de conflitos de negócio;
-    * *Requirements Specification:* Documentação formal com nível ótimo de detalhe, evitando omissões e ambiguidades;
-    * *Requirements Validation:* Aplicação de critérios de verificação e validação (atomicidade, verificabilidade e testabilidade de cada requisito);
-    * *Practical Considerations:* Manutenção da matriz de rastreabilidade bidirecional e gestão de atributos de requisitos (identificador, descrição, prioridade, status, regras vinculadas).
-* **Normas Internacionais:**
-  * **ISO/IEC/IEEE 29148:2018:** *Systems and software engineering -- Life cycle processes -- Requirements engineering* (Cláusula de requisitos para SRS e critérios de qualidade: Singular, Não-ambíguo, Completo, Consistente, Verificável e Rastreável);
-  * **IEEE Std 830-1998:** *Recommended Practice for Software Requirements Specifications*;
-  * **ISO/IEC 25010:2023:** *Systems and software Quality Requirements and Evaluation (SQuaRE) -- Product quality model*.
+O trabalho do agente reflete rigorosamente as melhores práticas do **SWEBOK v4 (Cap. 1)**, **ISO/IEC/IEEE 29148:2018**, **IEEE Std 830-1998** e **ISO/IEC 25010:2023**:
+- **PROIBIÇÃO DE METACITAÇÕES:** O documento da SRS é um documento de produto de software. **Não cite nominalmente as normas no texto** (ex.: nada de *"segundo a ISO 29148"*, *"conforme IEEE 830"*). O agente deve seguir os critérios (singularidade, não-ambiguidade, completeza, consistência e verificabilidade) diretamente no texto do requisito.
+- **GRADE NÍTIDA EM TABELAS:** Todas as tabelas de RF, RN, RNF e dicionário de dados devem possuir linhas horizontais e verticais explícitas (`|l|Y|...|` e `\hline`), com cabeçalho bege claro (`\rowcolor{tableheaderbeige}`) e títulos em negrito.
 
 ---
 
@@ -72,11 +69,11 @@ O trabalho do agente deve refletir rigorosamente os princípios de Engenharia de
    - **Perspectiva do Produto:** Se o software é independente ou componente de um sistema maior;
    - **Funções do Produto:** Resumo executivo das capacidades principais organizadas por módulos;
    - **Classes e Características dos Usuários:** Perfis de acesso, formação, privilégios e frequência de uso;
-   - **Restrições Gerais:** Limitações de hardware, tecnologias obrigatórias, conformidade legal (LGPD, normas da ANVISA/CFM se aplicável);
-   - **Suposições e Dependências:** Fatores externos cuja alteração impacta os requisitos (ex.: estabilidade de APIs de terceiros).
+   - **Restrições Gerais:** Limitações de hardware, tecnologias obrigatórias, conformidade legal (LGPD);
+   - **Suposições e Dependências:** Fatores externos cuja alteração impacta os requisitos.
 
 2. **Requisitos Funcionais (RF)**
-   - Agrupados por **Módulos Funcionais** coerentes (ex.: M1: Pessoas e Acesso, M2: Agenda, M3: Prontuário, M4: Estoque/Farmácia, M5: Financeiro);
+   - Agrupados por **Módulos Funcionais** coerentes (ex.: M1: Acessos, M2: Agenda, M3: Atendimento, M4: Financeiro);
    - Todo RF deve possuir:
      - **ID Único:** `RFxx` (ex.: `RF01`, `RF02`);
      - **Título Descritivo e Verbo de Ação Claro:** "Permitir ao recepcionista...", "Registrar...", "Validar...";
@@ -96,16 +93,16 @@ O trabalho do agente deve refletir rigorosamente os princípios de Engenharia de
    - Rastreabilidade explícita indicando quais RFs são afetados pela regra.
 
 5. **Requisitos Não Funcionais (RNF)**
-   - Devem ser **mensuráveis e testáveis**, categorizados segundo a ISO 25010:
+   - Devem ser **mensuráveis e testáveis**, categorizados segundo características de qualidade:
      - **Desempenho e Eficiência:** Tempo de resposta em segundos para percentil 95 ($P95 \le 2{,}0$s), vazão mínima de requisições;
      - **Segurança da Informação:** Algoritmos de criptografia (AES-256, TLS 1.3), hashing com salt (Bcrypt/Argon2), tokens stateless JWT com tempo de expiração;
      - **Confiabilidade e Disponibilidade:** Índice de uptime (ex.: 99.5%), tolerância a falhas e RTO/RPO;
-     - **Usabilidade:** Responsividade em diferentes resoluções, tempo máximo para novos operadores aprenderem operações básicas;
-     - **Conformidade Legal:** Anonimização de dados, revogação de consentimento e logs de acesso conforme a LGPD.
+     - **Usabilidade:** Responsividade em diferentes resoluções, tempo máximo de aprendizado;
+     - **Conformidade Legal:** Anonimização de dados, revogação de consentimento e logs de auditoria LGPD.
 
 ---
 
-## 4. Modelos de Tabelas e Código em LaTeX
+## 4. Modelos de Tabelas em LaTeX (Grade Nítida e Cabeçalho Bege)
 
 ### Requisitos Funcionais por Módulo
 ```latex
@@ -116,40 +113,36 @@ O trabalho do agente deve refletir rigorosamente os princípios de Engenharia de
 \label{tab:rf_m1}
 \centering
 \small
-\begin{tabularx}{\textwidth}{@{} l Y c l @{}}
-\toprule
-\textbf{ID} & \textbf{Descrição do Requisito Funcional} & \textbf{Prioridade} & \textbf{Regras Vinculadas} \\
-\midrule
-RF01 & Permitir o login de usuários mediante e-mail corporativo e senha criptografada. & \badgealta & RN01, RN02 \\
-RF02 & Bloquear a conta temporariamente por 15 minutos após 5 tentativas consecutivas de senha inválida. & \badgealta & RN03 \\
-RF03 & Permitir ao administrador criar e inativar perfis de permissão no modelo RBAC. & \badgemedia & RN04 \\
-\bottomrule
+\begin{tabularx}{\textwidth}{|l|Y|c|l|}
+\hline
+\rowcolor{tableheaderbeige}
+\textbf{ID} & \textbf{Descrição do Requisito Funcional} & \textbf{Prioridade} & \textbf{Regras Vinculadas} \\ \hline
+RF01 & Permitir o login de usuários mediante e-mail corporativo e senha criptografada. & \badgealta & RN01, RN02 \\ \hline
+RF02 & Bloquear a conta temporariamente por 15 minutos após 5 tentativas consecutivas de senha inválida. & \badgealta & RN03 \\ \hline
+RF03 & Permitir ao administrador criar e inativar perfis de permissão no modelo RBAC. & \badgemedia & RN04 \\ \hline
 \end{tabularx}
 \end{table}
 ```
 
-### Dicionário de Atributos de Requisito (Padrão Booktabs)
+### Dicionário de Atributos de Requisito
 ```latex
 \begin{table}[htbp]
 \caption{Dicionário de Atributos -- RF01 (Autenticação)}
 \label{tab:atributos_rf01}
 \centering
 \small
-\begin{tabularx}{\textwidth}{@{} l l l c Y @{}}
-\toprule
-\textbf{Atributo} & \textbf{Tipo} & \textbf{Formato} & \textbf{Obrigatório} & \textbf{Validação / Restrição} \\
-\midrule
-email & String & RFC 5322 & Sim & Deve conter `@` e domínio corporativo válido. \\
-senha & String & Min. 8 caracteres & Sim & Conter ao menos 1 maiúscula, 1 número e 1 caractere especial. \\
-token & String & JWT (Bearer) & Saída & Assinado com chave assimétrica RSA-256 e TTL de 8 horas. \\
-\bottomrule
+\begin{tabularx}{\textwidth}{|l|l|l|c|Y|}
+\hline
+\rowcolor{tableheaderbeige}
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Formato} & \textbf{Obrigatório} & \textbf{Validação / Restrição} \\ \hline
+email & String & RFC 5322 & Sim & Deve conter `@` e domínio corporativo válido. \\ \hline
+senha & String & Min. 8 caracteres & Sim & Conter ao menos 1 maiúscula, 1 número e 1 caractere especial. \\ \hline
+token & String & JWT (Bearer) & Saída & Assinado com chave assimétrica RSA-256 e TTL de 8 horas. \\ \hline
 \end{tabularx}
 \end{table}
 ```
 
 ### Catálogo de Regras de Negócio (RN)
-> **Diretriz:** NÃO utilize caixas gráficas de destaque ou molduras (`regrabox`, `destaque`). Apresente as regras de negócio em tabela `booktabs` estruturada:
-
 ```latex
 \begin{table}[htbp]
 \caption{Catálogo de Regras de Negócio (RN)}
@@ -157,13 +150,12 @@ token & String & JWT (Bearer) & Saída & Assinado com chave assimétrica RSA-256
 \centering
 \small
 \renewcommand{\arraystretch}{1.25}
-\begin{tabularx}{\textwidth}{@{} l l Y @{}}
-\toprule
-\textbf{Código} & \textbf{Nome da Regra} & \textbf{Descrição e Condição de Guarda} \\
-\midrule
-RN01 & Autenticação Multifator (MFA) & Todo acesso por médicos e administradores deve exigir validação de segundo fator antes de liberar prontuários. \\
-RN02 & Bloqueio por Tentativas & Bloquear a conta por 15 minutos após 5 tentativas consecutivas de senha inválida. \\
-\bottomrule
+\begin{tabularx}{\textwidth}{|l|l|Y|}
+\hline
+\rowcolor{tableheaderbeige}
+\textbf{Código} & \textbf{Nome da Regra} & \textbf{Descrição e Condição de Guarda} \\ \hline
+RN01 & Autenticação Multifator (MFA) & Todo acesso por médicos e administradores deve exigir validação de segundo fator antes de liberar prontuários. \\ \hline
+RN02 & Bloqueio por Tentativas & Bloquear a conta por 15 minutos após 5 tentativas consecutivas de senha inválida. \\ \hline
 \end{tabularx}
 \end{table}
 ```
@@ -174,14 +166,15 @@ RN02 & Bloqueio por Tentativas & Bloquear a conta por 15 minutos após 5 tentati
 
 - **Evite Termos Vagos:** Nunca use expressões como *"rápido"*, *"amigável"*, *"seguro"* ou *"otimizado"*. Substitua sempre por métricas numéricas verificáveis (ex.: em vez de *"sistema rápido"*, use *"tempo de resposta $\le 1{,}5$ segundos sob carga de 50 usuários simultâneos"*).
 - **Consistência de Vocabulário:** Mantenha os mesmos nomes de entidades ao longo de todo o documento (se usou "Paciente", nunca alterne para "Cliente" ou "Usuário" sem distinguir os papéis).
-- **Transição para Modelagem Visual (StarUML v7.0):** Os requisitos funcionais catalogados servirão como insumo primário para a modelagem visual dos Casos de Uso e Modelo Conceitual no StarUML v7.0 (executada através da skill `doc-casos-de-uso`). Não utilize diagramas-como-código nesta fase.
+- **Transição para Modelagem Visual (StarUML v7.0):** Os requisitos funcionais catalogados servirão como insumo primário para a modelagem visual dos Casos de Uso e Modelo Conceitual no StarUML v7.0 (executada através da skill `doc-casos-de-uso`).
 
 ---
 
 ## 6. Checklist de Qualidade do Agente
-- [ ] A rodada investigativa de perguntas técnicas foi realizada com o usuário e a proposta foi formalmente aprovada antes da redação?
-- [ ] Todos os requisitos são atômicos?
-- [ ] Todos os requisitos funcionais possuem verbo de ação e estão no modo indicativo afirmativo?
+- [ ] A rodada investigativa confirmou se a demanda é Documento do Zero ou Próximo Capítulo Lógico?
+- [ ] O texto está totalmente livre de citações nominais a normas (ISO 29148, IEEE 830, etc.)?
+- [ ] Todas as tabelas possuem linhas e colunas nítidas (`|...|` e `\hline`) com cabeçalho em `\rowcolor{tableheaderbeige}`?
+- [ ] Todos os requisitos são atômicos e estão no modo indicativo afirmativo?
 - [ ] Todo requisito não funcional possui métrica quantificável para teste de aceite?
 - [ ] O dicionário de dados cobre todos os campos manipulados pelos requisitos principais?
 - [ ] As regras de negócio (RN) estão desacopladas das telas e focam puramente nas restrições do negócio?

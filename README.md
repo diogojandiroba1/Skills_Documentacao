@@ -17,9 +17,34 @@ O repositório **Skills_Documentacao** foi concebido para resolver de forma defi
 
 ---
 
-## 🎨 Padronização de Modelagem Visual: StarUML v7.0
+## 🎨 Padronização de Modelagem Visual, Apoio (`sugests_diagrams/`) e Gantt Nativo
 
-A partir desta versão, **não utilizamos mais diagramas como código (PlantUML, Mermaid, etc.)**. Todas as representações gráficas de engenharia de software devem ser modeladas visualmente na ferramenta profissional **StarUML v7.0** e exportadas em alta resolução (PNG com fundo branco a 300 DPI ou PDF vetorial) para o diretório `Template_Unificado_LATEX/Imagens/`.
+### 1. Separação de Artefatos: O que vai no PDF vs. O que vai em `sugests_diagrams/`
+- **No Documento Final (LaTeX / PDF):** Deve conter **apenas a inclusão da imagem final** através da macro `\incluirdiagrama{Imagens/<arquivo>.png}{...}{fig:...}`. **É terminantemente proibido inserir roteiros ou instruções de "como desenhar no StarUML" dentro do PDF.**
+- **Na Subpasta de Apoio à Modelagem (`sugests_diagrams/<nome_diagrama>/`):**
+  Para cada diagrama a ser desenhado no StarUML v7.0, o agente gera uma subpasta contendo o trio de apoio:
+  1. `<nome_diagrama>.puml`: Código PlantUML que serve como modelo de referência estrutural;
+  2. `<nome_diagrama>.png`: Imagem renderizada da prévia visual do PlantUML;
+  3. `<nome_diagrama>.md`: Guia passo a passo textual detalhado instruindo o usuário a reproduzir o modelo no StarUML v7.0 (menu, toolbox, visibilidades, atributos, métodos e conexões).
+
+### 2. Diagrama de Gantt Nativo via `pgfgantt`
+O Diagrama de Gantt do Plano de Projeto **não utiliza imagem externa**. Ele é implementado **nativamente em LaTeX com o pacote `pgfgantt`**, garantindo:
+- Resolução vetorial contínua (zoom infinito sem pixelização);
+- Tipografia idêntica às fontes do documento acadêmico/corporativo;
+- Escala de semanas discretas (S1..Sn) com 2 níveis de cabeçalho (Meses + Semanas);
+- Mapeamento cromático do Caminho Crítico (CPM) em magenta/púrpura (`fill=magenta!35!purple!55, draw=magenta!70!black`) e frentes paralelas em lavanda (`fill=blue!20!purple!25, draw=blue!50!purple!70`);
+- Auto-ajuste de largura via `\resizebox{\textwidth}{!}{ ... }`.
+
+### 3. Padrão de Tabelas com Grade Nítida e Cabeçalho Bege Claro
+Todas as tabelas do ecossistema adotam divisão nítida entre linhas e colunas:
+- Linhas verticais e horizontais explícitas (`|l|Y|...|` e `\hline`);
+- Linha de cabeçalho destacada em bege claro suave (`\rowcolor{tableheaderbeige}`) e títulos em negrito (`\textbf{...}`), garantindo separação visual imediata entre metadados e os dados da tabela.
+
+### 4. Diretrizes de Escopo e Ausência de Citações no Texto
+- **Novo Projeto do Zero vs. Próximo Capítulo Lógico:** O agente confirma explicitamente o escopo antes de redigir. Jamais mescla ou concatena capítulos de sistemas diferentes em documentos existentes.
+- **Proibição de Citações Nominais a Normas no Texto:** O documento técnico é um artefato de produto. O agente segue rigorosamente o SWEBOK v4 e normas IEEE/ISO na estrutura e critérios, mas **não inclui citações nominais às normas no texto** (*"não há referências nesses documentos, só precisa segui-la a risca"*).
+
+---
 
 ### 📥 Instalação do StarUML v7.0
 Para instalar a versão completa do StarUML v7.0 (sem marca d'água na exportação), acesse o tutorial oficial da comunidade:  
@@ -29,42 +54,46 @@ Para instalar a versão completa do StarUML v7.0 (sem marca d'água na exportaç
 Os agentes atuam em estrita parceria com o usuário seguindo um fluxo mandatório de 3 etapas:
 
 1. **Investigação Técnica Ativa ("Interrogatório Técnico"):**
-   - O agente **não assume premissas às cegas nem inventa dados de negócio**.
-   - Antes de redigir qualquer documento, ele realiza uma rodada de perguntas investigativas estruturadas por tópicos essenciais (escopo, regras de negócio, personas, volumetria, restrições tecnológicas, integrações, requisitos não-funcionais, etc.), oferecendo opções fundamentadas com prós, contras e recomendação técnica de Engenharia de Software.
+   - Confirmação formal se a demanda é um **Novo Projeto do Zero** ou o **Próximo Capítulo Lógico**;
+   - Rodada investigativa por tópicos essenciais, com alternativas técnicas, prós, contras e recomendação de Engenharia de Software.
 
 2. **Proposição Estruturada e Gate de Aprovação do Usuário:**
-   - Com base nas respostas, o agente sintetiza o escopo e apresenta a **proposta detalhada da documentação**, acompanhada da **sugestão nominal de diagramas no StarUML v7.0** que melhor comunicam aquela solução.
-   - **Gate Bloqueante:** O agente solicita formalmente a aprovação do usuário e **só avança para a escrita após o aval explícito**.
+   - Síntese prévia do escopo e relação nominal de diagramas recomendados;
+   - **Gate Bloqueante:** O agente só gera arquivos `.tex` após o aval explícito do usuário.
 
-3. **Redação Formal em LaTeX e Copiloto de Modelagem no StarUML v7.0:**
-   - **Gerador da Documentação Formal:** Redige o conteúdo técnico rigoroso, tabelas `booktabs`, especificações textuais de Casos de Uso, catálogo de ADRs e matrizes de rastreabilidade em LaTeX.
-   - **Copiloto / Assistente de Modelagem no StarUML v7.0:** Fornece um roteiro textual passo a passo, detalhando exatamente como o usuário deve construir visualmente cada diagrama no StarUML (árvore do *Model Explorer*, tipo de diagrama, elementos da Toolbox, estereótipos, visibilidades `+`, `-`, `#`, métodos, tipos de retorno, multiplicidades, conexões e alinhamento).
+3. **Redação Formal em LaTeX e Geração de Modelos em `sugests_diagrams/`:**
+   - Redação do capítulo em LaTeX limpo, com tabelas de grade nítida (`\rowcolor{tableheaderbeige}`);
+   - Geração dos arquivos de modelo (`.puml`, `.png` e `.md`) na pasta `sugests_diagrams/<nome_diagrama>/`.
 
 ### 📋 Catálogo Oficial de Diagramas e Nomenclatura
 
-| # | Capítulo / Skill | Tipo no StarUML v7.0 | Nome do Arquivo Salvo | Formato |
+| # | Capítulo / Skill | Tipo / Ferramenta | Nome do Arquivo / Implementação | Formato |
 |:---:|:---|:---|:---|:---:|
-| 01 | `doc-plano-projeto` | **Class / Tree Diagram** | `Imagens/proj_wbs_escopo.png` | `.png` (300 DPI) / `.pdf` |
-| 03 | `doc-casos-de-uso` | **Use Case Diagram** | `Imagens/uc_geral.png` | `.png` (300 DPI) / `.pdf` |
-| 03 | `doc-casos-de-uso` | **Use Case Diagram** | `Imagens/uc_<modulo>.png` | `.png` (300 DPI) / `.pdf` |
+| 01 | `doc-plano-projeto` | **Class / Tree Diagram** (StarUML) | `Imagens/proj_wbs_escopo.png` | `.png` (300 DPI) / `.pdf` |
+| 01 | `doc-plano-projeto` | **Gantt CPM Nativo** (`pgfgantt`) | Código LaTeX nativo no capítulo | Vetorial (`.tex`) |
+| 03 | `doc-casos-de-uso` | **Use Case Diagram** (StarUML) | `Imagens/uc_geral.png` | `.png` (300 DPI) / `.pdf` |
+| 03 | `doc-casos-de-uso` | **Use Case Diagram** (StarUML) | `Imagens/uc_<modulo>.png` | `.png` (300 DPI) / `.pdf` |
 | 03 | `doc-casos-de-uso` | **Class Diagram** (Análise) | `Imagens/cls_conceitual_dominio.png` | `.png` (300 DPI) / `.pdf` |
-| 04 | `doc-arquitetura-software` | **Component Diagram** | `Imagens/arch_visao_logica.png` | `.png` (300 DPI) / `.pdf` |
-| 04 | `doc-arquitetura-software` | **Sequence / Activity Diagram** | `Imagens/arch_visao_processos.png` | `.png` (300 DPI) / `.pdf` |
-| 04 | `doc-arquitetura-software` | **Package Diagram** | `Imagens/arch_visao_desenvolvimento.png` | `.png` (300 DPI) / `.pdf` |
-| 04 | `doc-arquitetura-software` | **Deployment Diagram** | `Imagens/arch_visao_implantacao.png` | `.png` (300 DPI) / `.pdf` |
+| 04 | `doc-arquitetura-software` | **Component Diagram** (StarUML) | `Imagens/arch_visao_logica.png` | `.png` (300 DPI) / `.pdf` |
+| 04 | `doc-arquitetura-software` | **Sequence / Activity** (StarUML) | `Imagens/arch_visao_processos.png` | `.png` (300 DPI) / `.pdf` |
+| 04 | `doc-arquitetura-software` | **Package Diagram** (StarUML) | `Imagens/arch_visao_desenvolvimento.png` | `.png` (300 DPI) / `.pdf` |
+| 04 | `doc-arquitetura-software` | **Deployment Diagram** (StarUML) | `Imagens/arch_visao_implantacao.png` | `.png` (300 DPI) / `.pdf` |
 | 04 | `doc-arquitetura-software` | **Component Diagram** (Segurança) | `Imagens/arch_visao_seguranca.png` | `.png` (300 DPI) / `.pdf` |
 | 05 | `doc-design-detalhado` | **Class Diagram** (Projeto) | `Imagens/cls_projeto_<modulo>.png` | `.png` (300 DPI) / `.pdf` |
-| 05 | `doc-design-detalhado` | **Sequence Diagram** | `Imagens/seq_<caso_uso>.png` | `.png` (300 DPI) / `.pdf` |
-| 05 | `doc-design-detalhado` | **Statechart Diagram** | `Imagens/dsm_<entidade>.png` | `.png` (300 DPI) / `.pdf` |
-| 05 | `doc-design-detalhado` | **Activity Diagram** | `Imagens/act_<processo>.png` | `.png` (300 DPI) / `.pdf` |
-| 06 | `doc-plano-testes` | **Component / Package Diagram** | `Imagens/test_piramide_estrategia.png` | `.png` (300 DPI) / `.pdf` |
-| 06 | `doc-plano-testes` | **Statechart Diagram** | `Imagens/test_ciclo_defeito.png` | `.png` (300 DPI) / `.pdf` |
-| 07 | `doc-implantacao-devops` | **Activity Diagram** (Swimlanes) | `Imagens/devops_pipeline_cicd.png` | `.png` (300 DPI) / `.pdf` |
-| 07 | `doc-implantacao-devops` | **Deployment Diagram** | `Imagens/devops_topologia_infra.png` | `.png` (300 DPI) / `.pdf` |
+| 05 | `doc-design-detalhado` | **Sequence Diagram** (StarUML) | `Imagens/seq_<caso_uso>.png` | `.png` (300 DPI) / `.pdf` |
+| 05 | `doc-design-detalhado` | **Statechart Diagram** (StarUML) | `Imagens/dsm_<entidade>.png` | `.png` (300 DPI) / `.pdf` |
+| 05 | `doc-design-detalhado` | **Activity Diagram** (StarUML) | `Imagens/act_<processo>.png` | `.png` (300 DPI) / `.pdf` |
+| 06 | `doc-plano-testes` | **Component / Package** (StarUML) | `Imagens/test_piramide_estrategia.png` | `.png` (300 DPI) / `.pdf` |
+| 06 | `doc-plano-testes` | **Statechart Diagram** (StarUML) | `Imagens/test_ciclo_defeito.png` | `.png` (300 DPI) / `.pdf` |
+| 07 | `doc-implantacao-devops` | **Activity Diagram** (StarUML) | `Imagens/devops_pipeline_cicd.png` | `.png` (300 DPI) / `.pdf` |
+| 07 | `doc-implantacao-devops` | **Deployment Diagram** (StarUML) | `Imagens/devops_topologia_infra.png` | `.png` (300 DPI) / `.pdf` |
 | 08 | `doc-manual-usuario` | **Screenshots / Telas Reais** | `Imagens/ui_<funcionalidade>.png` | `.png` |
+| 08 | `doc-manual-usuario` | **Activity Diagram** (Jornada) | `Imagens/act_jornada_<perfil>.png` | `.png` (300 DPI) / `.pdf` |
 | 09 | `doc-gerencia-configuracao` | **Activity Diagram** (Branches) | `Imagens/scm_branching_model.png` | `.png` (300 DPI) / `.pdf` |
+| 09 | `doc-gerencia-configuracao` | **Statechart Diagram** (CCB) | `Imagens/scm_fluxo_ccb.png` | `.png` (300 DPI) / `.pdf` |
 | 10 | `doc-garantia-qualidade` | **Activity Diagram** (Code Review) | `Imagens/sqa_processo_revisao.png` | `.png` (300 DPI) / `.pdf` |
 | 11 | `doc-plano-manutencao` | **Activity Diagram** (Incidentes) | `Imagens/manut_ciclo_incidente.png` | `.png` (300 DPI) / `.pdf` |
+| 11 | `doc-plano-manutencao` | **Activity Diagram** (Hotfix) | `Imagens/manut_fluxo_hotfix.png` | `.png` (300 DPI) / `.pdf` |
 
 ### 🖼️ Placeholders nos Templates LaTeX
 Os capítulos LaTeX em `Template_Unificado_LATEX/Capitulos/` contêm placeholders visuais elegantes informando o nome exato do arquivo, o menu do StarUML v7.0 e a linha comentada `\incluirdiagrama{Imagens/<arquivo>.png}{...}{fig:...}`. Uma vez exportada a imagem do StarUML para `Imagens/`, basta descomentar a linha no `.tex` para ativar a figura na publicação.
